@@ -1,0 +1,28 @@
+Xcursor.size: 16W
+URxvt.urgentOnBell: true
+URxvt.scrollBar: false
+
+! Ctrl Up and Down control font size
+URxvt.resize-font.smaller: C-Down
+URxvt.resize-font.bigger: C-Up
+
+! Copy/Paste
+URxvt.keysym.Control-Shift-V: perl:clipboard:paste
+URxvt.keysym.Control-Shift-C: perl:clipboard:copy
+
+! Disable Ctrl+Shift
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+URxvt.font: xft:FuraMono\ Nerd\ Font:pixelsize=14:antialias=true:hinting=true
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 1
+URxvt.perl-ext-common: default,matcher,clipboard,vtwheel,resize-font,keyboard-select
+
+!! Cursor word movement
+URxvt*altSendsEscape: true
+URxvt.keysym.Control-Up:   \033[1;5A
+URxvt.keysym.Control-Down:    \033[1;5B
+URxvt.keysym.Control-Left:    \033[1;5D
+URxvt.keysym.Control-Right: \033[1;5C
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
