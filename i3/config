@@ -59,7 +59,7 @@ smart_gaps on
 # Workspace variables
 set $w1   1: 
 set $w2   2: 
-set $w3   "3: "
+set $w3   "3: "
 set $w4   4
 set $w5   5
 set $w6   6
@@ -219,7 +219,8 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # PrintScreen controls
 bindsym --release Print exec scrot -q 100 --silent $HOME/Pictures/`date +%Y-%m-%d_%H:%M:%S`.png
-bindsym --release Shift+Print exec scrot -q 100 --silent --select $HOME/Pictures/`date +%Y-%m-%d_%H:%M:%S`.png -e 'xclip -selection clipboard -t image/png -i $f; rm $f'
+#bindsym --release Shift+Print exec scrot -q 100 --silent --select $HOME/Pictures/`date +%Y-%m-%d_%H:%M:%S`.png -e 'xclip -selection clipboard -t image/png -i $f; rm $f' 
+bindsym --release Shift+Print exec ~/.config/i3/scripts/scrot_selection.sh
 
 # ------------------------------------------------------------------------------
 bindsym $mod+x exec ~/.config/i3/scripts/lock.sh -l dimblur
