@@ -1,0 +1,13 @@
+rofi.lines: 5
+rofi.font: SFNS Display 20
+rofi.separator-style: solid
+rofi.hide-scrollbar: true
+rofi.fixed-num-lines: true
+rofi.bw: 0
+rofi.width: 100
+rofi.padding: 500
+rofi.color-window: #BB000000, #0A1026, #99634D
+rofi.color-normal: #000A1026, #F9CAA1, #000A1026, #99634D, #0A1026
+rofi.color-active: #0A1026, #F9CAA1, #0A1026, #99634D, #0A1026
+rofi.color-urgent: #0A1026, #AF5C43, #0A1026, #AF5C43, #F9CAA1
+

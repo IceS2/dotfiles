@@ -1,0 +1,504 @@
+
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+    http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Browse - DAG Runs - Airflow</title>
+    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+    
+    
+  
+        <link href="/admin/admin/bootstrap/bootstrap3/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+        <link href="/admin/admin/bootstrap/bootstrap3/css/bootstrap-theme.min.css?v=3.3.5" rel="stylesheet">
+        <link href="/admin/admin/admin/css/bootstrap3/admin.css?v=1.1.1" rel="stylesheet">
+        <style>
+        body {
+            padding-top: 4px;
+        }
+        </style>
+    
+  <link href="/static/bootstrap-theme.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/static/pin_30.png">
+  <link rel="stylesheet" type="text/css" href="/static/main.css">
+
+    
+    
+    
+    
+  <link href="/admin/admin/vendor/select2/select2.css?v=3.5.2" rel="stylesheet">
+  <link href="/admin/admin/vendor/select2/select2-bootstrap3.css?v=1.4.6" rel="stylesheet">
+  <link href="/admin/admin/vendor/bootstrap-daterangepicker/daterangepicker-bs3.css?v=1.3.22" rel="stylesheet">
+  
+  
+  <link href="/admin/admin/vendor/x-editable/css/bootstrap3-editable.css?v=1.5.1.1" rel="stylesheet">
+  
+
+
+    
+    
+  </head>
+  <body>
+    
+<div class="container">
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#admin-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+          <a class="navbar-brand" rel="home" href="/admin/" style="cursor: pointer;">
+              <img style="float: left; width:35px; margin-top: -7px;"
+                   src="/static/pin_100.png"
+                   title="">
+              <span>Airflow</span>
+          </a>
+      </div>
+      <!-- navbar content -->
+      <div class="collapse navbar-collapse" id="admin-navbar-collapse">
+        
+        <ul class="nav navbar-nav">
+          
+  
+        <li>
+          <a href="/admin/">DAGs</a>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            Data Profiling<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/admin/queryview/">Ad Hoc Query</a>
+            </li>
+            <li>
+              <a href="/admin/chart/">Charts</a>
+            </li>
+            <li>
+              <a href="/admin/knownevent/">Known Events</a>
+            </li>
+          </ul>
+        </li>
+      
+        
+        <li class="active dropdown">
+        
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            Browse<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/admin/slamiss/">SLA Misses</a>
+            </li>
+            <li>
+              <a href="/admin/taskinstance/">Task Instances</a>
+            </li>
+            <li>
+              <a href="/admin/log/">Logs</a>
+            </li>
+            <li>
+              <a href="/admin/basejob/">Jobs</a>
+            </li>
+            <li class="active">
+            
+              <a href="/admin/dagrun/">DAG Runs</a>
+            </li>
+          </ul>
+        </li>
+      
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            Admin<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/admin/pool/">Pools</a>
+            </li>
+            <li>
+              <a href="/admin/configurationview/">Configuration</a>
+            </li>
+            <li>
+              <a href="/admin/user/">Users</a>
+            </li>
+            <li>
+              <a href="/admin/connection/">Connections</a>
+            </li>
+            <li>
+              <a href="/admin/variable/">Variables</a>
+            </li>
+            <li>
+              <a href="/admin/xcom/">XComs</a>
+            </li>
+          </ul>
+        </li>
+      
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            Docs<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="http://pythonhosted.org/airflow/">Documentation</a>
+            </li>
+            <li>
+              <a href="https://github.com/airbnb/airflow">Github</a>
+            </li>
+          </ul>
+        </li>
+      
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            About<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/admin/versionview/">Version</a>
+            </li>
+          </ul>
+        </li>
+      
+
+        </ul>
+        
+
+        
+        <ul class="nav navbar-right">
+          
+  
+  
+
+        </ul>
+        
+        <!-- clock and logout -->
+        <ul class="nav navbar-nav navbar-right">
+            <li><a id="clock"></a></li>
+            
+              <li><a href="/admin/airflow/logout"><span data-toggle="tooltip" data-placement="left" title="Logout" class="glyphicon glyphicon-off"></span></a></li>
+            
+        </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a id="clock"></a></li>
+          </ul>
+      </div>
+      </div>
+</nav>
+  
+  
+  
+    
+  
+
+  
+
+  
+  
+  
+    
+  
+    <h2>Dag Runs</h2>
+    <hr/>
+  
+  
+    <ul class="nav nav-tabs actions-nav">
+        <li class="active">
+            <a href="javascript:void(0)">List</a>
+        </li>
+
+        
+        <li>
+            <a href="/admin/dagrun/new/?url=%2Fadmin%2Fdagrun%2F%3Fflt0_dag_id_equals%3Draw-zoho%26flt1_state_equals%3Drunning" title="Create New Record">Create</a></li>
+        
+
+        
+
+        
+
+        
+        <li class="dropdown">
+            
+    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+        Add Filter<b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu field-filters">
+        
+        <li>
+            <a href="javascript:void(0)" class="filter" onclick="return false;">State</a>
+        </li>
+        
+        <li>
+            <a href="javascript:void(0)" class="filter" onclick="return false;">Dag Id</a>
+        </li>
+        
+        <li>
+            <a href="javascript:void(0)" class="filter" onclick="return false;">Execution Date</a>
+        </li>
+        
+        <li>
+            <a href="javascript:void(0)" class="filter" onclick="return false;">Run Id</a>
+        </li>
+        
+        <li>
+            <a href="javascript:void(0)" class="filter" onclick="return false;">External Trigger</a>
+        </li>
+        
+    </ul>
+
+        </li>
+        
+
+        
+        <li class="dropdown">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">With selected<b class="caret"></b></a>
+    <ul class="dropdown-menu">
+        
+        <li>
+            <a href="javascript:void(0)" onclick="return modelActions.execute('new_delete');">Delete</a>
+        </li>
+        
+        <li>
+            <a href="javascript:void(0)" onclick="return modelActions.execute('set_failed');">Set state to &#39;failed&#39;</a>
+        </li>
+        
+        <li>
+            <a href="javascript:void(0)" onclick="return modelActions.execute('set_running');">Set state to &#39;running&#39;</a>
+        </li>
+        
+        <li>
+            <a href="javascript:void(0)" onclick="return modelActions.execute('set_success');">Set state to &#39;success&#39;</a>
+        </li>
+        
+    </ul>
+
+        </li>
+        
+
+        
+        <li>
+            
+<form method="GET" action="/admin/dagrun/?flt0_dag_id_equals=raw-zoho&amp;flt1_state_equals=running" class="navbar-form navbar-left" role="search">
+    
+    
+    
+    <div class="form-group">
+        <input type="text" name="search" value="" class="col-md-2 form-control" placeholder="Search">
+    </div>
+    
+</form>
+
+        </li>
+        
+        
+    </ul>
+    
+
+
+    
+        
+    <form id="filter_form" method="GET" action="/admin/dagrun/?flt0_dag_id_equals=raw-zoho&amp;flt1_state_equals=running">
+        <div class="pull-right">
+            <button type="submit" class="btn btn-primary" style="display: none">Apply</button>
+            
+            <a href="/admin/dagrun/" class="btn btn-default">Reset Filters</a>
+            
+        </div>
+
+        <table class="filters"></table>
+    </form>
+    <div class="clearfix"></div>
+
+        <div class="clearfix"></div>
+    
+
+    
+    <table class="table table-striped table-bordered table-hover model-list">
+        <thead>
+            <tr>
+                
+                    
+                    <th class="list-checkbox-column">
+                        <input type="checkbox" name="rowtoggle" class="action-rowtoggle" title="Select all records" />
+                    </th>
+                    
+                    
+                        
+                        <th class="col-md-1">&nbsp;</th>
+                        
+                    
+                    
+                    
+                    <th class="column-header col-state">
+                        
+                            State
+                        
+                        
+                    </th>
+                    
+                    
+                    <th class="column-header col-dag_id">
+                        
+                            
+                                <a href="/admin/dagrun/?sort=1&amp;flt0_dag_id_equals=raw-zoho&amp;flt1_state_equals=running" title="Sort by Dag Id">Dag Id</a>
+                            
+                        
+                        
+                    </th>
+                    
+                    
+                    <th class="column-header col-execution_date">
+                        
+                            
+                                <a href="/admin/dagrun/?sort=2&amp;flt0_dag_id_equals=raw-zoho&amp;flt1_state_equals=running" title="Sort by Execution Date">Execution Date</a>
+                            
+                        
+                        
+                    </th>
+                    
+                    
+                    <th class="column-header col-run_id">
+                        
+                            
+                                <a href="/admin/dagrun/?sort=3&amp;flt0_dag_id_equals=raw-zoho&amp;flt1_state_equals=running" title="Sort by Run Id">Run Id</a>
+                            
+                        
+                        
+                    </th>
+                    
+                    
+                    <th class="column-header col-external_trigger">
+                        
+                            
+                                <a href="/admin/dagrun/?sort=4&amp;flt0_dag_id_equals=raw-zoho&amp;flt1_state_equals=running" title="Sort by External Trigger">External Trigger</a>
+                            
+                        
+                        
+                    </th>
+                    
+                    
+                
+            </tr>
+        </thead>
+        
+        <tr>
+            <td colspan="999">
+                
+                <div class="text-center">
+                    There are no items in the table.
+                </div>
+                
+            </td>
+        </tr>
+        
+    </table>
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    <form id="action_form" action="/admin/dagrun/action/" method="POST" style="display: none">
+        
+        <input type="hidden" name="csrf_token" value="1524679653##7c2a50c0013d7549e2e92a9314fed93b6d03be8a"/>
+        
+        <input type="hidden" name="url" value="/admin/dagrun/?flt0_dag_id_equals=raw-zoho&amp;flt1_state_equals=running">
+        <input type="hidden" id="action" name="action" />
+    </form>
+    
+
+    
+
+</div>
+
+
+    
+
+    <script src="/admin/admin/vendor/jquery.min.js?v=2.1.4" type="text/javascript"></script>
+    <script src="/admin/admin/bootstrap/bootstrap3/js/bootstrap.min.js?v=3.3.5" type="text/javascript"></script>
+    <script src="/admin/admin/vendor/moment.min.js?v=2.9.0" type="text/javascript"></script>
+    <script src="/admin/admin/vendor/select2/select2.min.js?v=3.5.2" type="text/javascript"></script>
+    
+<script src="/static/jqClock.min.js" type="text/javascript"></script>
+<script>
+    x = new Date()
+    var UTCseconds = (x.getTime() + x.getTimezoneOffset()*60*1000);
+    $("#clock").clock({
+        "seconds":"false",
+        "calendar":"false",
+        "format":"24",
+        "timestamp":UTCseconds
+    }).click(function(){
+        alert('21649451605a');
+    });
+    $('span').tooltip();
+</script>
+
+
+    
+    
+    
+    <script src="/admin/admin/admin/js/filters.js?v=1.0.0"></script>
+    
+  
+  <script src="/admin/admin/vendor/bootstrap-daterangepicker/daterangepicker.js?v=1.3.22"></script>
+  
+  <script src="/admin/admin/vendor/x-editable/js/bootstrap3-editable.min.js?v=1.5.1.1"></script>
+  
+  <script src="/admin/admin/admin/js/form.js?v=1.0.1"></script>
+
+
+    
+    
+    <script src="/admin/admin/admin/js/actions.js?v=1.0.0"></script>
+    <script language="javascript">
+        var modelActions = new AdminModelActions("Please select at least one record.", {"new_delete": "Are you sure you want to delete selected records?"});
+    </script>
+    
+
+
+    <script language="javascript">
+        (function($) {
+            $('[data-role=tooltip]').tooltip({
+                html: true,
+                placement: 'bottom'
+            });
+            
+                var filter = new AdminFilters(
+                    '#filter_form', '.field-filters',
+                    {"Dag Id": [{"arg": "dag_id_contains", "index": 7, "operation": "contains", "options": null, "type": null}, {"arg": "dag_id_not_contains", "index": 8, "operation": "not contains", "options": null, "type": null}, {"arg": "dag_id_equals", "index": 9, "operation": "equals", "options": null, "type": null}, {"arg": "dag_id_not_equal", "index": 10, "operation": "not equal", "options": null, "type": null}, {"arg": "dag_id_empty", "index": 11, "operation": "empty", "options": [["1", "Yes"], ["0", "No"]], "type": null}, {"arg": "dag_id_in_list", "index": 12, "operation": "in list", "options": null, "type": "select2-tags"}, {"arg": "dag_id_not_in_list", "index": 13, "operation": "not in list", "options": null, "type": "select2-tags"}], "Execution Date": [{"arg": "execution_date_equals", "index": 14, "operation": "equals", "options": null, "type": "datetimepicker"}, {"arg": "execution_date_not_equal", "index": 15, "operation": "not equal", "options": null, "type": "datetimepicker"}, {"arg": "execution_date_greater_than", "index": 16, "operation": "greater than", "options": null, "type": "datetimepicker"}, {"arg": "execution_date_smaller_than", "index": 17, "operation": "smaller than", "options": null, "type": "datetimepicker"}, {"arg": "execution_date_between", "index": 18, "operation": "between", "options": null, "type": "datetimerangepicker"}, {"arg": "execution_date_not_between", "index": 19, "operation": "not between", "options": null, "type": "datetimerangepicker"}, {"arg": "execution_date_empty", "index": 20, "operation": "empty", "options": [["1", "Yes"], ["0", "No"]], "type": null}], "External Trigger": [{"arg": "external_trigger_equals", "index": 28, "operation": "equals", "options": [["1", "Yes"], ["0", "No"]], "type": null}, {"arg": "external_trigger_not_equal", "index": 29, "operation": "not equal", "options": [["1", "Yes"], ["0", "No"]], "type": null}], "Run Id": [{"arg": "run_id_contains", "index": 21, "operation": "contains", "options": null, "type": null}, {"arg": "run_id_not_contains", "index": 22, "operation": "not contains", "options": null, "type": null}, {"arg": "run_id_equals", "index": 23, "operation": "equals", "options": null, "type": null}, {"arg": "run_id_not_equal", "index": 24, "operation": "not equal", "options": null, "type": null}, {"arg": "run_id_empty", "index": 25, "operation": "empty", "options": [["1", "Yes"], ["0", "No"]], "type": null}, {"arg": "run_id_in_list", "index": 26, "operation": "in list", "options": null, "type": "select2-tags"}, {"arg": "run_id_not_in_list", "index": 27, "operation": "not in list", "options": null, "type": "select2-tags"}], "State": [{"arg": "state_contains", "index": 0, "operation": "contains", "options": null, "type": null}, {"arg": "state_not_contains", "index": 1, "operation": "not contains", "options": null, "type": null}, {"arg": "state_equals", "index": 2, "operation": "equals", "options": null, "type": null}, {"arg": "state_not_equal", "index": 3, "operation": "not equal", "options": null, "type": null}, {"arg": "state_empty", "index": 4, "operation": "empty", "options": [["1", "Yes"], ["0", "No"]], "type": null}, {"arg": "state_in_list", "index": 5, "operation": "in list", "options": null, "type": "select2-tags"}, {"arg": "state_not_in_list", "index": 6, "operation": "not in list", "options": null, "type": "select2-tags"}]},
+                    [[9, "Dag Id", "raw-zoho"], [2, "State", "running"]]
+                );
+            
+        })(jQuery);
+    </script>
+
+  </body>
+</html>

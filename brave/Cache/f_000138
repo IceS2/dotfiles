@@ -1,0 +1,2218 @@
+
+
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+    http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Airflow - DAGs</title>
+    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+    
+    
+
+  
+        <link href="/admin/admin/bootstrap/bootstrap3/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+        <link href="/admin/admin/bootstrap/bootstrap3/css/bootstrap-theme.min.css?v=3.3.5" rel="stylesheet">
+        <link href="/admin/admin/admin/css/bootstrap3/admin.css?v=1.1.1" rel="stylesheet">
+        <style>
+        body {
+            padding-top: 4px;
+        }
+        </style>
+    
+  <link href="/static/bootstrap-theme.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/static/pin_30.png">
+  <link rel="stylesheet" type="text/css" href="/static/main.css">
+
+<link href="/static/dataTables.bootstrap.css" rel="stylesheet" type="text/css" >
+<link href="/static/bootstrap-toggle.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+    
+    
+  </head>
+  <body>
+    
+<div class="container">
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#admin-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+          <a class="navbar-brand" rel="home" href="/admin/" style="cursor: pointer;">
+              <img style="float: left; width:35px; margin-top: -7px;"
+                   src="/static/pin_100.png"
+                   title="">
+              <span>Airflow</span>
+          </a>
+      </div>
+      <!-- navbar content -->
+      <div class="collapse navbar-collapse" id="admin-navbar-collapse">
+        
+        <ul class="nav navbar-nav">
+          
+  
+        <li class="active">
+          <a href="/admin/">DAGs</a>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            Data Profiling<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/admin/queryview/">Ad Hoc Query</a>
+            </li>
+            <li>
+              <a href="/admin/chart/">Charts</a>
+            </li>
+            <li>
+              <a href="/admin/knownevent/">Known Events</a>
+            </li>
+          </ul>
+        </li>
+      
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            Browse<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/admin/slamiss/">SLA Misses</a>
+            </li>
+            <li>
+              <a href="/admin/taskinstance/">Task Instances</a>
+            </li>
+            <li>
+              <a href="/admin/log/">Logs</a>
+            </li>
+            <li>
+              <a href="/admin/basejob/">Jobs</a>
+            </li>
+            <li>
+              <a href="/admin/dagrun/">DAG Runs</a>
+            </li>
+          </ul>
+        </li>
+      
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            Admin<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/admin/pool/">Pools</a>
+            </li>
+            <li>
+              <a href="/admin/configurationview/">Configuration</a>
+            </li>
+            <li>
+              <a href="/admin/user/">Users</a>
+            </li>
+            <li>
+              <a href="/admin/connection/">Connections</a>
+            </li>
+            <li>
+              <a href="/admin/variable/">Variables</a>
+            </li>
+            <li>
+              <a href="/admin/xcom/">XComs</a>
+            </li>
+          </ul>
+        </li>
+      
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            Docs<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="http://pythonhosted.org/airflow/">Documentation</a>
+            </li>
+            <li>
+              <a href="https://github.com/airbnb/airflow">Github</a>
+            </li>
+          </ul>
+        </li>
+      
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+            About<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/admin/versionview/">Version</a>
+            </li>
+          </ul>
+        </li>
+      
+
+        </ul>
+        
+
+        
+        <ul class="nav navbar-right">
+          
+  
+  
+
+        </ul>
+        
+        <!-- clock and logout -->
+        <ul class="nav navbar-nav navbar-right">
+            <li><a id="clock"></a></li>
+            
+              <li><a href="/admin/airflow/logout"><span data-toggle="tooltip" data-placement="left" title="Logout" class="glyphicon glyphicon-off"></span></a></li>
+            
+        </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a id="clock"></a></li>
+          </ul>
+      </div>
+      </div>
+</nav>
+  
+  
+  
+    
+  
+
+  
+
+  
+  
+  
+  <h2>DAGs</h2>
+
+  <div id="main_content" style="display:none;">
+    <table id="dags" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th></th>
+                <th width="12"><span id="pause_header"class="glyphicon glyphicon-info-sign" title="Use this toggle to pause a DAG. The scheduler won't schedule new tasks instances for a paused DAG. Tasks already running at pause time won't be affected."></span></th>
+                <th>DAG</th>
+                <th>Schedule</th>
+                <th>Owner</th>
+                <th style="padding-left: 5px;">Recent Tasks
+                  <span id="statuses_info" class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Status of tasks from all active DAG runs or, if not currently active, from most recent run."></span>
+                  <img id="loading" width="15" src="/static/loading.gif">
+                </th>
+                <th style="padding-left: 5px;">Last Run <span id="statuses_info" class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Execution Date/Time of Highest Dag Run."></span>
+                </th>
+                <th style="padding-left: 5px;">DAG Runs
+                  <span id="statuses_info" class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Status of all previous DAG runs."></span>
+                  <img id="loading" width="15" src="/static/loading.gif">
+                </th>
+                <th class="text-center">Links</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=costs_etl" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-costs_etl" dag_id="costs_etl" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=costs_etl" title="">
+                        costs_etl
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule costs_etl" href="/admin/dagrun/?flt2_dag_id_equals=costs_etl">
+                        0 6 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-costs_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run costs_etl">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-costs_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=costs_etl"
+                   onclick="return confirmTriggerDag('costs_etl')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=costs_etl&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=costs_etl" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=costs_etl" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=costs_etl" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=costs_etl" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=costs_etl" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=costs_etl" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=costs_etl" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=costs_etl" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=d-1_etl" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-d-1_etl" dag_id="d-1_etl" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=d-1_etl" title="">
+                        d-1_etl
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule d-1_etl" href="/admin/dagrun/?flt2_dag_id_equals=d-1_etl">
+                        30 7 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-d-1_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run d-1_etl">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-d-1_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=d-1_etl"
+                   onclick="return confirmTriggerDag('d-1_etl')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=d-1_etl&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=d-1_etl" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=d-1_etl" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=d-1_etl" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=d-1_etl" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=d-1_etl" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=d-1_etl" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=d-1_etl" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=d-1_etl" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=evidencias_net" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-evidencias_net" dag_id="evidencias_net" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=evidencias_net" title="">
+                        evidencias_net
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule evidencias_net" href="/admin/dagrun/?flt2_dag_id_equals=evidencias_net">
+                        30 4 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-evidencias_net' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run evidencias_net">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-evidencias_net' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=evidencias_net"
+                   onclick="return confirmTriggerDag('evidencias_net')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=evidencias_net&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=evidencias_net" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=evidencias_net" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=evidencias_net" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=evidencias_net" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=evidencias_net" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=evidencias_net" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=evidencias_net" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=evidencias_net" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=ga_etl" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-ga_etl" dag_id="ga_etl" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=ga_etl" title="">
+                        ga_etl
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule ga_etl" href="/admin/dagrun/?flt2_dag_id_equals=ga_etl">
+                        30 4 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-ga_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run ga_etl">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-ga_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=ga_etl"
+                   onclick="return confirmTriggerDag('ga_etl')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=ga_etl&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=ga_etl" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=ga_etl" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=ga_etl" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=ga_etl" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=ga_etl" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=ga_etl" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=ga_etl" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=ga_etl" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=gwt_etl" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-gwt_etl" dag_id="gwt_etl" type="checkbox"  data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=gwt_etl" title="">
+                        gwt_etl
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule gwt_etl" href="/admin/dagrun/?flt2_dag_id_equals=gwt_etl">
+                        30 4 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-gwt_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run gwt_etl">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-gwt_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=gwt_etl"
+                   onclick="return confirmTriggerDag('gwt_etl')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=gwt_etl&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=gwt_etl" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=gwt_etl" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=gwt_etl" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=gwt_etl" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=gwt_etl" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=gwt_etl" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=gwt_etl" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=gwt_etl" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=intraday_etl" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-intraday_etl" dag_id="intraday_etl" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=intraday_etl" title="">
+                        intraday_etl
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule intraday_etl" href="/admin/dagrun/?flt2_dag_id_equals=intraday_etl">
+                        */40 0-3,10-23 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-intraday_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run intraday_etl">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-intraday_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=intraday_etl"
+                   onclick="return confirmTriggerDag('intraday_etl')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=intraday_etl&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=intraday_etl" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=intraday_etl" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=intraday_etl" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=intraday_etl" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=intraday_etl" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=intraday_etl" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=intraday_etl" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=intraday_etl" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=leticia_to_ns" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-leticia_to_ns" dag_id="leticia_to_ns" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=leticia_to_ns" title="">
+                        leticia_to_ns
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule leticia_to_ns" href="/admin/dagrun/?flt2_dag_id_equals=leticia_to_ns">
+                        0 * * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-leticia_to_ns' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run leticia_to_ns">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-leticia_to_ns' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=leticia_to_ns"
+                   onclick="return confirmTriggerDag('leticia_to_ns')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=leticia_to_ns&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=leticia_to_ns" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=leticia_to_ns" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=leticia_to_ns" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=leticia_to_ns" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=leticia_to_ns" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=leticia_to_ns" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=leticia_to_ns" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=leticia_to_ns" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=mkt_costs" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-mkt_costs" dag_id="mkt_costs" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=mkt_costs" title="">
+                        mkt_costs
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule mkt_costs" href="/admin/dagrun/?flt2_dag_id_equals=mkt_costs">
+                        00 9 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-mkt_costs' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run mkt_costs">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-mkt_costs' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=mkt_costs"
+                   onclick="return confirmTriggerDag('mkt_costs')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=mkt_costs&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=mkt_costs" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=mkt_costs" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=mkt_costs" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=mkt_costs" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=mkt_costs" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=mkt_costs" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=mkt_costs" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=mkt_costs" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=netsales_general" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-netsales_general" dag_id="netsales_general" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=netsales_general" title="">
+                        netsales_general
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule netsales_general" href="/admin/dagrun/?flt2_dag_id_equals=netsales_general">
+                        0 5 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-netsales_general' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run netsales_general">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-netsales_general' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=netsales_general"
+                   onclick="return confirmTriggerDag('netsales_general')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=netsales_general&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=netsales_general" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=netsales_general" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=netsales_general" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=netsales_general" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=netsales_general" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=netsales_general" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=netsales_general" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=netsales_general" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=parse_email_leticia" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-parse_email_leticia" dag_id="parse_email_leticia" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=parse_email_leticia" title="">
+                        parse_email_leticia
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule parse_email_leticia" href="/admin/dagrun/?flt2_dag_id_equals=parse_email_leticia">
+                        0 * * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-parse_email_leticia' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run parse_email_leticia">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-parse_email_leticia' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=parse_email_leticia"
+                   onclick="return confirmTriggerDag('parse_email_leticia')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=parse_email_leticia&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=parse_email_leticia" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=parse_email_leticia" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=parse_email_leticia" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=parse_email_leticia" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=parse_email_leticia" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=parse_email_leticia" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=parse_email_leticia" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=parse_email_leticia" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=ponto_etl" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-ponto_etl" dag_id="ponto_etl" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=ponto_etl" title="">
+                        ponto_etl
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule ponto_etl" href="/admin/dagrun/?flt2_dag_id_equals=ponto_etl">
+                        30 4 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-ponto_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run ponto_etl">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-ponto_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=ponto_etl"
+                   onclick="return confirmTriggerDag('ponto_etl')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=ponto_etl&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=ponto_etl" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=ponto_etl" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=ponto_etl" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=ponto_etl" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=ponto_etl" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=ponto_etl" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=ponto_etl" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=ponto_etl" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=raw-zoho" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-raw-zoho" dag_id="raw-zoho" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=raw-zoho" title="">
+                        raw-zoho
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule raw-zoho" href="/admin/dagrun/?flt2_dag_id_equals=raw-zoho">
+                        */5 * * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-raw-zoho' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run raw-zoho">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-raw-zoho' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=raw-zoho"
+                   onclick="return confirmTriggerDag('raw-zoho')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=raw-zoho&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=raw-zoho" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=raw-zoho" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=raw-zoho" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=raw-zoho" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=raw-zoho" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=raw-zoho" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=raw-zoho" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=raw-zoho" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=smd_etl" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-smd_etl" dag_id="smd_etl" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=smd_etl" title="">
+                        smd_etl
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule smd_etl" href="/admin/dagrun/?flt2_dag_id_equals=smd_etl">
+                        30 4 * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-smd_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run smd_etl">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-smd_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=smd_etl"
+                   onclick="return confirmTriggerDag('smd_etl')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=smd_etl&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=smd_etl" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=smd_etl" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=smd_etl" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=smd_etl" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=smd_etl" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=smd_etl" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=smd_etl" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=smd_etl" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=sms_etl" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-sms_etl" dag_id="sms_etl" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=sms_etl" title="">
+                        sms_etl
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule sms_etl" href="/admin/dagrun/?flt2_dag_id_equals=sms_etl">
+                        */2 * * * *
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-sms_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run sms_etl">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-sms_etl' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=sms_etl"
+                   onclick="return confirmTriggerDag('sms_etl')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=sms_etl&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=sms_etl" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=sms_etl" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=sms_etl" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=sms_etl" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=sms_etl" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=sms_etl" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=sms_etl" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=sms_etl" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+            
+            <tr>
+                <!-- Column 1: Edit dag -->
+                <td class="text-center" style="width:10px;">
+                    
+                    <a href="/admin/dagmodel/edit/?id=sms_list" title="Info">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                </td>
+
+                <!-- Column 2: Turn dag on/off -->
+                <td>
+                  
+                    <input id="toggle-sms_list" dag_id="sms_list" type="checkbox" checked data-toggle="toggle" data-size="mini">
+                  
+                </td>
+
+                <!-- Column 3: Name -->
+                <td>
+                    
+                    <a href="/admin/airflow/tree?dag_id=sms_list" title="">
+                        sms_list
+                    </a>
+                    
+                    
+                </td>
+
+                <!-- Column 4: Dag Schedule -->
+                <td>
+                    
+                    <a class="label label-default schedule sms_list" href="/admin/dagrun/?flt2_dag_id_equals=sms_list">
+                        0,30 6-21 * * 1-5
+                    </a>
+                    
+                </td>
+
+                <!-- Column 5: Dag Owners -->
+                <td>
+                  airflow
+                </td>
+
+                <!-- Column 6: Recent Tasks -->
+                <td style="padding:0px; width:200px; height:10px;">
+                    <svg height="10" width="10" id='task-run-sms_list' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 7: Last Run -->
+                <td class="text-nowrap latest_dag_run sms_list">
+                </td>
+
+                <!-- Column 8: Dag Runs -->
+                <td style="padding:0px; width:120px; height:10px;">
+                    <svg height="10" width="10" id='dag-run-sms_list' style="display: block;"></svg>
+                </td>
+
+                <!-- Column 9: Links -->
+                <td class="text-center" style="display:flex; flex-direction:row; justify-content:space-around;">
+                
+
+                <!-- Trigger Dag -->
+                <a href="/admin/airflow/trigger?dag_id=sms_list"
+                   onclick="return confirmTriggerDag('sms_list')" title="Trigger Dag">
+                    <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                </a>
+
+                <!-- Tree -->
+                <a href="/admin/airflow/tree?dag_id=sms_list&amp;num_runs=25" title="Tree View">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </a>
+
+                <!-- Graph -->
+                <a href="/admin/airflow/graph?dag_id=sms_list" title="Graph View">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Duration -->
+                <a href="/admin/airflow/duration?dag_id=sms_list" title="Tasks Duration">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </a>
+
+                <!-- Retries -->
+                <a href="/admin/airflow/tries?dag_id=sms_list" title="Task Tries">
+                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                </a>
+
+                <!-- Landing Times -->
+                <a href="/admin/airflow/landing_times?dag_id=sms_list" title="Landing Times">
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                </a>
+
+                <!-- Gantt -->
+                <a href="/admin/airflow/gantt?dag_id=sms_list" title="Gantt View">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </a>
+
+                <!-- Code -->
+                <a href="/admin/airflow/code?dag_id=sms_list" title="Code View">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
+
+                <!-- Logs -->
+                <a href="/admin/log/?sort=1&amp;desc=1&amp;flt1_dag_id_equals=sms_list" title="Logs">
+                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                </a>
+                
+
+                <!-- Refresh -->
+                <a href="/admin/airflow/refresh?dag_id=sms_list" title="Refresh">
+                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </a>
+
+                </td>
+            </tr>
+        
+        </tbody>
+    </table>
+    
+    <a href="/admin/?showPaused=False">Hide Paused DAGs</a>
+    
+  </div>
+
+
+</div>
+
+
+    
+
+    <script src="/admin/admin/vendor/jquery.min.js?v=2.1.4" type="text/javascript"></script>
+    <script src="/admin/admin/bootstrap/bootstrap3/js/bootstrap.min.js?v=3.3.5" type="text/javascript"></script>
+    <script src="/admin/admin/vendor/moment.min.js?v=2.9.0" type="text/javascript"></script>
+    <script src="/admin/admin/vendor/select2/select2.min.js?v=3.5.2" type="text/javascript"></script>
+    
+<script src="/static/jqClock.min.js" type="text/javascript"></script>
+<script>
+    x = new Date()
+    var UTCseconds = (x.getTime() + x.getTimezoneOffset()*60*1000);
+    $("#clock").clock({
+        "seconds":"false",
+        "calendar":"false",
+        "format":"24",
+        "timestamp":UTCseconds
+    }).click(function(){
+        alert('21649451605a');
+    });
+    $('span').tooltip();
+</script>
+
+
+    
+  
+    
+  <script src="/static/d3.v3.min.js"></script>
+  <script src="/static/jquery.dataTables.min.js"></script>
+  <script src="/static/bootstrap-toggle.min.js"></script>
+  <script>
+
+      function confirmTriggerDag(dag_id){
+          return confirm("Are you sure you want to run '"+dag_id+"' now?");
+      }
+      all_dags = $("[id^=toggle]");
+      $.each(all_dags, function(i,v) {
+        $(v).change (function() {
+          var dag_id =  $(v).attr('dag_id');
+          if ($(v).prop('checked')) {
+            is_paused = 'true'
+          } else {
+            is_paused = 'false'
+          }
+          url = 'airflow/paused?is_paused=' + is_paused + '&dag_id=' + dag_id;
+          $.ajax(url);
+        });
+      });
+      $('#dags').dataTable({
+        "iDisplayLength": 500,
+        "bSort": false,
+      });
+      $("#main_content").show(250);
+      diameter = 25;
+      circle_margin = 4;
+      stroke_width = 2;
+      stroke_width_hover = 6;
+      d3.json("/admin/airflow/blocked", function(error, json) {
+        $.each(json, function() {
+          $('.label.schedule.' + this.dag_id)
+          .attr('title', this.active_dag_run + '/' + this.max_active_runs + ' active dag runs')
+          .tooltip();
+          if(this.active_dag_run >= this.max_active_runs) {
+            $('.label.schedule.' + this.dag_id)
+            .css('background-color', 'red');
+          }
+        });
+      });
+      $.getJSON("/api/experimental/latest_runs", function(data) {
+        $.each(data, function() {
+          var link = $("<a>", {
+            href: this.dag_run_url,
+            text: this.execution_date
+          });
+          var info_icon = $('<span>', {
+            "aria-hidden": "true",
+            id: "statuses_info",
+            title: "Start Date: " + this.start_date,
+            "class": "glyphicon glyphicon-info-sign"
+          });
+          $('.latest_dag_run.' + this.dag_id).append(link).append(info_icon);
+        });
+      });
+      d3.json("/admin/airflow/dag_stats", function(error, json) {
+        for(var dag_id in json) {
+            states = json[dag_id];
+            g = d3.select('svg#dag-run-' + dag_id)
+              .attr('height', diameter + (stroke_width_hover * 2))
+              .attr('width', '110px')
+              .selectAll("g")
+              .data(states)
+              .enter()
+              .append('g')
+              .attr('transform', function(d, i) {
+                x = (i * (diameter + circle_margin)) + (diameter/2 + circle_margin);
+                y = (diameter/2) + stroke_width_hover;
+                return 'translate(' + x + ',' + y + ')';
+              });
+
+            g.append('text')
+              .attr('fill', 'black')
+              .attr('text-anchor', 'middle')
+              .attr('vertical-align', 'middle')
+              .attr('font-size', 8)
+              .attr('y', 3)
+              .text(function(d){ return d.count > 0 ? d.count : ''; });
+
+            g.append('circle')
+              .attr('stroke-width', function(d) {
+                  if (d.count > 0)
+                    return stroke_width;
+                  else {
+                    return 1;
+                  }
+              })
+              .attr('stroke', function(d) {
+                  if (d.count > 0)
+                    return d.color;
+                  else {
+                    return 'gainsboro';
+                  }
+              })
+              .attr('fill-opacity', 0)
+              .attr('r', diameter/2)
+              .attr('title', function(d) {return d.state})
+              .attr('style', function(d) {
+                if (d.count > 0)
+                    return"cursor:pointer;"
+              })
+              .on('click', function(d, i) {
+                  if (d.count > 0)
+                    window.location = "/admin/dagrun/?flt1_dag_id_equals=" + d.dag_id + "&flt2_state_equals=" + d.state;
+              })
+              .on('mouseover', function(d, i) {
+                if (d.count > 0) {
+                    d3.select(this).transition().duration(400)
+                      .attr('fill-opacity', 0.3)
+                      .style("stroke-width", stroke_width_hover);
+                }
+              })
+              .on('mouseout', function(d, i) {
+                if (d.count > 0) {
+                    d3.select(this).transition().duration(400)
+                      .attr('fill-opacity', 0)
+                      .style("stroke-width", stroke_width);
+                }
+              })
+              .style("opacity", 0)
+              .transition()
+              .duration(500)
+              .delay(function(d, i){return i*50;})
+              .style("opacity", 1);
+            d3.select("#loading").remove();
+        }
+        $("#pause_header").tooltip();
+        $("#statuses_info").tooltip();
+
+        $("circle").tooltip({
+          html: true,
+          container: "body",
+        });
+      });
+      d3.json("/admin/airflow/task_stats", function(error, json) {
+        for(var dag_id in json) {
+            states = json[dag_id];
+            g = d3.select('svg#task-run-' + dag_id)
+              .attr('height', diameter + (stroke_width_hover * 2))
+              .attr('width', '180px')
+              .selectAll("g")
+              .data(states)
+              .enter()
+              .append('g')
+              .attr('transform', function(d, i) {
+                x = (i * (diameter + circle_margin)) + (diameter/2 + circle_margin);
+                y = (diameter/2) + stroke_width_hover;
+                return 'translate(' + x + ',' + y + ')';
+              });
+
+            g.append('text')
+              .attr('fill', 'black')
+              .attr('text-anchor', 'middle')
+              .attr('vertical-align', 'middle')
+              .attr('font-size', 8)
+              .attr('y', 3)
+              .text(function(d){ return d.count > 0 ? d.count : ''; });
+
+            g.append('circle')
+              .attr('stroke-width', function(d) {
+                  if (d.count > 0)
+                    return stroke_width;
+                  else {
+                    return 1;
+                  }
+              })
+              .attr('stroke', function(d) {
+                  if (d.count > 0)
+                    return d.color;
+                  else {
+                    return 'gainsboro';
+                  }
+              })
+              .attr('fill-opacity', 0)
+              .attr('r', diameter/2)
+              .attr('title', function(d) {return d.state})
+              .attr('style', function(d) {
+                if (d.count > 0)
+                    return"cursor:pointer;"
+              })
+              .on('click', function(d, i) {
+                  if (d.count > 0)
+                    window.location = "/admin/taskinstance/?flt1_dag_id_equals=" + d.dag_id + "&flt2_state_equals=" + d.state;
+              })
+              .on('mouseover', function(d, i) {
+                if (d.count > 0) {
+                    d3.select(this).transition().duration(400)
+                      .attr('fill-opacity', 0.3)
+                      .style("stroke-width", stroke_width_hover);
+                }
+              })
+              .on('mouseout', function(d, i) {
+                if (d.count > 0) {
+                    d3.select(this).transition().duration(400)
+                      .attr('fill-opacity', 0)
+                      .style("stroke-width", stroke_width);
+                }
+              })
+              .style("opacity", 0)
+              .transition()
+              .duration(500)
+              .delay(function(d, i){return i*50;})
+              .style("opacity", 1);
+            d3.select("#loading").remove();
+        }
+        $("#pause_header").tooltip();
+        $("#statuses_info").tooltip();
+
+        $("circle").tooltip({
+          html: true,
+          container: "body",
+        });
+      });
+  </script>
+
+  </body>
+</html>

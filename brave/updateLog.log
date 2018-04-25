@@ -1,0 +1,150 @@
+2018-04-24T10:52:15.219Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T10:52:15.220Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:02:31.737Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:02:31.738Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:23:42.605Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:23:42.605Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:24:08.870Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:24:08.871Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:26:27.223Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:26:27.223Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:28:27.264Z - checkForUpdates
+2018-04-24T14:28:27.266Z - lastCheckMonth = null
+2018-04-24T14:28:27.266Z - lastCheckYMD = null
+2018-04-24T14:28:27.266Z - lastCheckWOY = null
+2018-04-24T14:28:27.266Z - firstCheckMade = false
+2018-04-24T14:28:27.266Z - weekOfInstallation= null
+2018-04-24T14:28:27.266Z - promoCode = none
+2018-04-24T14:28:27.266Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=true&weekly=true&monthly=true&first=true&woi=&ref=none&accept_preview=false
+2018-04-24T14:28:27.529Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
+2018-04-24T14:32:54.079Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:32:54.079Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:34:54.083Z - checkForUpdates
+2018-04-24T14:34:54.083Z - lastCheckYMD = 2018-04-24
+2018-04-24T14:34:54.084Z - lastCheckWOY = 110
+2018-04-24T14:34:54.085Z - lastCheckMonth = 4
+2018-04-24T14:34:54.085Z - firstCheckMade = true
+2018-04-24T14:34:54.085Z - weekOfInstallation= 2018-04-23
+2018-04-24T14:34:54.085Z - promoCode = none
+2018-04-24T14:34:54.085Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-24T14:34:54.261Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
+2018-04-24T14:40:27.749Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:40:27.749Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:42:27.491Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:42:27.492Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:44:27.495Z - checkForUpdates
+2018-04-24T14:44:27.496Z - lastCheckWOY = 110
+2018-04-24T14:44:27.496Z - lastCheckYMD = 2018-04-24
+2018-04-24T14:44:27.496Z - lastCheckMonth = 4
+2018-04-24T14:44:27.496Z - firstCheckMade = true
+2018-04-24T14:44:27.496Z - weekOfInstallation= 2018-04-23
+2018-04-24T14:44:27.496Z - promoCode = none
+2018-04-24T14:44:27.497Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-24T14:44:27.724Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
+2018-04-24T14:46:44.977Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:46:44.977Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T14:48:44.985Z - checkForUpdates
+2018-04-24T14:48:44.985Z - lastCheckYMD = 2018-04-24
+2018-04-24T14:48:44.985Z - lastCheckWOY = 110
+2018-04-24T14:48:44.985Z - lastCheckMonth = 4
+2018-04-24T14:48:44.985Z - firstCheckMade = true
+2018-04-24T14:48:44.985Z - weekOfInstallation= 2018-04-23
+2018-04-24T14:48:44.985Z - promoCode = none
+2018-04-24T14:48:44.986Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-24T14:48:45.582Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
+2018-04-24T15:46:45.041Z - Already checking for updates...
+2018-04-24T15:46:45.041Z - lastCheckYMD = 2018-04-24
+2018-04-24T15:46:45.041Z - lastCheckWOY = 110
+2018-04-24T15:46:45.041Z - lastCheckMonth = 4
+2018-04-24T15:46:45.041Z - firstCheckMade = true
+2018-04-24T15:46:45.041Z - weekOfInstallation= 2018-04-23
+2018-04-24T15:46:45.041Z - promoCode = none
+2018-04-24T15:46:45.041Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-24T20:20:22.999Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T20:20:23.000Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T20:23:28.349Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T20:23:28.349Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T20:25:28.401Z - checkForUpdates
+2018-04-24T20:25:28.401Z - lastCheckYMD = 2018-04-24
+2018-04-24T20:25:28.402Z - lastCheckWOY = 110
+2018-04-24T20:25:28.402Z - lastCheckMonth = 4
+2018-04-24T20:25:28.402Z - firstCheckMade = true
+2018-04-24T20:25:28.402Z - weekOfInstallation= 2018-04-23
+2018-04-24T20:25:28.402Z - promoCode = none
+2018-04-24T20:25:28.403Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-24T20:25:39.843Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
+2018-04-24T20:38:22.458Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T20:38:22.459Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T20:40:22.557Z - checkForUpdates
+2018-04-24T20:40:22.558Z - lastCheckYMD = 2018-04-24
+2018-04-24T20:40:22.558Z - lastCheckWOY = 110
+2018-04-24T20:40:22.558Z - lastCheckMonth = 4
+2018-04-24T20:40:22.558Z - firstCheckMade = true
+2018-04-24T20:40:22.558Z - weekOfInstallation= 2018-04-23
+2018-04-24T20:40:22.558Z - promoCode = none
+2018-04-24T20:40:22.560Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-24T20:40:22.796Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
+2018-04-24T21:12:06.315Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T21:12:06.315Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T21:14:06.374Z - checkForUpdates
+2018-04-24T21:14:06.374Z - lastCheckMonth = 4
+2018-04-24T21:14:06.374Z - lastCheckWOY = 110
+2018-04-24T21:14:06.374Z - lastCheckYMD = 2018-04-24
+2018-04-24T21:14:06.374Z - firstCheckMade = true
+2018-04-24T21:14:06.374Z - weekOfInstallation= 2018-04-23
+2018-04-24T21:14:06.374Z - promoCode = none
+2018-04-24T21:14:06.376Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-24T21:14:06.578Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
+2018-04-24T21:32:18.005Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T21:32:18.006Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-24T21:34:18.006Z - checkForUpdates
+2018-04-24T21:34:18.008Z - lastCheckMonth = 4
+2018-04-24T21:34:18.008Z - lastCheckWOY = 110
+2018-04-24T21:34:18.008Z - lastCheckYMD = 2018-04-24
+2018-04-24T21:34:18.008Z - firstCheckMade = true
+2018-04-24T21:34:18.008Z - weekOfInstallation= 2018-04-23
+2018-04-24T21:34:18.008Z - promoCode = none
+2018-04-24T21:34:18.009Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-24T21:34:18.527Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
+2018-04-25T15:03:06.981Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-25T15:03:06.981Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-25T15:05:06.988Z - checkForUpdates
+2018-04-25T15:05:06.989Z - lastCheckYMD = 2018-04-24
+2018-04-25T15:05:06.989Z - lastCheckWOY = 110
+2018-04-25T15:05:06.989Z - lastCheckMonth = 4
+2018-04-25T15:05:06.989Z - firstCheckMade = true
+2018-04-25T15:05:06.989Z - weekOfInstallation= 2018-04-23
+2018-04-25T15:05:06.989Z - promoCode = none
+2018-04-25T15:05:06.990Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=true&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-25T15:05:07.141Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
+2018-04-25T15:25:14.997Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-25T15:25:14.997Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-25T15:27:15.011Z - checkForUpdates
+2018-04-25T15:27:15.013Z - lastCheckYMD = 2018-04-25
+2018-04-25T15:27:15.013Z - lastCheckWOY = 110
+2018-04-25T15:27:15.013Z - lastCheckMonth = 4
+2018-04-25T15:27:15.013Z - firstCheckMade = true
+2018-04-25T15:27:15.013Z - weekOfInstallation= 2018-04-23
+2018-04-25T15:27:15.013Z - promoCode = none
+2018-04-25T15:27:15.015Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-25T15:27:55.131Z - [object Object]
+2018-04-25T16:25:15.057Z - checkForUpdates
+2018-04-25T16:25:15.057Z - lastCheckYMD = 2018-04-25
+2018-04-25T16:25:15.057Z - lastCheckWOY = 110
+2018-04-25T16:25:15.057Z - lastCheckMonth = 4
+2018-04-25T16:25:15.057Z - firstCheckMade = true
+2018-04-25T16:25:15.057Z - weekOfInstallation= 2018-04-23
+2018-04-25T16:25:15.057Z - promoCode = none
+2018-04-25T16:25:15.058Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-25T16:25:15.065Z - [object Object]
+2018-04-25T17:00:21.743Z - platformBaseUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-25T17:00:21.743Z - updateUrl = https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux
+2018-04-25T17:02:21.744Z - checkForUpdates
+2018-04-25T17:02:21.745Z - lastCheckYMD = 2018-04-25
+2018-04-25T17:02:21.745Z - lastCheckWOY = 110
+2018-04-25T17:02:21.745Z - lastCheckMonth = 4
+2018-04-25T17:02:21.745Z - firstCheckMade = true
+2018-04-25T17:02:21.745Z - weekOfInstallation= 2018-04-23
+2018-04-25T17:02:21.745Z - promoCode = none
+2018-04-25T17:02:21.745Z - https://laptop-updates.brave.com/1/releases/dev/0.22.14/linux?daily=false&weekly=false&monthly=false&first=false&woi=2018-04-23&ref=none&accept_preview=false
+2018-04-25T17:02:21.884Z - Metadata: {"version":"0.22.22","name":"Brave 0.22.22","pub_date":"2018-04-18T02:40:52.218Z","notes":"Fixed missing static variable on macOS for first-run referral program installs. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.22dev\n\nImprovements to the referral program and reverted quarantine feature for macOS. More details: https://github.com/brave/browser-laptop/releases/tag/v0.22.21dev","preview":false,"url":"https://brave-download.global.ssl.fastly.net/multi-channel/releases/dev/0.22.22/linux64/Brave.tar.bz2"}
