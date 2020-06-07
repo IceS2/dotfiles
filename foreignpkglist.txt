@@ -1,0 +1,14 @@
+betterlockscreen-git
+bibata-cursor-theme
+breeze-snow-cursor-theme
+i3-gaps-next-git
+networkmanager-dmenu-git
+picom-tryone-git
+polybar-git
+polybar-spotify-module
+powerline-fonts-git
+starship
+station
+themix-full-git
+xgetres
+yay-git
