@@ -1,0 +1,40 @@
+#define foreg  #ac8cd4
+#define backg  #0d0c11
+#define base00 #393746
+#define base01 #403c4d
+#define base02 #514c5e
+#define base03 #6c667c
+#define base04 #86819a
+#define base05 #a6a1b4
+#define base06 #c9c6d2
+#define base07 #d7d6d9
+#define base08 #676376
+#define base09 #5ebfd6
+#define base0A #8b8797
+#define base0B #936ee6
+#define base0C #80fafe
+#define base0D #ae95f0
+#define base0E #cbcacd
+#define base0F #bb7fff
+
+*.foreground:   foreg
+*.background:   backg
+*.cursorColor:  foreg
+
+*.color0:       base00
+*.color1:       base01
+*.color2:       base02
+*.color3:       base03
+*.color4:       base04
+*.color5:       base05
+*.color6:       base06
+*.color7:       base07
+
+*.color8:       base08
+*.color9:       base09
+*.color10:      base0A
+*.color11:      base0B
+*.color12:      base0C
+*.color13:      base0D
+*.color14:      base0E
+*.color15:      base0F
