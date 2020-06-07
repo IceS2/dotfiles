@@ -208,8 +208,6 @@ static void tdefutf8(char);
 static int32_t tdefcolor(int *, int *, int);
 static void tdeftran(char);
 static void tstrsequence(uchar);
-static void tsetcolor(int, int, int, uint32_t, uint32_t);
-static char * findlastany(char *, const char**, size_t);
 
 static void drawregion(int, int, int, int);
 
@@ -240,6 +238,33 @@ static uchar utfbyte[UTF_SIZ + 1] = {0x80,    0, 0xC0, 0xE0, 0xF0};
 static uchar utfmask[UTF_SIZ + 1] = {0xC0, 0x80, 0xE0, 0xF0, 0xF8};
 static Rune utfmin[UTF_SIZ + 1] = {       0,    0,  0x80,  0x800,  0x10000};
 static Rune utfmax[UTF_SIZ + 1] = {0x10FFFF, 0x7F, 0x7FF, 0xFFFF, 0x10FFFF};
+
+#include <time.h>
+static int su = 0;
+struct timespec sutv;
+
+static void
+tsync_begin()
+{
+	clock_gettime(CLOCK_MONOTONIC, &sutv);
+	su = 1;
+}
+
+static void
+tsync_end()
+{
+	su = 0;
+}
+
+int
+tinsync(uint timeout)
+{
+	struct timespec now;
+	if (su && !clock_gettime(CLOCK_MONOTONIC, &now)
+	       && TIMEDIFF(now, sutv) >= timeout)
+		su = 0;
+	return su;
+}
 
 ssize_t
 xwrite(int fd, const char *s, size_t len)
@@ -827,6 +852,9 @@ ttynew(char *line, char *cmd, char *out, char **args)
 	return cmdfd;
 }
 
+static int twrite_aborted = 0;
+int ttyread_pending() { return twrite_aborted; }
+
 size_t
 ttyread(void)
 {
@@ -835,7 +863,7 @@ ttyread(void)
 	int ret, written;
 
 	/* append read bytes to unprocessed bytes */
-	ret = read(cmdfd, buf+buflen, LEN(buf)-buflen);
+	ret = twrite_aborted ? 1 : read(cmdfd, buf+buflen, LEN(buf)-buflen);
 
 	switch (ret) {
 	case 0:
@@ -843,7 +871,7 @@ ttyread(void)
 	case -1:
 		die("couldn't read from shell: %s\n", strerror(errno));
 	default:
-		buflen += ret;
+		buflen += twrite_aborted ? 0 : ret;
 		written = twrite(buf, buflen, 0);
 		buflen -= written;
 		/* keep any incomplete UTF-8 byte sequence for the next call */
@@ -1007,6 +1035,7 @@ tsetdirtattr(int attr)
 void
 tfulldirt(void)
 {
+	tsync_end();
 	tsetdirt(0, term.row-1);
 }
 
@@ -1970,6 +1999,12 @@ strhandle(void)
 		return;
 	case 'P': /* DCS -- Device Control String */
 		term.mode |= ESC_DCS;
+		/* https://gitlab.com/gnachman/iterm2/-/wikis/synchronized-updates-spec */
+		if (strstr(strescseq.buf, "=1s") == strescseq.buf)
+			tsync_begin(), term.mode &= ~ESC_DCS;  /* BSU */
+		else if (strstr(strescseq.buf, "=2s") == strescseq.buf)
+			tsync_end(), term.mode &= ~ESC_DCS;  /* ESU */
+		return;
 	case '_': /* APC -- Application Program Command */
 	case '^': /* PM -- Privacy Message */
 		return;
@@ -2523,6 +2558,9 @@ twrite(const char *buf, int buflen, int show_ctrl)
 	Rune u;
 	int n;
 
+	int su0 = su;
+	twrite_aborted = 0;
+
 	for (n = 0; n < buflen; n += charsize) {
 		if (IS_SET(MODE_UTF8) && !IS_SET(MODE_SIXEL)) {
 			/* process a complete utf8 char */
@@ -2532,6 +2570,10 @@ twrite(const char *buf, int buflen, int show_ctrl)
 		} else {
 			u = buf[n] & 0xFF;
 			charsize = 1;
+		}
+		if (su0 && !su) {
+			twrite_aborted = 1;
+			break;  // ESU - allow rendering before a new BSU
 		}
 		if (show_ctrl && ISCONTROL(u)) {
 			if (u & 0x80) {
@@ -2690,126 +2732,4 @@ redraw(void)
 {
 	tfulldirt();
 	draw();
-}
-
-void
-tsetcolor( int row, int start, int end, uint32_t fg, uint32_t bg )
-{
-	int i = start;
-	for( ; i < end; ++i )
-	{
-		term.line[row][i].fg = fg;
-		term.line[row][i].bg = bg;
-	}
-}
-
-char *
-findlastany(char *str, const char** find, size_t len)
-{
-	char* found = NULL;
-	int i = 0;
-	for(found = str + strlen(str) - 1; found >= str; --found) {
-		for(i = 0; i < len; i++) {
-			if(strncmp(found, find[i], strlen(find[i])) == 0) {
-				return found;
-			}
-		}
-	}
-
-	return NULL;
-}
-
-/*
-** Select and copy the previous url on screen (do nothing if there's no url).
-**
-** FIXME: doesn't handle urls that span multiple lines; will need to add support
-**        for multiline "getsel()" first
-*/
-void
-copyurl(const Arg *arg) {
-	/* () and [] can appear in urls, but excluding them here will reduce false
-	 * positives when figuring out where a given url ends.
-	 */
-	static char URLCHARS[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		"abcdefghijklmnopqrstuvwxyz"
-		"0123456789-._~:/?#@!$&'*+,;=%";
-
-	static const char* URLSTRINGS[] = {"http://", "https://"};
-
-	/* remove highlighting from previous selection if any */
-	if(sel.ob.x >= 0 && sel.oe.x >= 0)
-		tsetcolor(sel.nb.y, sel.ob.x, sel.oe.x + 1, defaultfg, defaultbg);
-
-	int i = 0,
-		row = 0, /* row of current URL */
-		col = 0, /* column of current URL start */
-		startrow = 0, /* row of last occurrence */
-		colend = 0, /* column of last occurrence */
-		passes = 0; /* how many rows have been scanned */
-
-	char *linestr = calloc(sizeof(char), term.col+1); /* assume ascii */
-	char *c = NULL,
-		 *match = NULL;
-
-	row = (sel.ob.x >= 0 && sel.nb.y > 0) ? sel.nb.y : term.bot;
-	LIMIT(row, term.top, term.bot);
-	startrow = row;
-
-	colend = (sel.ob.x >= 0 && sel.nb.y > 0) ? sel.nb.x : term.col;
-	LIMIT(colend, 0, term.col);
-
-	/*
- 	** Scan from (term.bot,term.col) to (0,0) and find
-	** next occurrance of a URL
-	*/
-	while(passes !=term.bot + 2) {
-		/* Read in each column of every row until
- 		** we hit previous occurrence of URL
-		*/
-		for (col = 0, i = 0; col < colend; ++col,++i) {
-			/* assume ascii */
-			if (term.line[row][col].u > 127)
-				continue;
-			linestr[i] = term.line[row][col].u;
-		}
-		linestr[term.col] = '\0';
-
-		if ((match = findlastany(linestr, URLSTRINGS,
-						sizeof(URLSTRINGS)/sizeof(URLSTRINGS[0]))))
-			break;
-
-		if (--row < term.top)
-			row = term.bot;
-
-		colend = term.col;
-		passes++;
-	};
-
-	if (match) {
-		/* must happen before trim */
-		selclear();
-		sel.ob.x = strlen(linestr) - strlen(match);
-
-		/* trim the rest of the line from the url match */
-		for (c = match; *c != '\0'; ++c)
-			if (!strchr(URLCHARS, *c)) {
-				*c = '\0';
-				break;
-			}
-
-		/* highlight selection by inverting terminal colors */
-		tsetcolor(row, sel.ob.x, sel.ob.x + strlen( match ), defaultbg, defaultfg);
-
-		/* select and copy */
-		sel.mode = 1;
-		sel.type = SEL_REGULAR;
-		sel.oe.x = sel.ob.x + strlen(match)-1;
-		sel.ob.y = sel.oe.y = row;
-		selnormalize();
-		tsetdirt(sel.nb.y, sel.ne.y);
-		xsetsel(getsel());
-		xclipcopy();
-	}
-
-	free(linestr);
 }
