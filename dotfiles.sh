@@ -2,7 +2,7 @@
 
 # Create needed symlinks
 
-FOLDERS=(dunst i3 kitty picom polybar ranger rofi wallpaper xres)
+FOLDERS=(dunst i3 kitty picom polybar ranger rofi wallpaper xres nvim/config)
 
 for folder in ${FOLDERS[@]}; do
   ln -sn $HOME/.dotfiles/$folder $HOME/.config/$folder

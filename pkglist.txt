@@ -31,6 +31,7 @@ lxappearance
 m4
 make
 man-db
+mesa-demos
 neovim
 networkmanager
 networkmanager-openvpn
@@ -39,6 +40,7 @@ noto-fonts-emoji
 ntp
 numlockx
 nvidia
+nvidia-settings
 openssh
 os-prober
 otf-fira-code
