@@ -79,5 +79,6 @@ xclip
 xorg-server
 xorg-server-xephyr
 xorg-xrdb
+xsel
 yarn
 zsh
