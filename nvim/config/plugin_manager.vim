@@ -26,6 +26,9 @@ Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'sheerun/vim-polyglot'
 Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-indent'
 " python --------------------------------------------------
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " javascript ----------------------------------------------
