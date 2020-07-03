@@ -104,10 +104,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias ifood="source $HOME/.config/scripts/ssh_profile.sh ifood"
+alias personal="source $HOME/.config/scripts/ssh_profile.sh personal"
+
 (cat ~/.cache/wal/sequences &)
 eval "$(starship init zsh)"
 export LANG=en_US.UTF-8
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
 export EDITOR=nvim
 
 alias vim=nvim
@@ -118,3 +120,5 @@ fi
 
 # Created by `userpath` on 2020-06-07 15:00:21
 export PATH="$PATH:/home/ices2/.local/bin"
+
+source $HOME/.config/scripts/check_ssh_profile.sh

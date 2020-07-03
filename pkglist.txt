@@ -8,6 +8,7 @@ binutils
 bison
 code
 ctags
+docker
 dunst
 efibootmgr
 fakeroot
@@ -19,8 +20,10 @@ gcc
 git
 groff
 grub
+gtk-engine-murrine
 hacksaw
 htop
+jre8-openjdk
 kitty
 lightdm
 lightdm-webkit-theme-litarvan
@@ -43,7 +46,6 @@ nvidia
 nvidia-settings
 openssh
 os-prober
-otf-fira-code
 pacman-contrib
 pamixer
 papirus-icon-theme
@@ -73,6 +75,7 @@ texinfo
 ttf-dejavu
 ttf-fira-code
 ttf-font-awesome
+unzip
 which
 xautolock
 xclip
