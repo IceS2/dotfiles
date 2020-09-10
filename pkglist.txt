@@ -66,11 +66,13 @@ qt5-base
 ranger
 rofi
 rustup
+sbt
 screenfetch
 seahorse
 shotgun
 slop
 sudo
+terraform
 texinfo
 ttf-dejavu
 ttf-fira-code

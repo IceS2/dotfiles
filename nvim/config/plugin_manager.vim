@@ -30,6 +30,7 @@ Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-system-copy'
+Plug 'christoomey/vim-sort-motion'
 " python --------------------------------------------------
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " javascript ----------------------------------------------

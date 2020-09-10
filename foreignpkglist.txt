@@ -10,5 +10,6 @@ polybar-spotify-module
 powerline-fonts-git
 starship
 station
+vivaldi
 xgetres
 yay-git
