@@ -107,6 +107,10 @@ source $ZSH/oh-my-zsh.sh
 alias ifood="source $HOME/.config/scripts/ssh_profile.sh ifood"
 alias personal="source $HOME/.config/scripts/ssh_profile.sh personal"
 
+alias prod="source $HOME/.config/scripts/aws_profile_switcher.sh prod"
+alias dev="source $HOME/.config/scripts/aws_profile_switcher.sh dev"
+
+
 (cat ~/.cache/wal/sequences &)
 eval "$(starship init zsh)"
 export LANG=en_US.UTF-8
@@ -122,3 +126,4 @@ fi
 export PATH="$PATH:/home/ices2/.local/bin"
 
 source $HOME/.config/scripts/check_ssh_profile.sh
+source $HOME/.config/scripts/check_aws_profile.sh
