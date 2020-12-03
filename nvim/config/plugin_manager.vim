@@ -33,9 +33,13 @@ Plug 'christoomey/vim-system-copy'
 Plug 'christoomey/vim-sort-motion'
 " python --------------------------------------------------
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+" Rust ----------------------------------------------------
+Plug 'rust-lang/rust.vim'
 " javascript ----------------------------------------------
 Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
-" List ends here. Plugins become visible to Vim after this call.
+" Toml ----------------------------------------------------
+Plug 'cespare/vim-toml'
+"List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 

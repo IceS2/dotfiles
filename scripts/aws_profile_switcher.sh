@@ -1,13 +1,12 @@
-#! /bin/bash
+#! /bin/bash -x
 
 profile=$1
-ACTIVE_PROFILE_PATH="$HOME/.aws/active_profile"
 
 if [ "$profile" = "prod" ]; then
+  ifood-aws-login -u "$BITBUCKET_EMAIL" -p "$IAWSL" -r "data-intelligence:DataPlus_Access"
   export AWS_PROFILE="data-intelligence"
-  echo "data-intelligence" > $ACTIVE_PROFILE_PATH
 elif [ "$profile" = "dev" ]; then
+  ifood-aws-login -u "$BITBUCKET_EMAIL" -p "$IAWSL" -r "ifood-data-dev:DataPlus_Access"
   export AWS_PROFILE="ifood-data-dev"
-  echo "ifood-data-dev" > $ACTIVE_PROFILE_PATH
 fi
 

@@ -110,6 +110,11 @@ alias personal="source $HOME/.config/scripts/ssh_profile.sh personal"
 alias prod="source $HOME/.config/scripts/aws_profile_switcher.sh prod"
 alias dev="source $HOME/.config/scripts/aws_profile_switcher.sh dev"
 
+alias venv="$HOME/.config/scripts/create_python_virtualenv.sh"
+
+venv-delete() {
+  pyenv virtualenv-delete $1
+}
 
 (cat ~/.cache/wal/sequences &)
 eval "$(starship init zsh)"
@@ -127,3 +132,4 @@ export PATH="$PATH:/home/ices2/.local/bin"
 
 source $HOME/.config/scripts/check_ssh_profile.sh
 source $HOME/.config/scripts/check_aws_profile.sh
+source $HOME/workspace/ifood/.ifood_env/ifood_env_vars.sh

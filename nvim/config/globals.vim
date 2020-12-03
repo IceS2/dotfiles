@@ -20,6 +20,9 @@ set colorcolumn=80
 set diffopt+=vertical
 set pyxversion=3
 
+syntax enable
+filetype plugin indent on
+
 " shortcuts ----------------------------------------------------
 let mapleader = ","
 

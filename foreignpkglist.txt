@@ -1,6 +1,8 @@
 betterlockscreen-git
 bibata-cursor-theme
+bottom-git
 breeze-snow-cursor-theme
+google-chrome
 i3-gaps-next-git
 networkmanager-dmenu-git
 otf-fira-code
@@ -8,8 +10,9 @@ picom-tryone-git
 polybar-git
 polybar-spotify-module
 powerline-fonts-git
+pyenv-virtualenv
 starship
 station
-vivaldi
 xgetres
 yay-git
+zoom
