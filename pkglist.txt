@@ -1,5 +1,6 @@
 alsa-utils
 amd-ucode
+arandr
 arc-gtk-theme
 autoconf
 automake
@@ -16,7 +17,9 @@ feedreader
 feh
 firefox-developer-edition
 flex
+fuse2
 gcc
+gendesk
 git
 groff
 groovy
@@ -25,6 +28,7 @@ gtk-engine-murrine
 hacksaw
 htop
 jdk8-openjdk
+jenkins
 jre8-openjdk
 kitty
 lib32-nvidia-utils
@@ -34,6 +38,7 @@ lightdm-webkit-theme-litarvan
 lightdm-webkit2-greeter
 linux
 linux-firmware
+lsof
 lutris
 lxappearance
 m4
@@ -77,6 +82,7 @@ screenfetch
 seahorse
 shotgun
 slop
+starship
 sudo
 terraform
 texinfo
