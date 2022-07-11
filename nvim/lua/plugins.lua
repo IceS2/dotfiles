@@ -142,4 +142,10 @@ require 'paq' {
 
   -- Distant
   'chipsenkbeil/distant.nvim';
+
+  -- Just Syntax Highlight
+  'NoahTheDuke/vim-just';
+
+  -- Markdown Preview
+  'ellisonleao/glow.nvim';
 }

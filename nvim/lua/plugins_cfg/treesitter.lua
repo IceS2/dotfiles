@@ -12,7 +12,8 @@ nvim_treesitter.setup {
     enable = true,
   },
   indent = {
-    enable = true
+    enable = true,
+    disable = { 'yaml' }
   },
   autotag = {
     enable = true

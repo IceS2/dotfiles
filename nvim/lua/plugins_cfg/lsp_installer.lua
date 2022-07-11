@@ -91,4 +91,4 @@ require('lsp_signature').setup({
   hint_enable = false
 })
 
-require('rust-tools').setup({})
+require('rust-tools').setup()

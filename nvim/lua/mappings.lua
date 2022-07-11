@@ -139,8 +139,8 @@ vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 map("n", "<leader>cw", ":StripWhitespace<CR>")
 
 -- Comment
-map("n", "ct", ":CommentToggle<CR>")
-map("v", "ct", ":'<,'>CommentToggle<CR>")
+-- map("n", "ct", ":CommentToggle<CR>")
+-- map("v", "ct", ":'<,'>CommentToggle<CR>")
 
 -- Code Formatter
 -- map("n", "<leader>fr", ":Neoformat<CR>", lsp_opts)
