@@ -1,0 +1,50 @@
+#! /bin/sh
+
+# Load Hotkeys
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+# Setup Background
+feh --bg-max $HOME/.config/wallpapers/peakpx.jpg
+
+# Load Composer
+picom &
+
+# Load Status Bars
+polybar top-main &
+polybar top-secondary &
+
+# Load Audio Modules
+pactl load-module module-switch-on-connect
+pactl set-default-sink alsa_output.usb-Generic_USB_Audio-00.pro-output-1
+
+# Load playerctl daemon
+playerctld daemon
+
+# bspc monitor DP-0 -d     5 6 7 8 9 
+bspc monitor DP-2 -d 1 3 5 7 9
+bspc monitor DP-0 -d 2 4 6 8 0
+
+# ----------------------------------------
+# Settings
+# ----------------------------------------
+
+# Global ---------------------------------
+
+bspc config split_ratio          0.50
+
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc config focused_border_color "#000000"
+
+# Desktop --------------------------------
+
+bspc config window_gap          20
+
+# Node -----------------------------------
+
+bspc config border_width 0
+
+#-----------------------------------------------------------------
+
+bspc config external_rules_command "$HOME/.config/bspwm/external-rules.sh"

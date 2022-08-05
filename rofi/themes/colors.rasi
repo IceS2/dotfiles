@@ -1,0 +1,20 @@
+* {
+    pink:                           #FF26E2;
+    green:                          #26FF43;
+    cyan:                           #26FFB0;
+    yellow:                         #E2FF26;
+    orange:                         #FFB026;
+    purple:                         #B026FF;
+    red:                            #FF4326;
+    blue:                           #1E90FF;
+
+    background-0:                   #1E1F2A;
+    background-1:                   #1A1B26;
+    background-2:                   #101115;
+    foreground:                     #C0CAF5;
+
+    active-background:              #51297A55;
+
+    selected-background:            #10111C;
+    selected-foreground:            @purple;
+}

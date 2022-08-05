@@ -14,7 +14,8 @@ require 'paq' {
   'nvim-lua/plenary.nvim';
 
   -- Colorscheme
-  'navarasu/onedark.nvim';
+  -- 'navarasu/onedark.nvim';
+  'folke/tokyonight.nvim';
 
   -- LSP
   'neovim/nvim-lspconfig';
@@ -101,11 +102,11 @@ require 'paq' {
   'artart222/vim-resize';
 
   -- DAP
-  'mfussenegger/nvim-dap';
-  'rcarriga/nvim-dap-ui';
-  'Pocco81/DAPInstall.nvim';
-  'mfussenegger/nvim-dap-python';
-  'nvim-telescope/telescope-dap.nvim';
+  -- 'mfussenegger/nvim-dap';
+  -- 'rcarriga/nvim-dap-ui';
+  -- 'Pocco81/DAPInstall.nvim';
+  -- 'mfussenegger/nvim-dap-python';
+  -- 'nvim-telescope/telescope-dap.nvim';
 
   -- AutoFocus Windows
   -- 'beauwilliams/focus.nvim'

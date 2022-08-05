@@ -20,7 +20,7 @@ require('plugins_cfg/colorize')
 require('plugins_cfg/dashboard')
 require('plugins_cfg/better_whitespace')
 require('plugins_cfg/telescope')
-require('plugins_cfg/dap')
+-- require('plugins_cfg/dap')
 
 
 require('gitsigns').setup()
@@ -64,6 +64,6 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_li
 
 
 -- Debug
-require('dbg/python')
-require('dbg/rust')
+-- require('dbg/python')
+-- require('dbg/rust')
 

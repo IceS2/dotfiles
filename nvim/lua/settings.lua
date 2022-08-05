@@ -43,6 +43,7 @@ opt.showmode = false
 opt.gdefault = true
 opt.lazyredraw = true
 opt.diffopt = "vertical"
+opt.splitright = true
 
 opt.pyxversion = 3
 

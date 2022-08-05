@@ -1,4 +1,10 @@
-[env_var]
-variable = "SSH_PROFILE"
-style = "bold red"
-symbol = ""
+format = """
+$username\
+$hostname\
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+[\uf07c](bold cyan) \
+$all\
+"""

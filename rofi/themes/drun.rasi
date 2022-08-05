@@ -1,0 +1,123 @@
+@import "colors.rasi"
+
+* {
+    font:                           "Cascadia Code 12";
+    show-icons:                     true;
+    background:                     @background-1;
+}
+
+window {
+    background-color:               transparent;
+    text-color:                     @foreground;
+    height:                         55.50%;
+    width:                          45%;
+    location:                       center;
+}
+
+mainbox {
+    children:                       [ inputbar, listview ];
+    background-color:               @background;
+    border:                         0% 0% 0% 0%;
+    spacing:                        2%;
+    padding:                        2.5% 2% 2.5% 2%;
+}
+
+inputbar {
+    children:                       [ prompt, entry ];
+    background-color:               @background;
+    text-color:                     @foreground;
+    expand:                         false;
+    border:                         0 0 2px 0;
+    border-radius:                  0% 0% 0% 0%;
+    border-color:                   @selected-foreground;
+    margin:                         0% 0% 0% 0%;
+    padding:                        1%;
+    position:                       center;
+}
+
+prompt {
+    enabled:                        false;
+}
+
+entry {
+    font:                           "Cascadia Code 24";
+    background-color:               @background;
+    text-color:                     @foreground;
+    placeholder-color:              @foreground;
+    expand:                         true;
+    horizontal-align:               0.5;
+    placeholder:                    "Search Applications";
+    padding:                        0% 0% 0% 0%;
+    blink:                          true;
+    border:                         0;
+}
+
+listview {
+    background-color:               @background;
+    columns:                        5;
+    spacing:                        1%;
+    cycle:                          false;
+    dynamic:                        true;
+    layout:                         vertical;
+    scroll-bar:                     false;
+    padding:                        0.5%;
+    /* fixed-height:                   true; */
+    /* fixed-columns:                  true; */
+}
+
+
+element {
+    background-color:               @background;
+    text-color:                     @foreground;
+    orientation:                    vertical;
+    padding:                        1.5% 0% 1.5% 0%;
+}
+
+element-icon {
+    background-color:               transparent;
+    text-color:                     inherit;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    size:                           64px;
+    border:                         0px;
+}
+
+element-text {
+    background-color:               transparent;
+    text-color:                     inherit;
+    expand:                         true;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    margin:                         0.5% 1% 0% 1%;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    background-color:               @urgent;
+    text-color:                     @foreground;
+    border-radius:                  1%;
+}
+
+element normal.active,
+element alternate.active {
+    background-color:               @active-background;
+    text-color:                     @foreground;
+}
+
+element selected {
+    background-color:               @selected-background;
+    text-color:                     @foreground;
+    border:                         2px;
+    border-radius:                  10;
+    border-color:                   @selected-foreground;
+}
+
+element selected.urgent {
+    background-color:               @urgent;
+    text-color:                     @foreground;
+}
+
+element selected.active {
+    background-color:               @active-background;
+    color:                          @foreground;
+}

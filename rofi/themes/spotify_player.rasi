@@ -1,0 +1,89 @@
+@theme "/dev/null"
+@import "colors.rasi"
+
+* {
+  bg:			#0C0F09;
+  fg:			#05E289;
+  button:		#1B1E25;
+  background-color:	@bg;
+  text-color:		@fg;
+  font: "Cascadia Code 14";
+}
+
+* {
+bg: #1E222A;
+bgAlt: #252931;
+fg: #61AFEF;
+button: #252931;
+background-color: @bg;
+text-color: @fg;
+}
+
+* {
+     bg: @background-1;
+     bgAlt: @background-2;
+     fg: @foreground;
+     button: @background-2;
+     background-color: @bg;
+     text-color: @green;
+  }
+
+window {
+  transparency:		"real";
+  width:		500px;
+  height:		525px;
+  location: north west;
+  x-offset: 20;
+  y-offset: 52;
+  border: 2px;
+  border-radius: 10;
+  border-color: #000000;
+
+}
+
+prompt {
+  padding:		15px;
+  border-radius:	10px;
+  border: 2px;
+  border-color: #000000;
+  expand: false;
+  text-color: @fg;
+  markup: true;
+}
+
+inputbar {
+  children:		[ prompt ];
+  background-image:	url("/tmp/cover.png");
+  expand:		false;
+  padding:		290px 15px 15px 15px;
+  border: 0 0 2px 0;
+  border-color: #000000;
+}
+
+listview {
+  cycle:		true;
+  layout:		horizontal;
+  padding:		5px 10px 10px 20px;
+}
+
+mainbox { children: [ inputbar, listview ]; }
+
+element {
+  padding:		0px 10px 0px 10px;
+  border-radius:	8px;
+}
+
+element-text {
+  margin:		15px 18px 5px 15px;
+  padding:		0px 0px 0px 0px;
+  font:			"Font Awesome 38";
+  vertical-align: 0.5;
+  horizontal-align: 0.5;
+  background-color:	inherit;
+  text-color:		inherit;
+}
+element selected {
+  background-color:	@background-2;
+  text-color:		@purple;
+}
+

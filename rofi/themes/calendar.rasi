@@ -1,0 +1,89 @@
+@import "colors.rasi"
+
+
+* {
+    font:                           "Cascadia Code 16";
+    background: @background-2;
+    hover-select: false;
+}
+
+window {
+    background-color:               transparent;
+    text-color:                     @foreground;
+    height:                         28%;
+    width:                          16.7%;
+    location:                       north east;
+    border: 2px;
+    border-color: @purple;
+    border-radius: 10;
+    x-offset: -20;
+    y-offset: 52;
+}
+
+mainbox {
+    children:                       [ inputbar, listview ];
+    background-color:               @background;
+    border:                         0% 0% 0% 0%;
+    spacing:                        1%;
+    padding:                        2% 2% 2% 2%;
+}
+
+inputbar {
+    children:                       [ dummy, prompt, dummy ];
+    background-color:               @background;
+    text-color:                     @foreground;
+    expand:                         false;
+    border:                         0 0 2px 0;
+    border-radius:                  0% 0% 0% 0%;
+    border-color:                   @purple;
+    margin:                         0% 0% 0% 0%;
+    padding:                        0%;
+    position:                       center;
+}
+
+dummy {
+    expand: true;
+    background-color: @background-2;
+  }
+
+prompt {
+  enabled: true;
+    font: "Cascadia Code Bold 20";
+    background-color:               @background;
+    text-color:                     @foreground;
+    pading: 1% 1% 1% 0%;
+    position: center;
+    text-color: @cyan;
+}
+
+listview {
+    background-color:               @background;
+    columns:                        5;
+    spacing:                        0%;
+    cycle:                          false;
+    dynamic:                        true;
+    layout:                         vertical;
+    scroll-bar:                     false;
+    padding:                        0.2%;
+}
+
+element {
+    background-color:               @background;
+    text-color:                     @foreground;
+    orientation:                    vertical;
+    padding:                        0% 0% 0% 0%;
+}
+
+element-text {
+    background-color:               transparent;
+    text-color:                     inherit;
+    expand:                         true;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    margin:                         0.5% 1% 0% 1%;
+}
+
+element-text selected {
+    background-color:               @selected-background;
+    text-color:                     @cyan;
+}

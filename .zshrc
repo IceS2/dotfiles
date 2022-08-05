@@ -1,135 +1,137 @@
+function plugin-load {
+  local repo plugin_name plugin_dir initfile initfiles
+  ZPLUGINDIR=${ZPLUGINDIR:-${ZDOTDIR:-$HOME/.config/zsh}/plugins}
+  for repo in $@; do
+    plugin_name=${repo:t}
+    plugin_dir=$ZPLUGINDIR/$plugin_name
+    initfile=$plugin_dir/$plugin_name.plugin.zsh
+    if [[ ! -d $plugin_dir ]]; then
+      echo "Cloning $repo"
+      git clone -q --depth 1 --recursive --shallow-submodules https://github.com/$repo $plugin_dir
+    fi
+    if [[ ! -e $initfile ]]; then
+      initfiles=($plugin_dir/*.plugin.{z,}sh(N) $plugin_dir/*.{z,}sh{-theme,}(N))
+      [[ ${#initfiles[@]} -gt 0 ]] || { echo >&2 "Plugin has no init file '$repo'." && continue }
+      ln -sf "${initfiles[1]}" "$initfile"
+    fi
+    fpath+=$plugin_dir
+    (( $+functions[zsh-defer] )) && zsh-defer . $initfile || . $initfile
+  done
+}
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+function plugin-update {
+  ZPLUGINDIR=${ZPLUGINDIR:-$HOME/.config/zsh/plugins}
+  for d in $ZPLUGINDIR/*/.git(/); do
+    echo "Updating ${d:h:t}..."
+    command git -C "${d:h}" pull --ff --recurse-submodules --depth 1 --rebase --autostash
+  done
+}
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/ices2/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
-  poetry
-  rustup
-  cargo
+  # Lazy Load
+  romkatv/zsh-defer
+
+  # In Line Suggestions
+  zsh-users/zsh-autosuggestions
+
+  # Web Search from Terminal
+  sineto/web-search
+
+  # Alias Reminders
+  MichaelAquilina/zsh-you-should-use
+
+  redxtech/zsh-show-path
+  ael-code/zsh-colored-man-pages
+
+  # Git Utilities
+  Bhupesh-V/ugit
+
+  # Vim Mode
+  # jeffreytse/zsh-vi-mode
+
+  # Search History powered by fzf
+  joshskidmore/zsh-fzf-history-search
+
+  # Completion powered by fzf
+  Aloxaf/fzf-tab
+
+  # Syntax highlight. It should be loaded last!
+  zdharma-continuum/fast-syntax-highlighting
+
 )
 
-source $ZSH/oh-my-zsh.sh
+zmodload zsh/langinfo
+zmodload zsh/complist
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
 
-# User configuration
+plugin-load $plugins
 
-# export MANPATH="/usr/local/man:$MANPATH"
+complete -C $(command -v aws_completer) aws
+zstyle ':completion:*:*:git:*' script ~/.config/zsh/completions/git.zsh
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# preview directory's content with exa when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+bindkey '^ ' autosuggest-accept
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=1000000
+setopt autocd
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt SHARE_HISTORY
+unsetopt NOMATCH
+unsetopt beep
+# bindkey -e
+# End of lines configured by zsh-newuser-install
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Prompt -----------------------------------
+eval "$(starship init zsh)"
 
-alias ifood="source $HOME/.config/scripts/ssh_profile.sh ifood"
-alias personal="source $HOME/.config/scripts/ssh_profile.sh personal"
+# Zoxide -----------------------------------
+eval "$(zoxide init zsh)"
 
-alias prod="source $HOME/.config/scripts/aws_profile_switcher.sh prod"
-alias dev="source $HOME/.config/scripts/aws_profile_switcher.sh dev"
+# Pyenv ------------------------------------
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
-alias venv="$HOME/.config/scripts/create_python_virtualenv.sh"
+# nvm --------------------------------------
+source /usr/share/nvm/init-nvm.sh
+
+# Direnv -----------------------------------
+eval "$(direnv hook zsh)"
+
+# Alias ------------------------------------
+
+# ls
+alias ls="lsd"
+alias tree="lsd --tree"
+
+# kubectl
+alias kubectl="kubecolor"
+
+# Python Virtualenv
+alias venv="$HOME/.config/scripts/create_python_env.sh"
 
 venv-delete() {
   pyenv virtualenv-delete $1
 }
 
-(cat ~/.cache/wal/sequences &)
-eval "$(starship init zsh)"
-export LANG=en_US.UTF-8
-export EDITOR=nvim
+# Bindings ---------------------------------
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+bindkey '^R' history-incremental-search-backward
 
-alias vim=nvim
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
-# Created by `userpath` on 2020-06-07 15:00:21
-export PATH="$PATH:/home/ices2/.local/bin"
-
-source $HOME/.config/scripts/check_ssh_profile.sh
-source $HOME/.config/scripts/check_aws_profile.sh
-source $HOME/workspace/ifood/.ifood_env/ifood_env_vars.sh

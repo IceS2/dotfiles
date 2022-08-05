@@ -1,0 +1,114 @@
+@import "colors.rasi"
+
+* {
+    font:                           "Cascadia Code 12";
+    background:                     @background-1;
+    background-alt:                 @background-0;
+}
+
+window {
+    background-color:               transparent;
+    text-color:                     @foreground;
+    height:                         20%;
+    width:                          17%;
+    location:                       north east;
+    border:                         2px;
+    border-color:                   @blue;
+    border-radius:                  10;
+    x-offset:                       -300;
+    y-offset:                       52;
+}
+
+mainbox {
+    children:                       [ inputbar, listview ];
+    background-color:               @background;
+    border:                         0% 0% 0% 0%;
+}
+
+inputbar {
+    children:                       [ prompt, entry ];
+    background-color:               @background;
+    text-color:                     @foreground;
+    expand:                         false;
+    border:                         0 0 2px 0;
+    border-radius:                  0% 0% 0% 0%;
+    border-color:                   @blue;
+    margin:                         0% 3% 0% 3%;
+    padding:                        0.5%;
+    position:                       center;
+}
+
+prompt {
+    enabled:                        false;
+}
+
+entry {
+    font:                           "Cascadia Code 14";
+    background-color:               @background;
+    text-color:                     @foreground;
+    placeholder-color:              @foreground;
+    expand:                         true;
+    horizontal-align:               0.5;
+    placeholder:                    "Search Device";
+    padding:                        0% 0% 0% 0%;
+    blink:                          true;
+    border:                         0;
+}
+
+listview {
+    background-color:               @background;
+    /* spacing:                        1%; */
+    scroll-bar:                     false;
+    cycle:                          false;
+    padding:                        0.5%;
+    margin:                         0% 0.2% 0% 0.2%;
+}
+
+
+element {
+    background-color:               @background;
+    text-color:                     @foreground;
+    orientation:                    horizontal;
+    padding:                        0.2% 1% 0.2% 1%;
+}
+
+element alternate {
+    background-color:               @background-alt;
+}
+
+element-text {
+    background-color:               transparent;
+    text-color:                     inherit;
+    expand:                         true;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    background-color:               @urgent;
+    text-color:                     @foreground;
+    border-radius:                  1%;
+}
+
+element normal.active,
+element alternate.active {
+    background-color:               @active-background;
+    text-color:                     @foreground;
+}
+
+element selected {
+    background-color:               @selected-background;
+    text-color:                     @foreground;
+    border:                         2px;
+    border-radius:                  10;
+    border-color:                   @blue;
+}
+
+element selected.urgent {
+    background-color:               @urgent;
+    text-color:                     @foreground;
+}
+
+element selected.active {
+    background-color:               @active-background;
+    color:                          @foreground;
+}
