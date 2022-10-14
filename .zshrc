@@ -120,6 +120,9 @@ eval "$(direnv hook zsh)"
 alias ls="lsd"
 alias tree="lsd --tree"
 
+# cat
+alias cat="bat"
+
 # kubectl
 alias kubectl="kubecolor"
 

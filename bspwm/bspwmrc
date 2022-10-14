@@ -1,5 +1,9 @@
 #! /bin/sh
 
+# Load Audio Modules
+pactl load-module module-switch-on-connect
+pactl set-default-sink alsa_output.usb-Generic_USB_Audio-00.pro-output-1
+
 # Load Hotkeys
 pgrep -x sxhkd > /dev/null || sxhkd &
 
@@ -13,12 +17,12 @@ picom &
 polybar top-main &
 polybar top-secondary &
 
-# Load Audio Modules
-pactl load-module module-switch-on-connect
-pactl set-default-sink alsa_output.usb-Generic_USB_Audio-00.pro-output-1
 
 # Load playerctl daemon
 playerctld daemon
+
+# AutoLock
+xautolock -time 15 -locker $HOME/.config/scripts/lock.sh -detectsleep
 
 # bspc monitor DP-0 -d     5 6 7 8 9 
 bspc monitor DP-2 -d 1 3 5 7 9

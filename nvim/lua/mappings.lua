@@ -59,9 +59,6 @@ map("n", "<leader>bm", ":DashboardJumpMarks<CR>")
 map("n", "<C-s>l", ":SessionLoad<CR>")
 map("n", "<C-s>s", ":SessionSave<CR>")
 
--- Todo
--- map("n", "<leader>td", ":TodoTelescope<CR>")
-
 --Lsp
 local lsp_opts = { noremap=true, silent=true }
 map("n", "gD", ":lua vim.lsp.buf.declaration()<CR>", lsp_opts)
