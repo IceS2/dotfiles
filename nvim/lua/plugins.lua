@@ -14,13 +14,20 @@ require 'paq' {
   'nvim-lua/plenary.nvim';
 
   -- Colorscheme
-  -- 'navarasu/onedark.nvim';
   'folke/tokyonight.nvim';
 
   -- LSP
   'neovim/nvim-lspconfig';
-  'williamboman/nvim-lsp-installer';
+  'williamboman/mason.nvim';
+  'williamboman/mason-lspconfig.nvim';
+  'jose-elias-alvarez/null-ls.nvim';
+  'jay-babu/mason-null-ls.nvim';
 
+  -- DAP
+  'folke/neodev.nvim';
+  'mfussenegger/nvim-dap';
+  'jay-babu/mason-nvim-dap.nvim';
+  'rcarriga/nvim-dap-ui';
 
   -- Completion
   'hrsh7th/nvim-cmp';
@@ -28,19 +35,14 @@ require 'paq' {
   'hrsh7th/cmp-path';
   'hrsh7th/cmp-cmdline';
   'hrsh7th/cmp-nvim-lsp';
-  'L3MON4D3/LuaSnip';
-  'saadparwaiz1/cmp_luasnip';
-  'ray-x/lsp_signature.nvim';
+  'hrsh7th/cmp-nvim-lsp-signature-help';
   'onsails/lspkind-nvim';
 
   -- Rust
   'simrat39/rust-tools.nvim';
 
-  -- View and Search LSP symbos
-  'liuchengxu/vista.vim';
-
   -- Terminal
-  'akinsho/nvim-toggleterm.lua';
+  'voldikss/vim-floaterm';
 
   -- Git
   'tpope/vim-fugitive';
@@ -76,15 +78,12 @@ require 'paq' {
   -- File Tree
   'kyazdani42/nvim-tree.lua';
 
-  -- Bufferline
-  'akinsho/nvim-bufferline.lua';
-
   -- LuaLine
   'nvim-lualine/lualine.nvim';
 
   -- TreeSitter
   {'nvim-treesitter/nvim-treesitter', run=':TSUpdate'};
-  'p00f/nvim-ts-rainbow';
+  'HiPhish/nvim-ts-rainbow2';
   'windwp/nvim-ts-autotag';
 
   -- Highlight color codes
@@ -97,23 +96,16 @@ require 'paq' {
   'nvim-lua/popup.nvim';
   'nvim-telescope/telescope.nvim';
   {'nvim-telescope/telescope-fzf-native.nvim', run='make'};
+  'barrett-ruth/telescope-http.nvim';
+  'LinArcX/telescope-env.nvim';
+  'olacin/telescope-cc.nvim';
+  'paopaol/telescope-git-diffs.nvim';
 
   --resize
   'artart222/vim-resize';
 
-  -- DAP
-  -- 'mfussenegger/nvim-dap';
-  -- 'rcarriga/nvim-dap-ui';
-  -- 'Pocco81/DAPInstall.nvim';
-  -- 'mfussenegger/nvim-dap-python';
-  -- 'nvim-telescope/telescope-dap.nvim';
-
-  -- AutoFocus Windows
-  -- 'beauwilliams/focus.nvim'
-  'IceS2/focus.nvim';
-
   -- Replace
-  'windwp/nvim-spectre';
+  'nvim-pack/nvim-spectre';
 
   -- Project Management
   'ahmedkhalf/project.nvim';
@@ -140,9 +132,6 @@ require 'paq' {
   'kana/vim-textobj-line';
   'kana/vim-textobj-indent';
   'nvim-treesitter/nvim-treesitter-textobjects';
-
-  -- Distant
-  'chipsenkbeil/distant.nvim';
 
   -- Just Syntax Highlight
   'NoahTheDuke/vim-just';

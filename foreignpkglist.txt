@@ -1,7 +1,10 @@
+act
 aws-cli-v2-bin
 aws-session-manager-plugin
 awsvpnclient
 ckb-next-git
+clipcat
+czkawka-cli
 datagrip
 datagrip-jre
 i3lock-color
@@ -23,7 +26,11 @@ spotify
 sweet-folders-icons-git
 sweet-theme-full-git
 tfenv
+tflint
+ttf-nerd-fonts-symbols-mono
 ttf-openlogos-archupdate
+wacom-settings-git
+web-greeter
 yay
 zoom
 zscroll-git

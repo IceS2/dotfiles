@@ -19,10 +19,11 @@ polybar top-secondary &
 
 
 # Load playerctl daemon
-playerctld daemon
+playerctld daemon &
 
 # AutoLock
-xautolock -time 15 -locker $HOME/.config/scripts/lock.sh -detectsleep
+# xautolock -time 15 -locker $HOME/.config/scripts/lock.sh -detectsleep &
+xidlehook --not-when-fullscreen --not-when-audio --detect-sleep --timer 900 $HOME/.config/scripts/lock.sh '' &
 
 # bspc monitor DP-0 -d     5 6 7 8 9 
 bspc monitor DP-2 -d 1 3 5 7 9

@@ -7,9 +7,7 @@ lualine.setup {
   options = {
     theme = "auto",
     disabled_filetypes = {
-      "toggleterm",
       "NvimTree",
-      "vista_kind",
       "dapui_scopes",
       "dapui_breakpoints",
       "dapui_stacks",

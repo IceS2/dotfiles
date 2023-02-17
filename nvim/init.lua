@@ -2,25 +2,23 @@ require('plugins')
 require('settings')
 require('colorscheme')
 require('mappings')
+require('diagnostic')
 
 
 -- Load Plugins
 -- -------------
 
-require('plugins_cfg/lsp_installer')
+require('plugins_cfg/aerial')
+require('plugins_cfg/mason_ls_and_dap')
 require('plugins_cfg/cmp')
--- require('plugins_cfg/vista')
-require('plugins_cfg/toggleterm')
 require('plugins_cfg/indent_blankline')
 require('plugins_cfg/tree')
--- require('plugins_cfg/bufferline')
 require('plugins_cfg/lualine')
 require('plugins_cfg/treesitter')
 require('plugins_cfg/colorize')
 require('plugins_cfg/dashboard')
 require('plugins_cfg/better_whitespace')
 require('plugins_cfg/telescope')
--- require('plugins_cfg/dap')
 
 
 require('gitsigns').setup()
@@ -31,7 +29,6 @@ require('mkdir')
 require('nvim_comment').setup({
   comment_empty = false
 })
--- require('focus').setup()
 require('spectre').setup()
 require('project_nvim').setup()
 require('diffview').setup()
@@ -60,10 +57,4 @@ require('mini.surround').setup({
 })
 
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-
-
-
--- Debug
--- require('dbg/python')
--- require('dbg/rust')
 

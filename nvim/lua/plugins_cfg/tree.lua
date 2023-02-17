@@ -7,13 +7,23 @@ local tree_cb = require"nvim-tree.config".nvim_tree_callback
 -- Set alias for vim.g.
 local g = vim.g
 
+local function open_nvim_tree()
+  local IGNORED_FT = {
+    "dashboard"
+  }
+
+  if vim.tbl_contains(IGNORED_FT, filetype) then
+    return
+  end
+
+  require("nvim-tree.api").tree.toggle({ focus = false })
+end
+
 nvimtree.setup {
-  ignore_ft_on_setup = { "dashboard" },
   open_on_tab = false,
   actions = {
     open_file = {
       quit_on_open = false,
-      -- resize_window = true,
       window_picker = {
         enable = true,
         exclude = {
@@ -26,10 +36,14 @@ nvimtree.setup {
   renderer = {
     add_trailing = true,
     highlight_git = false,
-    highlight_opened_files = "all",
+    highlight_opened_files = "name",
+    highlight_modified = "icon",
     indent_markers = {
       enable = true
     }
+  },
+  modified = {
+    enable = true
   },
   hijack_directories = {
     enable = true,
@@ -37,7 +51,7 @@ nvimtree.setup {
   },
   update_focused_file = {
     enable = true,
-    update_root = true
+    update_root = false
   },
   diagnostics = {
     enable = true,
@@ -60,6 +74,9 @@ nvimtree.setup {
   },
   filters = {
     dotfiles = false,
-    custom = { ".git", "node_modules", ".cache", "__pycache__" }
+    custom = { ".git", "node_modules", ".cache", "__pycache__" },
+    exclude = { ".github", ".gitignore", "env"}
   }
 }
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
