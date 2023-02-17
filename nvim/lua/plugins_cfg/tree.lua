@@ -7,12 +7,12 @@ local tree_cb = require"nvim-tree.config".nvim_tree_callback
 -- Set alias for vim.g.
 local g = vim.g
 
-local function open_nvim_tree()
+local function open_nvim_tree(data)
   local IGNORED_FT = {
     "dashboard"
   }
 
-  if vim.tbl_contains(IGNORED_FT, filetype) then
+  if vim.tbl_contains(IGNORED_FT, vim.bo[data.buf].ft) then
     return
   end
 
