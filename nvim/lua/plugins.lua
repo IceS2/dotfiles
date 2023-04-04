@@ -86,6 +86,9 @@ require 'paq' {
   'HiPhish/nvim-ts-rainbow2';
   'windwp/nvim-ts-autotag';
 
+  -- CSV
+  'mechatroner/rainbow_csv';
+
   -- Highlight color codes
   'norcalli/nvim-colorizer.lua';
 

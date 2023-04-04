@@ -22,7 +22,8 @@ pyenv-virtualenv
 saml2aws
 slack-desktop
 slides-git
-spotify
+spotify-dev
+spotify-tui
 sweet-folders-icons-git
 sweet-theme-full-git
 tfenv

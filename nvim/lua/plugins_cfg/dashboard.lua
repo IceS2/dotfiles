@@ -1,34 +1,46 @@
-local g = vim.g
-local fn = vim.fn
+local vim = vim
+
+local plugins_count
 
 if vim.fn.has("win32") == 1 then
-  plugins_count = fn.len(fn.globpath("~/AppData/Local/nvim-data/site/pack/packer/start", "*", 0, 1))
+  plugins_count = vim.fn.len(vim.fn.globpath("~/AppData/Local/nvim-data/site/pack/packer/start", "*", 0, 1))
 else
-  plugins_count = fn.len(fn.globpath("~/.local/share/nvim/site/pack/paqs/start", "*", 0, 1))
+  plugins_count = vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/paqs/start", "*", 0, 1))
 end
 
-vim.cmd[[au VimEnter * highlight dashboardHeader ctermfg=147 guifg=#afafff]]
-vim.cmd[[au VimEnter * highlight dashboardFooter ctermfg=147 guifg=#afafff]]
-vim.cmd[[au VimEnter * highlight dashboardCenter ctermfg=147 guifg=#af87ff]]
-vim.cmd[[au VimEnter * highlight dashboardShortCut ctermfg=147 guifg=#ffffaf]]
+vim.cmd[[au VimEnter * highlight DashboardHeader ctermfg=147 guifg=#9388FF]]
+vim.cmd[[au VimEnter * highlight DashboardFooter ctermfg=147 guifg=#9388FF]]
+vim.cmd[[au VimEnter * highlight DashboardDesc ctermfg=147 guifg=#AFAFFF]]
+vim.cmd[[au VimEnter * highlight DashboardKey ctermfg=147 guifg=#AFAFFF]]
+vim.cmd[[au VimEnter * highlight DashboardIcon ctermfg=147 guifg=#9B70FF]]
+vim.cmd[[au VimEnter * highlight DashboardShortCut ctermfg=147 guifg=#FFFFAF]]
 
-dashboard_custom_header = {
-"8888888888                           888             ",
-"888                                  888             ",
-"888                                  888             ",
-"8888888    888d888  .d88b.  .d8888b  888888 888  888 ",
-"888        888P\"   d88\"\"88b 88K      888    888  888 ",
-"888        888     888  888 \"Y8888b. 888    888  888 ",
-"888        888     Y88..88P      X88 Y88b.  Y88b 888 ",
-"888        888      \"Y88P\"   88888P'  \"Y888  \"Y88888 ",
-"                                                 888 ",
-"                                            Y8b d88P ",
-"                                             \"Y88P\"  "
+
+local dashboard_custom_header = {
+"",
+"",
+"────────────────────────────────────────────────",
+" ██████████  ██████████████  ████████  ████████ ",
+" ██░░░░░░██  ██░░░░░░░░░░██  ██░░░░██  ██░░░░██ ",
+" ████░░████  ██░░██████████  ████░░██  ██░░████ ",
+"   ██░░██    ██░░██            ██░░░░██░░░░██   ",
+"   ██░░██    ██░░██            ████░░░░░░████   ",
+"   ██░░██    ██░░██              ████░░████     ",
+"   ██░░██    ██░░██                ██░░██       ",
+"   ██░░██    ██░░██                ██░░██       ",
+" ████░░████  ██░░██████████        ██░░██       ",
+" ██░░░░░░██  ██░░░░░░░░░░██        ██░░██       ",
+" ██████████  ██████████████        ██████       ",
+"────────────────────────────────────────────────",
+"",
+"",
 }
 
-dashboard_custom_footer = {
-    "Frosty Loaded " .. plugins_count .. " plugins!  ",
-    "Frosty v0.1"
+local dashboard_custom_footer = {
+    "",
+    "────────────────────────────────────────────────",
+    "Icy Loaded " .. plugins_count .. " plugins!  ",
+    "Icy v0.1"
 }
 
 
@@ -40,7 +52,7 @@ require('dashboard').setup {
       {
         icon = '  ',
         icon_h1 = 'Title',
-        desc = 'Find File',
+        desc = 'Find File            ',
         desc_h1 = 'String',
         key = 'a',
         keymap = 'SPC f f',

@@ -116,6 +116,15 @@ eval "$(direnv hook zsh)"
 
 # Alias ------------------------------------
 
+# icy
+icy() {
+  if [[ -z $1 ]]; then
+    nvim -c Dashboard
+  else
+    nvim $@
+  fi
+}
+
 # ls
 alias ls="lsd"
 alias tree="lsd --tree"

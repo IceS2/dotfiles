@@ -7,6 +7,7 @@ aws-cli-v2-bin
 aws-session-manager-plugin
 awsvpnclient
 base
+base-devel
 bat
 bind
 binutils
@@ -23,6 +24,7 @@ cuda
 czkawka-cli
 datagrip
 datagrip-jre
+devtools
 direnv
 discord
 docker
@@ -139,7 +141,8 @@ shotgun
 slack-desktop
 slides-git
 slop
-spotify
+spotify-dev
+spotify-tui
 starship
 sudo
 sweet-folders-icons-git
