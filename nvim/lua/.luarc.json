@@ -1,0 +1,14 @@
+{
+    "diagnostics.globals": [
+        "vim"
+    ],
+    "workspace.checkThirdParty": false,
+    "workspace.library": [
+        "/home/ices2/.dotfiles/nvim-test/share/nvim/lazy/neodev.nvim/types/stable",
+        "/usr/share/nvim/runtime/lua",
+        "/home/ices2/.dotfiles/nvim-test/share/nvim/lazy/nvim-dap-ui/lua",
+        "/home/ices2/.dotfiles/nvim-test/share/nvim/lazy/neotest/lua",
+        "/home/ices2/.dotfiles/nvim-test/nvim/lua",
+        "/home/ices2/.dotfiles/nvim-test/share/nvim/mason/packages/lua-language-server/libexec/meta/310b3508"
+    ]
+}

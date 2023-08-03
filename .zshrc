@@ -104,8 +104,8 @@ eval "$(zoxide init zsh)"
 
 # Pyenv ------------------------------------
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 
 # nvm --------------------------------------

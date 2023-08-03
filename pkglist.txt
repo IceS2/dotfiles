@@ -1,5 +1,7 @@
 act
+adr-tools
 alsa-utils
+android-studio
 apache
 autoconf
 automake
@@ -17,6 +19,7 @@ bluez
 bluez-utils
 bottom
 bspwm
+chafa
 ckb-next-git
 clipcat
 cmake
@@ -28,11 +31,15 @@ devtools
 direnv
 discord
 docker
+docker-buildx
 docker-compose
 drawing
 dunst
 dust
+eclipse-mat
+exercism
 fakeroot
+fd
 feh
 file
 findutils
@@ -42,8 +49,10 @@ gawk
 gcc
 gettext
 git
+gitui
 glow
 gnome-keyring
+gnu-netcat
 go
 go-yq
 grep
@@ -56,7 +65,10 @@ i3lock-color
 ibus
 jdk-openjdk
 jdk11-openjdk
+jdk17-openjdk
 jq
+just
+k9s
 kdash-bin
 kind-bin
 kitty
@@ -64,6 +76,8 @@ kubecolor
 kubectl
 kubectx
 lapce
+lazydocker
+lazygit
 lib32-nvidia-utils
 libcanberra
 libtool
@@ -85,10 +99,12 @@ mariadb
 mdcat
 microsoft-edge-stable-bin
 neovim
+nerd-fonts-git
 network-manager-applet
 networkmanager
 networkmanager-dmenu-git
 networkmanager-openvpn
+nmap
 noise-suppression-for-voice
 notion-app
 noto-fonts
@@ -106,6 +122,7 @@ openssl-1.1
 otf-cascadia-code
 pacman
 pacman-contrib
+pandoc-cli
 patch
 pavucontrol
 picom-ibhagwan-git
@@ -138,6 +155,7 @@ saml2aws
 seahorse
 sed
 shotgun
+silicon
 slack-desktop
 slides-git
 slop
@@ -152,11 +170,12 @@ systemd-resolvconf
 texinfo
 tfenv
 tflint
+tk
+ttf-dejavu
 ttf-font-awesome
-ttf-iosevka-nerd
-ttf-nerd-fonts-symbols-mono
 ttf-openlogos-archupdate
 unzip
+vscode-codicons-git
 wacom-settings-git
 web-greeter
 wget

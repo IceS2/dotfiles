@@ -1,0 +1,1 @@
+-- vim.keymap.set("n", "q", "<CMD>q<CR>", { desc = "Quit Terminal" })

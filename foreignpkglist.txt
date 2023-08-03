@@ -1,4 +1,6 @@
 act
+adr-tools
+android-studio
 aws-cli-v2-bin
 aws-session-manager-plugin
 awsvpnclient
@@ -7,12 +9,16 @@ clipcat
 czkawka-cli
 datagrip
 datagrip-jre
+eclipse-mat
+exercism
 i3lock-color
 kdash-bin
 kind-bin
 kubecolor
+lazydocker
 lightdm-webkit2-theme-reactive
 microsoft-edge-stable-bin
+nerd-fonts-git
 networkmanager-dmenu-git
 notion-app
 nvm
@@ -28,8 +34,8 @@ sweet-folders-icons-git
 sweet-theme-full-git
 tfenv
 tflint
-ttf-nerd-fonts-symbols-mono
 ttf-openlogos-archupdate
+vscode-codicons-git
 wacom-settings-git
 web-greeter
 yay
