@@ -93,7 +93,7 @@ return {
       filters = {
         dotfiles = false,
         custom = { ".git", "node_modules", ".cache", "__pycache__" },
-        exclude = { ".github", ".gitignore", "env", ".env" }
+        exclude = { ".github", ".gitignore", "env", ".env" , "settings*"}
       }
     }
   end,

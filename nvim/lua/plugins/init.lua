@@ -5,4 +5,8 @@ return {
     event  = "VeryLazy",
     config = true
   },
+  {
+  "elkowar/yuck.vim",
+    event = "VeryLazy"
+  }
 }

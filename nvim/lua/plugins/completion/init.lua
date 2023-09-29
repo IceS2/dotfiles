@@ -156,6 +156,7 @@ return{
   },
   {
     "zbirenbaum/copilot-cmp",
+    lazy = "VeryLazy",
     dependencies = {
       "zbirenbaum/copilot.lua",
       config = function()
@@ -165,6 +166,8 @@ return{
         }
       end
     },
-    config = true
+    config = function()
+      require("copilot_cmp").setup(nil)
+    end
   }
 }

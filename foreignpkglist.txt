@@ -1,4 +1,3 @@
-act
 adr-tools
 android-studio
 aws-cli-v2-bin
@@ -10,7 +9,10 @@ czkawka-cli
 datagrip
 datagrip-jre
 eclipse-mat
+eww-wayland
 exercism
+hyprland-git
+hyprpicker-git
 i3lock-color
 kdash-bin
 kind-bin
@@ -22,10 +24,14 @@ nerd-fonts-git
 networkmanager-dmenu-git
 notion-app
 nvm
+nwg-look
 picom-ibhagwan-git
 ponymix
 pyenv-virtualenv
+rofi-lbonn-wayland
 saml2aws
+sddm-git
+sddm-sugar-candy-git
 slack-desktop
 slides-git
 spotify-dev
@@ -38,6 +44,7 @@ ttf-openlogos-archupdate
 vscode-codicons-git
 wacom-settings-git
 web-greeter
+wl-clip-persist-git
 yay
 zoom
 zscroll-git
