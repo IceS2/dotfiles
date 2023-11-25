@@ -10,23 +10,30 @@ return {
       { "<leader>rtv", "<cmd>w|TestVisit<cr>", desc = "Visit" },
     },
     config = function()
-      vim.g["test#strategy"] = "floaterm"
+      vim.api.nvim_exec([[
+      function! FloatermSplit(cmd)
+        execute 'FloatermNew --wintype=split --height=0.3 --autoclose=0 '.a:cmd
+      endfunction
+
+      let g:test#custom_strategies = {'floaterm_split': function('FloatermSplit')}
+      ]], false)
+      vim.g["test#strategy"] = "floaterm_split"
       vim.g["test#python#runner"] = "pytest" -- pytest
     end,
   },
   {
     "nvim-neotest/neotest",
     keys = {
-      { "<leader>tNF", "<cmd>w|lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", desc = "Debug File" },
-      { "<leader>tNL", "<cmd>w|lua require('neotest').run.run_last({strategy = 'dap'})<cr>", desc = "Debug Last" },
-      { "<leader>tNa", "<cmd>w|lua require('neotest').run.attach()<cr>", desc = "Attach" },
-      { "<leader>tNf", "<cmd>w|lua require('neotest').run.run(vim.fn.expand('%'))<cr>", desc = "File" },
-      { "<leader>tNl", "<cmd>w|lua require('neotest').run.run_last()<cr>", desc = "Last" },
-      { "<leader>tNn", "<cmd>w|lua require('neotest').run.run()<cr>", desc = "Nearest" },
-      { "<leader>tNN", "<cmd>w|lua require('neotest').run.run({strategy = 'dap'})<cr>", desc = "Debug Nearest" },
-      { "<leader>tNo", "<cmd>w|lua require('neotest').output.open({ enter = true })<cr>", desc = "Output" },
-      { "<leader>tNs", "<cmd>w|lua require('neotest').run.stop()<cr>", desc = "Stop" },
-      { "<leader>tNS", "<cmd>w|lua require('neotest').summary.toggle()<cr>", desc = "Summary" },
+      { "<leader>rNF", "<cmd>w|lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", desc = "Debug File" },
+      { "<leader>rNL", "<cmd>w|lua require('neotest').run.run_last({strategy = 'dap'})<cr>", desc = "Debug Last" },
+      { "<leader>rNa", "<cmd>w|lua require('neotest').run.attach()<cr>", desc = "Attach" },
+      { "<leader>rNf", "<cmd>w|lua require('neotest').run.run(vim.fn.expand('%'))<cr>", desc = "File" },
+      { "<leader>rNl", "<cmd>w|lua require('neotest').run.run_last()<cr>", desc = "Last" },
+      { "<leader>rNn", "<cmd>w|lua require('neotest').run.run()<cr>", desc = "Nearest" },
+      { "<leader>rNN", "<cmd>w|lua require('neotest').run.run({strategy = 'dap'})<cr>", desc = "Debug Nearest" },
+      { "<leader>rNo", "<cmd>w|lua require('neotest').output.open({ enter = true })<cr>", desc = "Output" },
+      { "<leader>rNs", "<cmd>w|lua require('neotest').run.stop()<cr>", desc = "Stop" },
+      { "<leader>rNS", "<cmd>w|lua require('neotest').summary.toggle()<cr>", desc = "Summary" },
     },
     dependencies = {
       "vim-test/vim-test",
@@ -41,10 +48,7 @@ return {
         adapters = {
           require "neotest-python" {
             dap = { justMyCode = false },
-            runner = "pytest",
-            python = function()
-              return require("venv-selector").get_active_path()
-            end
+            runner = "pytest"
           },
           require "neotest-plenary",
           require "neotest-vim-test" {
@@ -86,23 +90,18 @@ return {
   {
     "stevearc/overseer.nvim",
     keys = {
-      { "<leader>toR", "<cmd>OverseerRunCmd<cr>", desc = "Run Command" },
-      { "<leader>toa", "<cmd>OverseerTaskAction<cr>", desc = "Task Action" },
-      { "<leader>tob", "<cmd>OverseerBuild<cr>", desc = "Build" },
-      { "<leader>toc", "<cmd>OverseerClose<cr>", desc = "Close" },
-      { "<leader>tod", "<cmd>OverseerDeleteBundle<cr>", desc = "Delete Bundle" },
-      { "<leader>tol", "<cmd>OverseerLoadBundle<cr>", desc = "Load Bundle" },
-      { "<leader>too", "<cmd>OverseerOpen<cr>", desc = "Open" },
-      { "<leader>toq", "<cmd>OverseerQuickAction<cr>", desc = "Quick Action" },
-      { "<leader>tor", "<cmd>OverseerRun<cr>", desc = "Run" },
-      { "<leader>tos", "<cmd>OverseerSaveBundle<cr>", desc = "Save Bundle" },
-      { "<leader>tot", "<cmd>OverseerToggle<cr>", desc = "Toggle" },
+      { "<leader>roR", "<cmd>OverseerRunCmd<cr>", desc = "Run Command" },
+      { "<leader>roa", "<cmd>OverseerTaskAction<cr>", desc = "Task Action" },
+      { "<leader>rob", "<cmd>OverseerBuild<cr>", desc = "Build" },
+      { "<leader>roc", "<cmd>OverseerClose<cr>", desc = "Close" },
+      { "<leader>rod", "<cmd>OverseerDeleteBundle<cr>", desc = "Delete Bundle" },
+      { "<leader>rol", "<cmd>OverseerLoadBundle<cr>", desc = "Load Bundle" },
+      { "<leader>roo", "<cmd>OverseerOpen<cr>", desc = "Open" },
+      { "<leader>roq", "<cmd>OverseerQuickAction<cr>", desc = "Quick Action" },
+      { "<leader>ror", "<cmd>OverseerRun<cr>", desc = "Run" },
+      { "<leader>ros", "<cmd>OverseerSaveBundle<cr>", desc = "Save Bundle" },
+      { "<leader>rot", "<cmd>OverseerToggle<cr>", desc = "Toggle" },
     },
     config = true,
   },
-  -- {
-  --   "andythigpen/nvim-coverage",
-  --   cmd = { "Coverage" },
-  --   config = true,
-  -- },
 }

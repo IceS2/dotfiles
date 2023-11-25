@@ -82,7 +82,7 @@ return {
     "echasnovski/mini.misc",
     event = "VeryLazy",
     keys = {
-      { "<leader>vz", function() require("mini.misc").zoom() end, desc = "Toggle Zoom" },
+      { "<leader>z", function() require("mini.misc").zoom() end, desc = "Toggle Zoom" },
     },
   },
   {

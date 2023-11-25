@@ -52,26 +52,48 @@ return {
       telescope.load_extension("textcase")
     end,
     keys = {
-      { "<leader>f~", "<CMD>Telescope find_files cwd=~<CR>", desc = "Files from Home" },
+      -- Find Files
+      { "<leader>f`", "<CMD>Telescope find_files cwd=~<CR>", desc = "Files from Home" },
       { "<leader>ff", "<CMD>Telescope find_files", desc = "Files" },
-      { "<leader>f/", "<CMD>Telescope live_grep<CR>", desc = "Grep" },
       { "<leader>fr", "<CMD>Telescope oldfiles<CR>", desc = "Recent" },
+
+      -- Grep
+      { "<leader>f/", "<CMD>Telescope live_grep<CR>", desc = "Grep" },
+
+      -- List Tabs/Buffers
       { "<leader>ft", "<CMD>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
       { "<leader>fb", "<CMD>Telescope buffers<CR>", desc = "Buffers" },
-      { "<leader>fg", "<CMD>Telescope git_files<CR>", desc = "Git Files" },
-      { "<leader>fo", "<CMD>Telescope aerial<CR>", desc = "Code Outline" },
-      { "<leader>fc", "<CMD>Telescope conventional_commits<CR>", desc = "Conventional Commits" },
+
+      -- List Environment
       { "<leader>fe", "<CMD>Telescope env<CR>", desc = "Environment" },
+        -- <c-a> Append Environment Value to Buffer
+        -- <c-e> Edit Environment Value for the current Session
+
+      -- List Workspaces
       { "<leader>fw", "<CMD>Telescope workspaces<CR>", desc = "Workspaces" },
+
+      -- List TODOs
       { "<leader>fx", "<CMD>TodoTelescope<CR>", desc = "TODOs" },
+
+      -- List KeyMaps
       { "<leader>fk", "<CMD>Telescope keymaps<CR>", desc = "Keymaps" },
+
+      -- List HTTP Codes
       { "<leader>fh", "<CMD>Telescope http list<CR>", desc = "HTTP Codes" },
-      { "<leader>fr", "<CMD>Telescope lsp_references<CR>", desc = "Find References" },
+
+      -- List LSP References
+      { "<leader>fr", "<CMD>Telescope lsp_references<CR>", desc = "LSP References" },
+
+      -- Case Conversion
       { "<leader>fm", "<CMD>TextCaseOpenTelescope<CR>", desc = "Text Case Conversion" },
 
--- keymap("n", "<leader>fo", function() require("telescope.builtin").lsp_references() end)
--- keymap("n", "<leader>fx", function() require("telescope.builtin").lsp_definitions() end)
-      -- { <cmd>Telescope neoclip unnamed<CR> }
+      -- Find on Register Unnamed
+      { "<leader>fy", "<CMD>Telescope neoclip unnamed<CR>", desc = "Unnamed Register" },
+
+
+      -- { "<leader>fg", "<CMD>Telescope git_files<CR>", desc = "Git Files" },
+      -- { "<leader>fo", "<CMD>Telescope aerial<CR>", desc = "Code Outline" },
+      -- { "<leader>fc", "<CMD>Telescope conventional_commits<CR>", desc = "Conventional Commits" },
       -- { <cmd>Telescope luasnip<CR> }
       -- { <cmd>Telescope lazy<CR> }
       -- { <cmd>Telescope dap<CR> }
@@ -86,7 +108,11 @@ return {
   {
     "AckslD/nvim-neoclip.lua",
     config = function()
-      require("neoclip").setup {}
+      require("neoclip").setup {
+        on_select = {
+          move_to_front = true
+        }
+      }
     end
   },
   {
