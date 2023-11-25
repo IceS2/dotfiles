@@ -104,8 +104,8 @@ eval "$(zoxide init zsh)"
 
 # Pyenv ------------------------------------
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 
 # nvm --------------------------------------
@@ -115,6 +115,15 @@ source /usr/share/nvm/init-nvm.sh
 eval "$(direnv hook zsh)"
 
 # Alias ------------------------------------
+
+# icy
+icy() {
+  if [[ -z $1 ]]; then
+    nvim -c Dashboard
+  else
+    nvim $@
+  fi
+}
 
 # ls
 alias ls="lsd"
