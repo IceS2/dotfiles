@@ -1,4 +1,3 @@
--- TODO:
 local dashboard_custom_header = {
 "",
 "",

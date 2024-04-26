@@ -1,4 +1,3 @@
--- TODO:
 return {
   {
     "nanozuki/tabby.nvim",

@@ -32,4 +32,3 @@ require("lazy").setup("plugins", {
     },
   },
 })
-vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", { desc = "Plugin Manager" })

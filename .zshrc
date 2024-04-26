@@ -109,7 +109,7 @@ eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 
 # nvm --------------------------------------
-source /usr/share/nvm/init-nvm.sh
+# source /usr/share/nvm/init-nvm.sh
 
 # Direnv -----------------------------------
 eval "$(direnv hook zsh)"
@@ -133,7 +133,7 @@ alias tree="lsd --tree"
 alias cat="bat"
 
 # kubectl
-alias kubectl="kubecolor"
+# alias kubectl="kubecolor"
 
 # Python Virtualenv
 alias venv="$HOME/.config/scripts/create_python_env.sh"
@@ -142,8 +142,18 @@ venv-delete() {
   pyenv virtualenv-delete $1
 }
 
+# Git
+alias gfu="git fetch upstream"
+alias gf="git fetch"
+alias gc="git checkout"
+alias gcb='function gcb(){git fetch $2 && gc -b "$1" --no-track $2/main};gcb'
+alias gcr='function gcr(){git fetch $1 && gc -B random --no-track $1/main};gcr'
+
 # Bindings ---------------------------------
-bindkey "^[[1;3C" forward-word
-bindkey "^[[1;3D" backward-word
+# bindkey "^[[1;3C" forward-word
+# bindkey "^[[1;3D" backward-word
 bindkey '^R' history-incremental-search-backward
 
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+# export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+export PATH="$HOME/apache-maven-3.9.6/bin:$PATH"

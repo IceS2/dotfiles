@@ -1,4 +1,3 @@
--- TODO:
 local keymap = vim.api.nvim_set_keymap
 
 -- Better escape using jk in insert and terminal mode

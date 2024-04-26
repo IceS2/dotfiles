@@ -44,13 +44,6 @@ return {
     event = { "InsertEnter" },
     config = true
   },
-  -- {
-  --   "echasnovski/mini.pairs",
-  --   event = { "InsertEnter" },
-  --   config = function()
-  --     require("mini.pairs").setup {}
-  --   end
-  -- },
   {
     "echasnovski/mini.splitjoin",
     event = { "BufReadPre", "BufNewFile" },

@@ -13,7 +13,7 @@ return {
     },
     scope = "file",
     custom_colorcolumn = {
-      python = "88"
+      python = "120"
     }
   }
 }

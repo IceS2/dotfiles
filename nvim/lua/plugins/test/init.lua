@@ -1,4 +1,3 @@
--- TODO:
 return {
   {
     "vim-test/vim-test",

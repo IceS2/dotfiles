@@ -23,7 +23,6 @@ ckb-next-git
 clipcat
 cliphist
 cmake
-cuda
 czkawka-cli
 datagrip
 datagrip-jre
@@ -82,7 +81,10 @@ kubectx
 lapce
 lazydocker
 lazygit
+<<<<<<< HEAD
 lib32-nvidia-utils
+=======
+>>>>>>> 22a216b7d640427dc059185935c9f0e8f20eb401
 libcanberra
 libtool
 lightdm
@@ -111,7 +113,7 @@ networkmanager-dmenu-git
 networkmanager-openvpn
 nmap
 noise-suppression-for-voice
-notion-app
+notion-app-electron
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
@@ -119,9 +121,7 @@ noto-fonts-extra
 npm
 ntp
 numlockx
-nvidia
-nvidia-settings
-nvidia-utils
+nvidia-dkms
 nvm
 nwg-look
 openssl-1.1
@@ -160,6 +160,7 @@ ripgrep
 rofi-lbonn-wayland
 rtkit
 ruff
+ruff-lsp
 saml2aws
 sddm-git
 sddm-sugar-candy-git
@@ -186,6 +187,10 @@ ttf-dejavu
 ttf-font-awesome
 ttf-openlogos-archupdate
 unzip
+<<<<<<< HEAD
+=======
+velero
+>>>>>>> 22a216b7d640427dc059185935c9f0e8f20eb401
 vscode-codicons-git
 wacom-settings-git
 web-greeter

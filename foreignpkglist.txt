@@ -22,7 +22,7 @@ lightdm-webkit2-theme-reactive
 microsoft-edge-stable-bin
 nerd-fonts-git
 networkmanager-dmenu-git
-notion-app
+notion-app-electron
 nvm
 nwg-look
 picom-ibhagwan-git
@@ -41,6 +41,10 @@ sweet-theme-full-git
 tfenv
 tflint
 ttf-openlogos-archupdate
+<<<<<<< HEAD
+=======
+velero
+>>>>>>> 22a216b7d640427dc059185935c9f0e8f20eb401
 vscode-codicons-git
 wacom-settings-git
 web-greeter

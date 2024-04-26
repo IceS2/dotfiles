@@ -10,8 +10,6 @@ return {
       parents = 0,
       poetry_path = "",
       pipenv_path = "",
-      -- path = venv_path,
-      -- name = result,
       fd_binary_name = "fd"
     }
   end,

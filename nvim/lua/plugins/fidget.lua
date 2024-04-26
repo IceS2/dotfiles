@@ -1,9 +1,11 @@
 return {
   "j-hui/fidget.nvim",
-  event = { "BufReadPre", "BufNewFile" },
+  lazy = false,
   opts = {
-    window = {
-      relative = "editor"
+    notification = {
+      window = {
+        relative = "editor"
+      }
     }
   }
 }

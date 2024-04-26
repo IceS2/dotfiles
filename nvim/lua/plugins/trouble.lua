@@ -19,6 +19,7 @@ return {
   end,
   keys = {
     {"<leader>xx", "<CMD>TroubleToggle<CR>", desc = "Toggle Trouble"},
-    {"<leader>xd", "<CMD>TodoTrouble<CR>", desc = "Toggle TODO in Trouble"}
+    {"<leader>xd", "<CMD>TodoTrouble<CR>", desc = "Toggle TODO in Trouble"},
+    {"<leader>xr", "<CMD>TroubleToggle lsp_references<CR>", desc = "Toggle Trouble LSP References"}
   }
 }

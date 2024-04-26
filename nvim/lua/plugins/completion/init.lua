@@ -1,4 +1,3 @@
--- TODO:
 return{
   {
     "hrsh7th/nvim-cmp",
@@ -50,7 +49,6 @@ return{
               nvim_lsp = "[LSP]",
               nvim_lsp_signature_help = "[Signature]",
               nvim_lua = "[Lua]",
-              neorg = "[Neorg]",
               copilot = "[Copilot]"
             })
           })
@@ -101,7 +99,6 @@ return{
           { name = "luasnip" },
           { name = "buffer" },
           { name = "path" },
-          { name = "neorg" },
           { name = "copilot", group_index = 2 }
         }
       }

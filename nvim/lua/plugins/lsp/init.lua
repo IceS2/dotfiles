@@ -12,56 +12,30 @@ return {
       "towolf/vim-helm"
     },
     config = function()
-      -- ----------------------------------------------------------------------
-      -- Fixing Pyright way for working with pyenv-virtualenv
-      -- ----------------------------------------------------------------------
-      local util = require('lspconfig/util')
-      local path = util.path
-
-      local function get_python_path(workspace)
-        -- Use activated virtualenv.
-        if vim.env.VIRTUAL_ENV then
-          return path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
-        end
-
-        -- Find and use virtualenv in workspace directory.
-        for _, pattern in ipairs({'*', '.*'}) do
-          local match = vim.fn.glob(
-            path.join(workspace, pattern, '.python-local'))
-          if match ~= '' then
-            return path.join(
-              vim.env.PYENV_ROOT,
-              'versions',
-              path.dirname(match),
-              'bin',
-              'python')
-          end
-        end
-
-        -- Fallback to system Python.
-        return exepath('python3') or exepath('python') or 'python'
-      end
-
-      local function get_venv(workspace)
-        for _, pattern in ipairs({'*', '.*'}) do
-          local match = vim.fn.glob(path.join(workspace, pattern, '.python-local'))
-          if match ~= '' then
-            return match
-          end
-        end
-      end
-      -- ----------------------------------------------------------------------
-
       local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-      lsp_capabilities.textDocument.foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true
-      }
 
-      -- local lsp_attach = function(client, bufnr)
-      -- end
-      --
-      -- require("mason").setup()
+      vim.api.nvim_create_autocmd('LspAttach', {
+        desc = 'LSP actions',
+        callback = function(event)
+          local opts = {buffer = event.buf}
+
+          vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+          vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+          -- vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+          vim.keymap.set('n', 'gD', '<C-W><C-V> <cmd> lua vim.lsp.buf.definition()<cr>', opts)
+          vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+          vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+          vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+          vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+          vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+          vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+          vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+
+          vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
+          vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
+          vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
+        end
+      })
 
       require("mason-lspconfig").setup {
         ensure_installed = {
@@ -72,7 +46,7 @@ return {
           "docker_compose_language_service",            -- Docker Compose
           "gopls",                                      -- Go
           "graphql",                                    -- GraphQL
-          "helm_ls",
+          "helm_ls",                                    -- Helm
           "html",                                       -- HTML
           "jsonls",                                     -- JSON
           "tsserver",                                   -- TypeScript/JavaScript
@@ -80,6 +54,7 @@ return {
           "lua_ls",                                     -- Lua
           "marksman",                                   -- Markdown
           "pyright",                                    -- Python
+          "ruff_lsp",                                   -- Python
           "rust_analyzer",                              -- Rust
           "sqlls",                                      -- SQL
           "taplo",                                      -- TOML
@@ -97,6 +72,17 @@ return {
             capabilities = lsp_capabilities
           }
         end,
+
+        -- ["pyright"] = function()
+        --   require("lspconfig").pyright.setup {
+        --     capabilities = lsp_capabilities,
+        --     settings = {
+        --       python = {
+        --         venvPath = vim.fn.expand('/$HOME/.pyenv/versions/')
+        --       }
+        --     }
+        --   }
+        -- end,
 
         ["docker_compose_language_service"] = function()
           require("lspconfig").docker_compose_language_service.setup {
@@ -135,26 +121,15 @@ return {
           }
         end,
 
-        ["pyright"] = function()
-          require("lspconfig").pyright.setup {
-            capabilities = lsp_capabilities,
-            on_init = function(client)
-              client.config.settings.python.pythonPath = get_python_path(client.config_root_dir)
-              client.config.settings.venvPath = path.join(vim.env.PYENV_ROOT, 'versions')
-              client.config.settings.venv = get_venv(client.config.root_dir)
-            end
-          }
-        end,
-
-        ["ruff_lsp"] = function()
-          require("lspconfig")["ruff_lsp"].setup {
-            capabilities = lsp_capabilities,
-            on_init = function(client)
-              client.server_capabilities.hoverProvider = false
-              client.config.interpreter = get_python_path(client.config.root_dir)
-            end
-          }
-        end,
+        -- ["ruff_lsp"] = function()
+        --   require("lspconfig")["ruff_lsp"].setup {
+        --     capabilities = lsp_capabilities,
+        --     on_init = function(client)
+        --       client.server_capabilities.hoverProvider = false
+        --       client.config.interpreter = get_python_path(client.config.root_dir)
+        --     end
+        --   }
+        -- end,
 
         ["rust_analyzer"] = function()
           require("rust-tools").setup {
@@ -189,35 +164,35 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "williamboman/mason.nvim",
-      "jose-elias-alvarez/null-ls.nvim"
+      "nvimtools/none-ls.nvim"
     },
     config = function()
       require("mason-null-ls").setup {
         ensure_installed = {
-          -- Linter
-          "actionlint",
-          "curlylint",
-          -- "pyproject-flake8",
-          "hadolint",
-          "jsonlint",
-          -- "markdownlint",
-          "misspell",
-          "revive",
-          "rstcheck",
-          "ruff",
-          "selene",
-          "sqlfluff",
-          "tflint",
-          "tfsec",
-          -- "yamllint",
-          -- Formatter
-          "black",
-          "isort",
-          "rustfmt",
-          "shfmt",
-          "sqlfmt",
-          "stylua",
-          "yamlfmt"
+          -- -- Linter
+          -- "actionlint",
+          -- "curlylint",
+          -- -- "pyproject-flake8",
+          -- "hadolint",
+          -- "jsonlint",
+          -- -- "markdownlint",
+          -- "misspell",
+          -- "revive",
+          -- "rstcheck",
+          -- "ruff",
+          -- "selene",
+          -- "sqlfluff",
+          -- "tflint",
+          -- "tfsec",
+          -- -- "yamllint",
+          -- -- Formatter
+          -- "black",
+          -- "isort",
+          -- "rustfmt",
+          -- "shfmt",
+          -- "sqlfmt",
+          -- "stylua",
+          -- "yamlfmt"
         },
         automatic_installation = false,
         handlers = {
@@ -226,7 +201,7 @@ return {
     end
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       local null_ls = require "null-ls"
