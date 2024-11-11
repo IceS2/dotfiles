@@ -20,6 +20,14 @@ return {
             dap.default_setup(config)
           end,
           python = function(config)
+            config.adapters = {
+              type = "executable",
+              command = "/Users/ices2/Workspace/repos/OpenMetadata/env/bin/python",
+              args = {
+                "-m",
+                "debugpy.adapter",
+              }
+            }
             config.configurations[1].justMyCode = false
             dap.default_setup(config)
           end
@@ -48,7 +56,7 @@ return {
     "rcarriga/nvim-dap-ui",
     dependencies = {
       "mfussenegger/nvim-dap",
-      "folke/neodev.nvim"
+      "nvim-neotest/nvim-nio",
     },
     config = function()
       require("dapui").setup {}

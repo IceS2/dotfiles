@@ -54,7 +54,9 @@ return {
           "lua_ls",                                     -- Lua
           "marksman",                                   -- Markdown
           "pyright",                                    -- Python
-          "ruff_lsp",                                   -- Python
+          -- "ruff_lsp",                                   -- Python
+          -- "pylsp",
+          -- "ruff",
           "rust_analyzer",                              -- Rust
           "sqlls",                                      -- SQL
           "taplo",                                      -- TOML
@@ -72,17 +74,6 @@ return {
             capabilities = lsp_capabilities
           }
         end,
-
-        -- ["pyright"] = function()
-        --   require("lspconfig").pyright.setup {
-        --     capabilities = lsp_capabilities,
-        --     settings = {
-        --       python = {
-        --         venvPath = vim.fn.expand('/$HOME/.pyenv/versions/')
-        --       }
-        --     }
-        --   }
-        -- end,
 
         ["docker_compose_language_service"] = function()
           require("lspconfig").docker_compose_language_service.setup {
@@ -126,7 +117,6 @@ return {
         --     capabilities = lsp_capabilities,
         --     on_init = function(client)
         --       client.server_capabilities.hoverProvider = false
-        --       client.config.interpreter = get_python_path(client.config.root_dir)
         --     end
         --   }
         -- end,
@@ -156,59 +146,6 @@ return {
             }
           }
         end
-      }
-    end
-  },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "nvimtools/none-ls.nvim"
-    },
-    config = function()
-      require("mason-null-ls").setup {
-        ensure_installed = {
-          -- -- Linter
-          -- "actionlint",
-          -- "curlylint",
-          -- -- "pyproject-flake8",
-          -- "hadolint",
-          -- "jsonlint",
-          -- -- "markdownlint",
-          -- "misspell",
-          -- "revive",
-          -- "rstcheck",
-          -- "ruff",
-          -- "selene",
-          -- "sqlfluff",
-          -- "tflint",
-          -- "tfsec",
-          -- -- "yamllint",
-          -- -- Formatter
-          -- "black",
-          -- "isort",
-          -- "rustfmt",
-          -- "shfmt",
-          -- "sqlfmt",
-          -- "stylua",
-          -- "yamlfmt"
-        },
-        automatic_installation = false,
-        handlers = {
-        }
-      }
-    end
-  },
-  {
-    "nvimtools/none-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      local null_ls = require "null-ls"
-      null_ls.setup {
-        sources = {
-          null_ls.builtins.code_actions.refactoring,
-        }
       }
     end
   },

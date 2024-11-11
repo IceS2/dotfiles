@@ -1,3 +1,9 @@
+ local tab_rename = function()
+  vim.ui.input({prompt = "Tab Name"}, function(input)
+    require('tabby').tab_rename(input)
+  end)
+end
+
 return {
   {
     "nanozuki/tabby.nvim",
@@ -106,13 +112,14 @@ return {
       end)
     end,
     keys = {
-      -- { "<leader><space>", "<cmd>tabclose<cr>", desc = "Close Tab Workspace" },
+      { "<leader>wtc", "<cmd>tabclose<cr>", desc = "Close Tab" },
+      { "<leader>wtr", tab_rename, desc = "Rename Tab" },
       -- Go to tab # number
     }
   },
   {
     "tiagovla/scope.nvim",
-    enabled = false,
+    -- enabled = false,
     config = true
   }
 }

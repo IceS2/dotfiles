@@ -2,7 +2,7 @@ return {
   "m4xshen/smartcolumn.nvim",
   event = "VeryLazy",
   opts = {
-    colorcolumn = "80",
+    colorcolumn = "120",
     disabled_filetypes = {
       "help",
       "text",

@@ -1,20 +1,14 @@
 return {
   {
-    "weilbith/nvim-code-action-menu",
-    cmd = "CodeActionMenu",
-    keys = {
-      { "<leader>ca", "<CMD>CodeActionMenu<CR>", desc = "Open CodeAction Menu"}
-    }
-  },
-  {
-    "kosayoda/nvim-lightbulb",
-    event = "VeryLazy",
+    "aznhe21/actions-preview.nvim",
+    lazy = false,
     config = function()
-      require("nvim-lightbulb").setup {
-        autocmd = {
-          enabled = true
-        }
+      require("actions-preview").setup {
+        backend = { "nui", "telescope" }
       }
-    end
+    end,
+    keys = {
+      { "<leader>ca", function() require("actions-preview").code_actions() end, desc = "Open Code Action Menu"}
+    }
   }
 }

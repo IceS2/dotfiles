@@ -52,6 +52,7 @@ return {
       actions = {
         open_file = {
           quit_on_open = false,
+          resize_window = false,
           window_picker = {
             enable = true,
             exclude = {
@@ -93,7 +94,7 @@ return {
       filters = {
         dotfiles = false,
         custom = { ".git", "node_modules", ".cache", "__pycache__" },
-        exclude = { ".github", ".gitignore", "env", ".env" , "settings*"}
+        exclude = { ".github", ".gitignore", "env", ".env" , "settings*", ".gitmodules" }
       }
     }
   end,

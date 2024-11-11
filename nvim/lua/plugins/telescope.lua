@@ -6,7 +6,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-fzf-native.nvim",
-      "barrett-ruth/telescope-http.nvim",
+      "barrett-ruth/http-codes.nvim",
       "AckslD/nvim-neoclip.lua",
       "LinArcX/telescope-env.nvim",
       "olacin/telescope-cc.nvim",
@@ -14,7 +14,6 @@ return {
       "benfowler/telescope-luasnip.nvim",
       "tsakirist/telescope-lazy.nvim",
       "nvim-telescope/telescope-dap.nvim",
-      "stevearc/aerial.nvim",
       "aaronhallaert/advanced-git-search.nvim",
       "johmsalas/text-case.nvim"
     },
@@ -47,56 +46,48 @@ return {
       telescope.load_extension("lazy")
       telescope.load_extension("workspaces")
       telescope.load_extension("dap")
-      telescope.load_extension("aerial")
       telescope.load_extension("advanced_git_search")
       telescope.load_extension("textcase")
     end,
     keys = {
       -- Find Files
-      { "<leader>f`", "<CMD>Telescope find_files cwd=~<CR>", desc = "Files from Home" },
-      { "<leader>ff", "<CMD>Telescope find_files", desc = "Files" },
-      { "<leader>fr", "<CMD>Telescope oldfiles<CR>", desc = "Recent" },
+      { "<leader>fF", "<CMD>Telescope find_files cwd=~<CR>", desc = "[Telescope] Files from ~" },
+      { "<leader>ff", "<CMD>Telescope find_files<CR>", desc = "[Telescope] Files" },
+      { "<leader>fr", "<CMD>Telescope oldfiles<CR>", desc = "[Telescope] Recent" },
 
       -- Grep
-      { "<leader>f/", "<CMD>Telescope live_grep<CR>", desc = "Grep" },
+      { "<leader>f/", "<CMD>Telescope live_grep<CR>", desc = "[Telescope] Grep" },
 
       -- List Tabs/Buffers
-      { "<leader>ft", "<CMD>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
-      { "<leader>fb", "<CMD>Telescope buffers<CR>", desc = "Buffers" },
+      { "<leader>ft", "<CMD>Telescope telescope-tabs list_tabs<CR>", desc = "[Telescope] Tabs" },
+      { "<leader>fb", "<CMD>Telescope buffers<CR>", desc = "[Telescope] Buffers" },
 
       -- List Environment
-      { "<leader>fe", "<CMD>Telescope env<CR>", desc = "Environment" },
+      { "<leader>fe", "<CMD>Telescope env<CR>", desc = "[Telescope] Environment" },
         -- <c-a> Append Environment Value to Buffer
         -- <c-e> Edit Environment Value for the current Session
 
       -- List Workspaces
-      { "<leader>fw", "<CMD>Telescope workspaces<CR>", desc = "Workspaces" },
+      { "<leader>fw", "<CMD>Telescope workspaces<CR>", desc = "[Telescope] Workspaces" },
 
       -- List TODOs
-      { "<leader>fx", "<CMD>TodoTelescope<CR>", desc = "TODOs" },
+      { "<leader>fx", "<CMD>TodoTelescope<CR>", desc = "[Telescope] TODOs" },
 
       -- List KeyMaps
-      { "<leader>fk", "<CMD>Telescope keymaps<CR>", desc = "Keymaps" },
+      { "<leader>fk", "<CMD>Telescope keymaps<CR>", desc = "[Telescope] Keymaps" },
 
       -- List HTTP Codes
-      { "<leader>fh", "<CMD>Telescope http list<CR>", desc = "HTTP Codes" },
+      { "<leader>fh", "<CMD>Telescope http list<CR>", desc = "[Telescope] HTTP Codes" },
 
       -- List LSP References
-      { "<leader>fr", "<CMD>Telescope lsp_references<CR>", desc = "LSP References" },
+      { "<leader>fr", "<CMD>Telescope lsp_references<CR>", desc = "[Telescope] LSP References" },
 
       -- Case Conversion
-      { "<leader>fm", "<CMD>TextCaseOpenTelescope<CR>", desc = "Text Case Conversion" },
+      { "<leader>fm", "<CMD>TextCaseOpenTelescope<CR>", desc = "[Telescope] Text Case Conversion" },
 
       -- Find on Register Unnamed
-      { "<leader>fy", "<CMD>Telescope neoclip unnamed<CR>", desc = "Unnamed Register" },
+      { "<leader>fy", "<CMD>Telescope neoclip unnamed<CR>", desc = "[Telescope] Unnamed Register" },
 
-
-      -- { "<leader>fg", "<CMD>Telescope git_files<CR>", desc = "Git Files" },
-      -- { "<leader>fo", "<CMD>Telescope aerial<CR>", desc = "Code Outline" },
-      -- { "<leader>fc", "<CMD>Telescope conventional_commits<CR>", desc = "Conventional Commits" },
-      -- { <cmd>Telescope luasnip<CR> }
-      -- { <cmd>Telescope lazy<CR> }
-      -- { <cmd>Telescope dap<CR> }
       -- { <cmd>Telescope advanced_git_search diff_commit_file<CR> }
       -- { <cmd>Telescope advanced_git_search search_log_content<CR> }
     }
@@ -131,9 +122,5 @@ return {
         end
       }
     end
-  },
-  {
-    "stevearc/aerial.nvim",
-    config = true
   }
 }

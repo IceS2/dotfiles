@@ -58,6 +58,8 @@ vim.opt.scrolloff      = 8
 vim.opt.sidescrolloff  = 8
 
 -- Other Stuff
+vim.opt.sessionoptions = "curdir,folds,globals,help,tabpages,terminal,winsize"
+
 vim.o.formatoptions    = "jcroqlnt"
 vim.o.shortmess        = "filnxtToOFWIcC"
 

@@ -10,6 +10,3 @@ keymap("n", "N", "Nzz", { noremap = true, silent = true })
 
 -- Cancel search highlighting with ESC
 keymap("n", "<ESC>", ":nohlsearch<Bar>:echo<CR>", { noremap = true, silent = true })
-
-
-keymap("n", "qq", "<NOP>", {})

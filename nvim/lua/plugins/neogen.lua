@@ -39,9 +39,9 @@ return {
     },
   },
   keys = {
-    { "<leader>cg", function() require("neogen").generate() end, desc = "Generate Annotation", },
     { "<leader>cgc", function() require("neogen").generate { type = "class" } end, desc = "Class", },
     { "<leader>cgf", function() require("neogen").generate { type = "func" } end, desc = "Function", },
     { "<leader>cgt", function() require("neogen").generate { type = "type" } end, desc = "Type", },
+    { "<leader>cgF", function() require("neogen").generate { type = "file" } end, desc = "File", },
   },
 }

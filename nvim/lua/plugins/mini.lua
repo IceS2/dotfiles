@@ -86,6 +86,10 @@ return {
     },
   },
   {
+    "echasnovski/mini.icons",
+    config = true
+  },
+  {
     "ntpeters/vim-better-whitespace",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
