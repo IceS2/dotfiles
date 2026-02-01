@@ -1,168 +1,168 @@
 return {
-  "nvim-neo-tree/neo-tree.nvim",
-  lazy = false,
-  branch = "v3.x",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "MunifTanjim/nui.nvim",
-    "echasnovski/mini.icons",
-    {
-      "s1n7ax/nvim-window-picker",
-      version = "2.*",
-      opts = {
-        hint = "floating-big-letter",
-        filter_rules = {
-          bo = {
-            filetype = { "neo-tree", "neo-tree-popup" },
-            buftype = { "terminal", "quickfix"},
-          }
-        }
-      }
-    }
-  },
-  cmd = "Neotree",
-  keys = {
-    { "<leader>fe", "<cmd>Neotree toggle<cr>", desc = "Explorer (Root)" },
-    { "<leader>fE", "<cmd>Neotree toggle dir=%:p:h<cr>", desc = "Explorer (cwd)" },
-    { "<leader>e", "<cmd>Neotree reveal<cr>", desc = "Explorer Reveal" },
-    { "<leader>ge", "<cmd>Neotree git_status<cr>", desc = "Git Status" },
-    { "<leader>be", "<cmd>Neotree buffers<cr>", desc = "Buffer Explorer" },
-  },
-  opts = {
-    close_if_last_window = false,
-    popup_border_style = "single",
-    enable_git_status = true,
-    enable_diagnostics = true,
-    use_default_mappings = true,
-
-    open_files_do_not_replace_types = { "terminal", "nofile" },
-
-    sources = {
-      "filesystem",
-      "buffers",
-      "git_status",
-    },
-
-    default_component_configs = {
-      indent = {
-        indent_size = 2,
-        padding = 1,
-      },
-      icon = {
-        provider = function(icon, node)
-          local text, hl
-          local mini_icons = require("mini.icons")
-
-          if node.type == "file" then
-            text, hl = mini_icons.get("file", node.name)
-          elseif node.type == "directory" then
-            text, hl = mini_icons.get("directory", node.name)
-            if node:is_expanded() then
-              text = nil
-            end
-          end
-
-          if text then icon.text = text end
-          if hl then icon.highlight = hl end
-        end,
-      },
-      modified = {
-        symbol = "[+]",
-      },
-      name = {
-        trailing_slash = false,
-      },
-      git_status = {
-        symbols = {
-          added     = "✚",
-          modified  = "~",
-          deleted   = "✖",
-          renamed   = "➜",
-          untracked = "★",
-          ignored   = "◌",
-          unstaged  = "✗",
-          staged    = "✓",
-          conflict  = "",
-        }
-      },
-    },
-
-    window = {
-      position = "left",
-      width = 35,
-      mappings = {
-        ["<space>"] = "toggle_node",
-        ["<cr>"] = "open",
-        ["<esc>"] = "cancel",
-        ["P"] = { "toggle_preview", config = { use_float = true } },
-        ["l"] = "focus_preview",
-        ["S"] = "open_split",
-        ["s"] = "open_vsplit",
-        ["w"] = "open_with_window_picker",
-        ["t"] = "open_tabnew",
-        ["C"] = "close_node",
-        ["z"] = "close_all_nodes",
-        ["a"] = { "add", config = { show_path = "none" } },
-        ["A"] = "add_directory",
-        ["d"] = "delete",
-        ["r"] = "rename",
-        ["y"] = "copy_to_clipboard",
-        ["x"] = "cut_to_clipboard",
-        ["p"] = "paste_from_clipboard",
-        ["c"] = "copy",
-        ["m"] = "move",
-        ["q"] = "close_window",
-        ["R"] = "refresh",
-        ["?"] = "show_help",
-        ["<bs>"] = "navigate_up",
-        ["."] = "set_root",
-        ["H"] = "toggle_hidden",
-        ["/"] = "fuzzy_finder",
-        ["<"] = "prev_source",
-        [">"] = "next_source",
-      }
-    },
-
-    filesystem = {
-      follow_current_file = {
-        enabled = true,
-        leave_dirs_open = false,
-      },
-      hijack_netrw_behavior = "open_default",
-      use_libuv_file_watcher = true,
-      filtered_items = {
-        visible = false,
-        hide_dotfiles = false,
-        hide_gitignored = true,
-        hide_hidden = true,
-        never_show = {
-          ".DS_Store",
-          "node_modules",
-          ".git",
-          ".cache",
-          "__pycache__",
-        },
-        always_show = {
-          ".github",
-          ".gitignore",
-          "env",
-          ".env",
-        }
-      },
-    },
-
-    buffers = {
-      follow_current_file = {
-        enabled = true,
-      },
-      group_empty_dirs = true,
-      show_unloaded = true,
-    },
-
-    git_status = {
-      window = {
-        position = "float",
-      }
-    },
-  },
+  -- "nvim-neo-tree/neo-tree.nvim",
+  -- lazy = false,
+  -- branch = "v3.x",
+  -- dependencies = {
+  --   "nvim-lua/plenary.nvim",
+  --   "MunifTanjim/nui.nvim",
+  --   "echasnovski/mini.icons",
+  --   {
+  --     "s1n7ax/nvim-window-picker",
+  --     version = "2.*",
+  --     opts = {
+  --       hint = "floating-big-letter",
+  --       filter_rules = {
+  --         bo = {
+  --           filetype = { "neo-tree", "neo-tree-popup" },
+  --           buftype = { "terminal", "quickfix"},
+  --         }
+  --       }
+  --     }
+  --   }
+  -- },
+  -- cmd = "Neotree",
+  -- keys = {
+  --   { "<leader>fe", "<cmd>Neotree toggle<cr>", desc = "Explorer (Root)" },
+  --   { "<leader>fE", "<cmd>Neotree toggle dir=%:p:h<cr>", desc = "Explorer (cwd)" },
+  --   { "<leader>e", "<cmd>Neotree reveal<cr>", desc = "Explorer Reveal" },
+  --   { "<leader>ge", "<cmd>Neotree git_status<cr>", desc = "Git Status" },
+  --   { "<leader>be", "<cmd>Neotree buffers<cr>", desc = "Buffer Explorer" },
+  -- },
+  -- opts = {
+  --   close_if_last_window = false,
+  --   popup_border_style = "single",
+  --   enable_git_status = true,
+  --   enable_diagnostics = true,
+  --   use_default_mappings = true,
+  --
+  --   open_files_do_not_replace_types = { "terminal", "nofile" },
+  --
+  --   sources = {
+  --     "filesystem",
+  --     "buffers",
+  --     "git_status",
+  --   },
+  --
+  --   default_component_configs = {
+  --     indent = {
+  --       indent_size = 2,
+  --       padding = 1,
+  --     },
+  --     icon = {
+  --       provider = function(icon, node)
+  --         local text, hl
+  --         local mini_icons = require("mini.icons")
+  --
+  --         if node.type == "file" then
+  --           text, hl = mini_icons.get("file", node.name)
+  --         elseif node.type == "directory" then
+  --           text, hl = mini_icons.get("directory", node.name)
+  --           if node:is_expanded() then
+  --             text = nil
+  --           end
+  --         end
+  --
+  --         if text then icon.text = text end
+  --         if hl then icon.highlight = hl end
+  --       end,
+  --     },
+  --     modified = {
+  --       symbol = "[+]",
+  --     },
+  --     name = {
+  --       trailing_slash = false,
+  --     },
+  --     git_status = {
+  --       symbols = {
+  --         added     = "✚",
+  --         modified  = "~",
+  --         deleted   = "✖",
+  --         renamed   = "➜",
+  --         untracked = "★",
+  --         ignored   = "◌",
+  --         unstaged  = "✗",
+  --         staged    = "✓",
+  --         conflict  = "",
+  --       }
+  --     },
+  --   },
+  --
+  --   window = {
+  --     position = "left",
+  --     width = 35,
+  --     mappings = {
+  --       ["<space>"] = "toggle_node",
+  --       ["<cr>"] = "open",
+  --       ["<esc>"] = "cancel",
+  --       ["P"] = { "toggle_preview", config = { use_float = true } },
+  --       ["l"] = "focus_preview",
+  --       ["S"] = "open_split",
+  --       ["s"] = "open_vsplit",
+  --       ["w"] = "open_with_window_picker",
+  --       ["t"] = "open_tabnew",
+  --       ["C"] = "close_node",
+  --       ["z"] = "close_all_nodes",
+  --       ["a"] = { "add", config = { show_path = "none" } },
+  --       ["A"] = "add_directory",
+  --       ["d"] = "delete",
+  --       ["r"] = "rename",
+  --       ["y"] = "copy_to_clipboard",
+  --       ["x"] = "cut_to_clipboard",
+  --       ["p"] = "paste_from_clipboard",
+  --       ["c"] = "copy",
+  --       ["m"] = "move",
+  --       ["q"] = "close_window",
+  --       ["R"] = "refresh",
+  --       ["?"] = "show_help",
+  --       ["<bs>"] = "navigate_up",
+  --       ["."] = "set_root",
+  --       ["H"] = "toggle_hidden",
+  --       ["/"] = "fuzzy_finder",
+  --       ["<"] = "prev_source",
+  --       [">"] = "next_source",
+  --     }
+  --   },
+  --
+  --   filesystem = {
+  --     follow_current_file = {
+  --       enabled = true,
+  --       leave_dirs_open = false,
+  --     },
+  --     hijack_netrw_behavior = "open_default",
+  --     use_libuv_file_watcher = true,
+  --     filtered_items = {
+  --       visible = false,
+  --       hide_dotfiles = false,
+  --       hide_gitignored = true,
+  --       hide_hidden = true,
+  --       never_show = {
+  --         ".DS_Store",
+  --         "node_modules",
+  --         ".git",
+  --         ".cache",
+  --         "__pycache__",
+  --       },
+  --       always_show = {
+  --         ".github",
+  --         ".gitignore",
+  --         "env",
+  --         ".env",
+  --       }
+  --     },
+  --   },
+  --
+  --   buffers = {
+  --     follow_current_file = {
+  --       enabled = true,
+  --     },
+  --     group_empty_dirs = true,
+  --     show_unloaded = true,
+  --   },
+  --
+  --   git_status = {
+  --     window = {
+  --       position = "float",
+  --     }
+  --   },
+  -- },
 }

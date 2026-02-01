@@ -1,3 +1,9 @@
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+# Set Homebrew PATH early (macOS)
+if [[ -f /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 function plugin-load {
   local repo plugin_name plugin_dir initfile initfiles
   ZPLUGINDIR=${ZPLUGINDIR:-${ZDOTDIR:-$HOME/.config/zsh}/plugins}
@@ -62,13 +68,15 @@ plugins=(
 
 zmodload zsh/langinfo
 zmodload zsh/complist
-autoload bashcompinit && bashcompinit
+
+# Use zsh's native git completion (loaded automatically via compinit)
 autoload -Uz compinit && compinit
 
 plugin-load $plugins
 
-complete -C $(command -v aws_completer) aws
-zstyle ':completion:*:*:git:*' script ~/.config/zsh/completions/git.zsh
+
+# Removed problematic zstyle that was causing recursion
+# zstyle ':completion:*:*:git:*' script $(brew --prefix)/share/zsh/site-functions/_git
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
 # set descriptions format to enable group support
@@ -114,6 +122,10 @@ eval "$(pyenv virtualenv-init -)"
 # Direnv -----------------------------------
 eval "$(direnv hook zsh)"
 
+# jenv -------------------------------------
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
 # Alias ------------------------------------
 
 # icy
@@ -149,11 +161,21 @@ alias gc="git checkout"
 alias gcb='function gcb(){git fetch $2 && gc -b "$1" --no-track $2/main};gcb'
 alias gcr='function gcr(){git fetch $1 && gc -B random --no-track $1/main};gcr'
 
+# x86 homebrew
+alias brow='arch --x86_64 /usr/local/Homebrew/bin/brew'
+
+# WezTerm
+alias ww='wezterm start --always-new-process -- --workspace-type work &'
+alias pw='wezterm start --always-new-process -- --workspace-type personal &'
+
+# AWS
+alias set-playgrounds='source ~/.config/scripts/assume-playgrounds-role.sh'
+
 # Bindings ---------------------------------
 # bindkey "^[[1;3C" forward-word
 # bindkey "^[[1;3D" backward-word
+bindkey "^[f" forward-word   # Option + Right
+bindkey "^[b" backward-word  # Option + Left
 bindkey '^R' history-incremental-search-backward
 
-export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
-# export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
 export PATH="$HOME/apache-maven-3.9.6/bin:$PATH"

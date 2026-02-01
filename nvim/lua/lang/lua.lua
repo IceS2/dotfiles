@@ -2,7 +2,11 @@ return {
   {
     "folke/lazydev.nvim",
     ft = "lua",
-    opts = {}
+    opts = {
+      integrations = {
+        lspconfig = true
+      }
+    },
   },
   {
     "saghen/blink.cmp",
@@ -18,23 +22,5 @@ return {
         }
       }
     }
-  },
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require("lazydev")
-      vim.lsp.config("lua_ls", {
-        capabilities = require("blink.cmp").get_lsp_capabilities(),
-        on_attach = function(_, bufnr)
-            require("plugins.lsp.keymaps").setup(bufnr)
-        end,
-        settings = {
-          Lua = {
-            workspace = { checkThirdParty = false },
-            telemetry = { enable = false },
-          }
-        }
-      })
-    end
   },
 }

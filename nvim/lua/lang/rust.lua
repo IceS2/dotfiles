@@ -9,6 +9,7 @@ return {
           test_executor = "background",
         },
         server = {
+          capabilities = require("blink.cmp").get_lsp_capabilities(),
           on_attach = function(_, bufnr)
             local opts = { buffer = bufnr }
             require("plugins.lsp.keymaps").setup(bufnr)

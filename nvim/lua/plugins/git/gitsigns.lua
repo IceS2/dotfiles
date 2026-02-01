@@ -25,10 +25,6 @@ return {
       -- Whole-buffer Actions
       map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
       map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-
-      -- Blame
-      map("n", "<leader>gb", gs.toggle_current_line_blame, "Toggle Blame")
-      map("n", "<leader>gB", function() gs.blame_line { full = true } end, "Blame Full")
     end,
   }
 }

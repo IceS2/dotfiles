@@ -5,13 +5,17 @@ return {
     preset = "modern",
     delay = 300,
     spec = {
-      { "<leader>b", group = "Buffer", icon = " " },
+      { "<leader><leader>", desc = "Smart Find" },
+      { "<leader>b", group = "Buffers", icon = " " },
       { "<leader>c", group = "Code", icon = " " },
       { "<leader>d", group = "Debug", icon = " " },
-      { "<leader>f", group = "File/Find", icon = " " },
+      { "<leader>e", desc = "Explorer" },
+      { "<leader>E", desc = "Explorer (File Dir)" },
+      { "<leader>f", group = "Find", icon = " " },
       { "<leader>g", group = "Git", icon = "󰊢 " },
+      { "<leader>s", group = "Search", icon = " " },
       { "<leader>t", group = "Terminal", icon = " " },
-      { "<leader>x", group = "Trouble", icon = " " },
+      { "<leader>x", group = "Diagnostics", icon = " " },
     }
   }
 }

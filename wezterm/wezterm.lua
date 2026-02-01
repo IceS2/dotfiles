@@ -28,7 +28,7 @@ custom = {
 }
 
 -- Launching
-config.default_prog = { "/bin/zsh" }
+config.default_prog = { "/bin/zsh", "-l" }
 config.automatically_reload_config = true
 
 -- Clipboard

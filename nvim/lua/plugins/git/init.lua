@@ -1,4 +1,5 @@
 return {
   { import = "plugins.git.gitsigns" },
-  { import = "plugins.git.snacks_lazygit" },
+  { import = "plugins.git.gitblame" },
+  { import = "plugins.git.diffview" },
 }
