@@ -1,6 +1,8 @@
 mod colors;
 mod countdown;
 mod data;
+mod git;
+mod segments;
 
 use std::io::Read;
 
