@@ -57,6 +57,7 @@ fn run_git(cwd: &str) -> String {
     Command::new("git")
         .args(["branch", "--show-current"])
         .current_dir(cwd)
+        .stderr(std::process::Stdio::null())
         .output()
         .ok()
         .and_then(|o| {
