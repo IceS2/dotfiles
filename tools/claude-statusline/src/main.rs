@@ -1,3 +1,4 @@
+mod colors;
 mod data;
 
 use std::io::Read;
