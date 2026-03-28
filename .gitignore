@@ -1,0 +1,8 @@
+*.local
+zsh/config/zsh-private.zsh
+__pycache__/
+*.pyc
+.zcompdump*
+*.bak
+*.swp
+*~
