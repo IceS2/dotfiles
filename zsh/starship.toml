@@ -1,10 +1,198 @@
+# ╔═══════════════════════════════════════════════════════════╗
+# ║              Starship Prompt Configuration                ║
+# ║          Catppuccin Mocha + Performance Optimized         ║
+# ╚═══════════════════════════════════════════════════════════╝
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Use Catppuccin Mocha palette
+palette = 'catppuccin_mocha'
+
+# Performance tuning
+scan_timeout = 30
+command_timeout = 1000
+add_newline = true
+
+# Two-line prompt: Info line + Input line
 format = """
+[╭─ ](bold blue)\
 $username\
 $hostname\
-$localip\
-$shlvl\
-$singularity\
-$kubernetes\
-[\uf07c](bold cyan) \
-$all\
+$directory\
+$git_branch\
+$git_status\
+$rust\
+$golang\
+$python\
+$nodejs\
+$java\
+$kotlin\
+$lua\
+$dart\
+$julia\
+$terraform\
+$docker_context\
+$line_break\
+[╰─](bold blue)$character\
 """
+
+# Right side: Metadata
+right_format = """$cmd_duration$jobs$time"""
+
+# ─────────────────────────────────────────────────────────────
+# Core Modules
+# ─────────────────────────────────────────────────────────────
+
+[character]
+# Uses ❯ symbol with Catppuccin colors
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+style = "bold blue"
+
+[username]
+show_always = false
+format = "[$user]($style)@"
+style_user = "bold lavender"
+style_root = "bold red"
+
+[hostname]
+ssh_only = true
+format = "[$hostname]($style) in "
+style = "bold lavender"
+
+# ─────────────────────────────────────────────────────────────
+# Git Integration
+# ─────────────────────────────────────────────────────────────
+
+[git_branch]
+# Uses default icon
+format = "on [$symbol$branch]($style) "
+style = "bold mauve"
+
+[git_status]
+# Simple, clean git status (disables slow operations for performance)
+style = "bold red"
+untracked = ""        # Disabled for performance (slowest operation)
+stashed = ""          # Disabled unless you use stash frequently
+renamed = ""          # Disabled for performance
+
+# ─────────────────────────────────────────────────────────────
+# Language Modules (Performance Optimized)
+# ─────────────────────────────────────────────────────────────
+
+[rust]
+# Uses default icon and format
+style = "bold red"
+
+[python]
+# Uses default icon and format
+style = "bold yellow"
+pyenv_version_name = true  # Fast: read from file, don't spawn python
+
+[nodejs]
+# Uses default icon and format
+style = "bold green"
+
+[docker_context]
+# Uses default icon and format
+style = "bold blue"
+only_with_files = true
+
+# ─────────────────────────────────────────────────────────────
+# Additional Language Support (Optional)
+# ─────────────────────────────────────────────────────────────
+
+[golang]
+style = "bold cyan"
+
+[java]
+style = "bold red"
+
+[kotlin]
+style = "bold blue"
+
+[lua]
+style = "bold blue"
+
+[dart]
+style = "bold blue"
+
+[julia]
+style = "bold mauve"
+
+[terraform]
+style = "bold mauve"
+
+# ─────────────────────────────────────────────────────────────
+# Utility Modules
+# ─────────────────────────────────────────────────────────────
+
+[cmd_duration]
+min_time = 500  # Only show if command took >500ms
+format = "[took $duration](peach) "
+show_milliseconds = true
+
+[jobs]
+symbol = " "
+format = "[$symbol$number]($style) "
+style = "bold blue"
+number_threshold = 1
+
+[time]
+disabled = false
+format = "[$time]($style) "
+style = "subtext0"
+time_format = "%H:%M"
+use_12hr = false
+
+# ─────────────────────────────────────────────────────────────
+# Disabled Modules (Performance/Irrelevant)
+# ─────────────────────────────────────────────────────────────
+
+[aws]
+disabled = true  # Slow API calls
+
+[gcloud]
+disabled = true  # Slow API calls
+
+[kubernetes]
+disabled = true  # Slow API calls, enable if actively using K8s
+
+[battery]
+disabled = true  # Not needed on desktop
+
+# ─────────────────────────────────────────────────────────────
+# Catppuccin Mocha Color Palette
+# ─────────────────────────────────────────────────────────────
+
+[palettes.catppuccin_mocha]
+rosewater = "#EEE1ED"
+flamingo = "#DFD0E9"
+pink = "#B0D4FF"
+mauve = "#00C5FF"
+red = "#A6A2F0"
+maroon = "#BBACE2"
+peach = "#FFA8D0"
+yellow = "#FFD2D2"
+green = "#FFCA8A"
+teal = "#D0D9A5"
+sky = "#ACDAB4"
+sapphire = "#7CCCB4"
+blue = "#12C5D3"
+lavender = "#5AD1EA"
+text = "#B0DFE6"
+subtext1 = "#9FCAD2"
+subtext0 = "#8BB5BD"
+overlay2 = "#79A0A8"
+overlay1 = "#668B93"
+overlay0 = "#54777E"
+surface2 = "#406169"
+surface1 = "#2E4D54"
+surface0 = "#19383F"
+base = "#04232B"
+mantle = "#041C22"
+crust = "#011519"
