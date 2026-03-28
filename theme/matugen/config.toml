@@ -1,0 +1,21 @@
+[config]
+version_check = false
+
+[config.wallpaper]
+command = "swww"
+set = false
+
+[config.custom_colors]
+success = { color = "#a6e3a1", blend = true }
+warning = { color = "#f9e2af", blend = true }
+caution = { color = "#fab387", blend = true }
+teal = { color = "#94e2d5", blend = true }
+sapphire = { color = "#74c7ec", blend = true }
+blue = { color = "#89b4fa", blend = true }
+flamingo = { color = "#f2cdcd", blend = true }
+
+[templates.colors-json]
+input_path = "templates/colors.json"
+output_path = "~/.config/theme/colors.json"
+# No post_hook — apply-theme.sh is called explicitly on confirm
+# (avoids reloading kitty/hyprland/etc. during wallpaper browsing)

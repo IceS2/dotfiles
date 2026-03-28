@@ -1,0 +1,30 @@
+# wpaperd configuration
+# Wallpaper daemon for Wayland
+# Managed in ~/.dotfiles/theme/wallpaper/wpaperd/
+
+# Default settings for all displays
+[default]
+duration = "1h"
+mode = "center"
+sorting = "random"
+
+# DP-2: Primary monitor - Horizontal (2560x1440)
+[DP-2]
+path = "/home/ice/.dotfiles/theme/wallpaper/images/peakpx.jpg"
+mode = "fit"  # Fit to screen
+
+# DP-1: Secondary monitor - Vertical (1440x2560, rotated)
+[DP-1]
+path = "/home/ice/.dotfiles/theme/wallpaper/images/peakpx.jpg"
+mode = "fit"  # Fit to screen
+
+# Mode options:
+# - center: Center image without scaling
+# - fit: Fit image to screen (may have bars)
+# - stretch: Stretch to fill screen (may distort)
+# - tile: Tile image across screen
+# - fit-border-color: Fit with colored borders
+
+# Duration: Time before changing wallpaper (if path is a directory with multiple images)
+# - Examples: "30s", "5m", "1h", "2h30m"
+# - Omit duration if using single static image
