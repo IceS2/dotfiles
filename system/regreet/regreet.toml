@@ -1,0 +1,35 @@
+# ReGreet Configuration
+# Copied to: /etc/greetd/regreet.toml
+
+# Background (optional - uncomment and set path)
+# [background]
+# path = "/path/to/your/wallpaper.jpg"
+# fit = "Cover"  # Options: Fill, Contain, Cover, ScaleDown
+
+[GTK]
+application_prefer_dark_theme = true
+font_name = "Inter 11"
+theme_name = "catppuccin-mocha-lavender-standard+default"
+icon_theme_name = "Papirus-Dark"
+cursor_theme_name = "catppuccin-mocha-lavender-cursors"
+cursor_blink = false
+
+[commands]
+reboot = ["systemctl", "reboot"]
+poweroff = ["systemctl", "poweroff"]
+
+[appearance]
+greeting_msg = "Kernel panic? Not today."
+
+[widget.clock]
+# 24hr format - simple ASCII only
+format = "%A, %d %B %Y | %H:%M"
+resolution = "1000ms"
+
+[env]
+XDG_SESSION_TYPE = "wayland"
+# Force sharp rendering
+GDK_SCALE = "1"
+GDK_DPI_SCALE = "1"
+# Font hinting for sharp text
+FREETYPE_PROPERTIES = "truetype:interpreter-version=40"

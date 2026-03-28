@@ -1,0 +1,37 @@
+# Yazi Keybindings - Arrow key navigation
+
+[manager]
+prepend_keymap = [
+  # Navigation (arrow keys)
+  { on = ["<Left>"], run = "leave", desc = "Go to parent directory" },
+  { on = ["<Right>"], run = "enter", desc = "Enter directory / open file" },
+  { on = ["<Up>"], run = "arrow -1", desc = "Move up" },
+  { on = ["<Down>"], run = "arrow 1", desc = "Move down" },
+  
+  # Quick jumps
+  { on = ["g", "g"], run = "arrow -99999999", desc = "Jump to top" },
+  { on = ["G"], run = "arrow 99999999", desc = "Jump to bottom" },
+  
+  # File operations
+  { on = ["d"], run = "remove", desc = "Delete selected files" },
+  { on = ["y"], run = "yank", desc = "Yank (copy) selected files" },
+  { on = ["x"], run = "yank --cut", desc = "Cut selected files" },
+  { on = ["p"], run = "paste", desc = "Paste files" },
+  { on = ["r"], run = "rename", desc = "Rename file" },
+  
+  # Selection
+  { on = ["<Space>"], run = "select --state=none", desc = "Toggle selection" },
+  { on = ["v"], run = "visual_mode", desc = "Enter visual mode" },
+  { on = ["V"], run = "visual_mode --unset", desc = "Exit visual mode" },
+  
+  # View options
+  { on = ["z", "h"], run = "hidden toggle", desc = "Toggle hidden files" },
+  { on = ["z", "s"], run = "sort modified --reverse", desc = "Sort by modified time" },
+  { on = ["z", "n"], run = "sort natural", desc = "Sort by name" },
+  
+  # Quick actions
+  { on = ["q"], run = "quit", desc = "Quit yazi" },
+  { on = ["/"], run = "search fd", desc = "Search files" },
+  { on = ["n"], run = "search_arrow", desc = "Next search result" },
+  { on = ["N"], run = "search_arrow --previous", desc = "Previous search result" },
+]

@@ -1,0 +1,28 @@
+[Desktop Entry]
+Version=1.0
+Name=Jellyfin
+Comment=Desktop client for Jellyfin
+Exec=env QTWEBENGINE_CHROMIUM_FLAGS="--disable-features=IsolateOrigins,site-per-process --disable-site-isolation-trials" jellyfin-desktop
+Icon=org.jellyfin.JellyfinDesktop
+Terminal=false
+Type=Application
+StartupWMClass=org.jellyfin.JellyfinDesktop
+Categories=AudioVideo;Video;Player;TV;
+
+Actions=DesktopF;DesktopW;TVF;TVW
+
+[Desktop Action DesktopF]
+Name=Desktop [Fullscreen]
+Exec=env QTWEBENGINE_CHROMIUM_FLAGS="--disable-features=IsolateOrigins,site-per-process --disable-site-isolation-trials" jellyfin-desktop --fullscreen --desktop
+
+[Desktop Action DesktopW]
+Name=Desktop [Windowed]
+Exec=env QTWEBENGINE_CHROMIUM_FLAGS="--disable-features=IsolateOrigins,site-per-process --disable-site-isolation-trials" jellyfin-desktop --windowed --desktop
+
+[Desktop Action TVF]
+Name=TV [Fullscreen]
+Exec=env QTWEBENGINE_CHROMIUM_FLAGS="--disable-features=IsolateOrigins,site-per-process --disable-site-isolation-trials" jellyfin-desktop --fullscreen --tv
+
+[Desktop Action TVW]
+Name=TV [Windowed]
+Exec=env QTWEBENGINE_CHROMIUM_FLAGS="--disable-features=IsolateOrigins,site-per-process --disable-site-isolation-trials" jellyfin-desktop --windowed --tv

@@ -1,0 +1,13 @@
+[Unit]
+Description=Arctis 7+ Auto-Switch Monitor
+After=pipewire.service wireplumber.service
+PartOf=wireplumber.service
+
+[Service]
+Type=simple
+ExecStart=%h/.config/wireplumber/scripts/arctis-auto-switch.sh
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=default.target

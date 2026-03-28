@@ -1,0 +1,19 @@
+[general]
+mode = viewer
+overlay = yes
+app_id = swayimg
+
+[viewer]
+window = #1e1e2e
+transparency = grid
+scale = optimal
+antialiasing = bicubic
+preload = 1
+
+[gallery]
+size = 200
+padding = 10
+antialiasing = bicubic
+
+[keys.viewer]
+F11 = fullscreen

@@ -1,0 +1,21 @@
+include catppuccin-mocha
+
+# Font
+set font "JetBrainsMono Nerd Font 10"
+
+# Use Wayland clipboard
+set selection-clipboard clipboard
+
+# Fit width by default
+set adjust-open "best-fit"
+
+# Show basename in title
+set window-title-basename "true"
+
+# Scrolling
+set scroll-step 100
+
+# Padding
+set statusbar-h-padding 10
+set statusbar-v-padding 5
+set page-padding 2
