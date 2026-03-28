@@ -1,6 +1,10 @@
 return {
   "saghen/blink.cmp",
   version = "1.*",
+  enabled = function()
+    local disabled_fts = { "dap-repl", "dapui_watches", "dapui_hover" }
+    return not vim.tbl_contains(disabled_fts, vim.bo.filetype)
+  end,
   event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
     "echasnovski/mini.icons",
@@ -110,7 +114,7 @@ return {
       }
     },
     signature = {
-      enabled = true,
+      enabled = false,
     },
     cmdline = {
       keymap = {

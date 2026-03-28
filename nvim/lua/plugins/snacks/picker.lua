@@ -166,10 +166,21 @@ return {
     },
     {
       "<leader>xb",
-      function() required("snacks").picker.diagnostics_buffer() end,
+      function() require("snacks").picker.diagnostics_buffer() end,
       desc = "Diagnostics (Buffer)"
     },
 
+
+    {
+      "<leader>xq",
+      function() require("snacks").picker.qflist() end,
+      desc = "Quickfix List"
+    },
+    {
+      "<leader>xl",
+      function() require("snacks").picker.loclist() end,
+      desc = "Location List"
+    },
 
     {
       "<leader>fh",

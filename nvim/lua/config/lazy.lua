@@ -19,11 +19,13 @@ require("lazy").setup({
     { import = "plugins.core.ui" },
     { import = "plugins.editor" },
     { import = "plugins.git" },
+    { import = "plugins.debug" },
+    { import = "plugins.test" },
     { import = "plugins" },
     { import = "lang" },
   },
   defaults = { lazy = true },
-  install = { colorscheme = { "tokyonight" } },
+  install = { colorscheme = { "catppuccin" } },
   checker = { enabled = true, frequency = 86400 },
   performance = {
     rtp = {

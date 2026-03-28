@@ -21,10 +21,9 @@ M.setup = function(bufnr)
 
     -- Actions
     safe_map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename Symbol" })
+    safe_map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename File" })
     safe_map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code Action" })
-    safe_map("n", "<leader>cf", function()
-      vim.lsp.buf.format({ async = true })
-    end, { buffer = bufnr, desc = "Format Document" })
+    -- Format handled by conform.nvim (<leader>cf in plugins/editor/conform.lua)
 
     -- Diagnostics
     safe_map("n", "[d", function()

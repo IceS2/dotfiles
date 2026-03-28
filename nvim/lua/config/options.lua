@@ -92,6 +92,20 @@ vim.api.nvim_create_autocmd("CursorHold", {
   end,
 })
 
+-- Folding (nvim-ufo)
+vim.opt.foldcolumn = "1"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
+
+-- Highlight on Yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
+  callback = function()
+    vim.hl.on_yank({ timeout = 200 })
+  end,
+})
+
 vim.filetype.add({
   extension = {
     mdx = "mdx",

@@ -1,28 +1,37 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",  -- Use master branch for stable API
     event = { "BufReadPost", "BufNewFile" },
     build = ":TSUpdate",
-    config = function()
-        require("nvim-treesitter.configs").setup({
-          ensure_installed = {
-            "bash",
-            "json",
-            "lua",
-            "markdown",
-            "markdown_inline",
-            "query",
-            "regex",
-            "rust",
-            "toml",
-            "vim",
-            "vimdoc",
-            "yaml",
-        },
-        highlight = { enable = true },
-        indent = { enable = true },
-        matchup = { enable = true },
-      })
+    opts = {
+      ensure_installed = {
+        "astro",
+        "bash",
+        "css",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "query",
+        "regex",
+        "rust",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "yaml",
+      },
+      highlight = { enable = true },
+      indent = { enable = true },
+      matchup = { enable = true },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
     end,
   },
   {
@@ -40,6 +49,7 @@ return {
   {
     "windwp/nvim-ts-autotag",
     ft = {
+      "astro",
       "html",
       "xml",
       "javascript",

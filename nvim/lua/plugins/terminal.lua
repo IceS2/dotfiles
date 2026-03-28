@@ -1,19 +1,17 @@
 return {
-  "termim",
-  dir = "~/Workspace/ices2/termim.nvim/",
-  lazy = false,
+  "2kabhishek/termim.nvim",
+  cmd = { "Fterm", "FTerm", "Sterm", "STerm", "Tterm", "TTerm", "Vterm", "VTerm" },
   keys = {
-      -- Default toggles
-      { "<leader>tf", "<cmd>FToggleTerm<cr>", desc = "Toggle float terminal" },
-      { "<leader>ts", "<cmd>SToggleTerm<cr>", desc = "Toggle split terminal" },
-      { "<leader>tv", "<cmd>VToggleTerm<cr>", desc = "Toggle vsplit terminal" },
-      { "<leader>tt", "<cmd>TToggleTerm<cr>", desc = "Toggle tab terminal" },
+      -- Ephemeral terminals (auto-close when exited)
+      { "<leader>;f", "<cmd>Fterm<cr>", desc = "Float terminal (ephemeral)" },
+      { "<leader>;s", "<cmd>Sterm<cr>", desc = "Split terminal (ephemeral)" },
+      { "<leader>;v", "<cmd>Vterm<cr>", desc = "Vsplit terminal (ephemeral)" },
+      { "<leader>;t", "<cmd>Tterm<cr>", desc = "Tab terminal (ephemeral)" },
 
-      -- Ephemeral terminals
-      { "<leader>tF", "<cmd>FTerm<cr>",       desc = "Float terminal" },
-      { "<leader>tS", "<cmd>STerm<cr>",       desc = "Split terminal" },
-      { "<leader>tV", "<cmd>VTerm<cr>",       desc = "VSplit terminal" },
-      { "<leader>tR", "<cmd>TTerm<cr>",       desc = "Tab terminal" },
-
+      -- Persistent terminals (stay open until manually closed)
+      { "<leader>;F", "<cmd>FTerm<cr>", desc = "Float terminal (persistent)" },
+      { "<leader>;S", "<cmd>STerm<cr>", desc = "Split terminal (persistent)" },
+      { "<leader>;V", "<cmd>VTerm<cr>", desc = "Vsplit terminal (persistent)" },
+      { "<leader>;T", "<cmd>TTerm<cr>", desc = "Tab terminal (persistent)" },
   }
 }

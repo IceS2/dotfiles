@@ -6,7 +6,7 @@ return {
     init = function()
       vim.g.rustaceanvim = {
         tools = {
-          test_executor = "background",
+          test_executor = "neotest",
         },
         server = {
           capabilities = require("blink.cmp").get_lsp_capabilities(),
@@ -35,11 +35,36 @@ return {
           default_settings = {
             ["rust-analyzer"] = {
               checkOnSave = { command = "clippy" },
+              cargo = {
+                allFeatures = true,
+                loadOutDirsFromCheck = true,
+                buildScripts = { enable = true },
+              },
+              procMacro = {
+                enable = true,
+                ignored = {
+                  ["async-trait"] = { "async_trait" },
+                  ["napi-derive"] = { "napi" },
+                  ["async-recursion"] = { "async_recursion" },
+                },
+              },
+              files = {
+                excludeDirs = {
+                  ".direnv",
+                  ".git",
+                  ".github",
+                  "node_modules",
+                  "target",
+                  ".venv",
+                },
+              },
               inlayHints = {
                 closingBraceHints = { enable = true },
                 parameterHints = { enable = true },
                 typeHints = { enable = true },
-              }
+                chainingHints = { enable = true },
+                lifetimeElisionHints = { enable = "skip_trivial" },
+              },
             }
           }
         }

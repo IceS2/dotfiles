@@ -40,8 +40,6 @@ return {
 
       -- JavaScript
       vim.lsp.config("vtsls", require("lang.javascript.vtsls"))
-      require("lang.javascript.biome") -- We are only running an autocmd
-      require("lang.javascript.prettier")
 
       require("mason-lspconfig").setup({
         ensure_installed = {
@@ -53,8 +51,7 @@ return {
           -- JavaScript
           "vtsls",
           "biome",
-          "prettier",
-          "astro-language-server",
+          "astro",
         },
         automatic_enable =  {
           exclude = {
