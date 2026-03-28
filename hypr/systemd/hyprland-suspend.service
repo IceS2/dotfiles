@@ -1,0 +1,25 @@
+# ============================================
+# Hyprland Suspend Service
+# ============================================
+# Suspends Hyprland BEFORE the NVIDIA driver suspends to prevent
+# application freezes and crashes on resume.
+#
+# Installation:
+#   sudo ln -sf ~/.config/hypr/systemd/hyprland-suspend.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable hyprland-suspend.service
+
+[Unit]
+Description=Suspend Hyprland before NVIDIA driver
+Before=systemd-suspend.service
+Before=systemd-hibernate.service
+Before=nvidia-suspend.service
+Before=nvidia-hibernate.service
+
+[Service]
+Type=oneshot
+ExecStart=/home/ice/.config/hypr/scripts/suspend-hyprland.sh suspend
+
+[Install]
+WantedBy=systemd-suspend.service
+WantedBy=systemd-hibernate.service

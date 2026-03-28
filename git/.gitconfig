@@ -1,0 +1,135 @@
+# ╔═══════════════════════════════════════════════════════════╗
+# ║                  Git Configuration                        ║
+# ║            (Safe for public dotfiles repo)                ║
+# ╚═══════════════════════════════════════════════════════════╝
+
+# Include private config (for machine-specific overrides)
+# This file is in .gitignore and stays on your machine
+[include]
+    path = ~/.gitconfig.local
+
+# ─────────────────────────────────────────────────────────────
+# Core Settings
+# ─────────────────────────────────────────────────────────────
+[core]
+    editor = nvim
+    pager = delta
+    autocrlf = input
+    whitespace = trailing-space,space-before-tab
+
+[init]
+    defaultBranch = main
+
+# ─────────────────────────────────────────────────────────────
+# Delta (Syntax-highlighted diffs)
+# ─────────────────────────────────────────────────────────────
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    line-numbers = true
+    side-by-side = false
+    features = catppuccin-mocha
+
+[delta "catppuccin-mocha"]
+    syntax-theme = "Catppuccin Mocha"
+    file-style = "#cba6f7" bold
+    file-decoration-style = "#cba6f7" ul
+    hunk-header-style = file line-number syntax
+    hunk-header-decoration-style = "#89b4fa" box
+    minus-style = syntax "#3c2c3e"
+    minus-emph-style = syntax "#533c52"
+    plus-style = syntax "#2a3a2e"
+    plus-emph-style = syntax "#415248"
+    line-numbers-minus-style = "#f38ba8"
+    line-numbers-plus-style = "#a6e3a1"
+    line-numbers-left-style = "#6c7086"
+    line-numbers-right-style = "#6c7086"
+    line-numbers-zero-style = "#6c7086"
+
+# ─────────────────────────────────────────────────────────────
+# Diff & Merge
+# ─────────────────────────────────────────────────────────────
+[diff]
+    colorMoved = default
+    algorithm = histogram
+
+[merge]
+    conflictstyle = diff3
+    tool = nvimdiff
+
+[rebase]
+    autoSquash = true
+    autoStash = true
+
+# ─────────────────────────────────────────────────────────────
+# Colors
+# ─────────────────────────────────────────────────────────────
+[color]
+    ui = auto
+
+# ─────────────────────────────────────────────────────────────
+# Push & Pull
+# ─────────────────────────────────────────────────────────────
+[push]
+    default = current
+    autoSetupRemote = true
+
+[pull]
+    rebase = true
+
+# ─────────────────────────────────────────────────────────────
+# Aliases (from your legacy config + extras)
+# ─────────────────────────────────────────────────────────────
+[alias]
+    # Status & info
+    st = status -sb
+    s = status
+    
+    # Logs
+    l = log --oneline --graph --decorate
+    ll = log --graph --pretty=format:'%C(auto)%h%d %s %C(green)%cr %C(blue)%an'
+    lg = log --oneline --graph --all --decorate
+    
+    # Diff
+    d = diff
+    ds = diff --staged
+    dc = diff --cached
+    
+    # Commit
+    c = commit
+    ca = commit -a
+    cm = commit -m
+    cam = commit -am
+    amend = commit --amend --no-edit
+    
+    # Branch
+    b = branch
+    ba = branch -a
+    bd = branch -d
+    
+    # Checkout
+    co = checkout
+    cob = checkout -b
+    
+    # Remote
+    f = fetch
+    fa = fetch --all
+    p = push
+    pf = push --force-with-lease
+    pl = pull
+    
+    # Stash
+    ss = stash save
+    sp = stash pop
+    sl = stash list
+    
+    # Undo
+    unstage = reset HEAD --
+    undo = reset --soft HEAD^
+    
+    # Clean
+    clr = clean -fd
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret

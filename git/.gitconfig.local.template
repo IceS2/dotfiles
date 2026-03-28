@@ -1,0 +1,21 @@
+# ╔═══════════════════════════════════════════════════════════╗
+# ║              Private Git Configuration                    ║
+# ║                  (NOT in git repo)                        ║
+# ╚═══════════════════════════════════════════════════════════╝
+#
+# Copy this file to ~/.gitconfig.local and fill in your details
+# ~/.gitconfig.local is gitignored and stays private
+
+[user]
+    name = YOUR_NAME
+    email = YOUR_EMAIL@example.com
+
+# Optional: GPG signing
+# [commit]
+#     gpgSign = true
+# [gpg]
+#     program = gpg
+
+# Optional: Credential helper
+# [credential]
+#     helper = store

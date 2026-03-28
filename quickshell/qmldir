@@ -1,0 +1,83 @@
+module quickshell.config
+singleton Theme 1.0 services/Theme.qml
+singleton Audio 1.0 services/Audio.qml
+singleton Network 1.0 services/Network.qml
+NetworkWifi 1.0 services/NetworkWifi.qml
+NetworkVpn 1.0 services/NetworkVpn.qml
+singleton Launcher 1.0 services/Launcher.qml
+singleton Workspaces 1.0 services/Workspaces.qml
+singleton Clock 1.0 services/Clock.qml
+singleton GlobalState 1.0 services/GlobalState.qml
+singleton Notifications 1.0 services/Notifications.qml
+singleton Toast 1.0 services/Toast.qml
+singleton Calendar 1.0 services/Calendar.qml
+singleton Clipboard 1.0 services/Clipboard.qml
+singleton Overview 1.0 services/Overview.qml
+singleton PowerMenu 1.0 services/PowerMenu.qml
+singleton HyprlandData 1.0 services/HyprlandData.qml
+singleton ColorUtils 1.0 services/ColorUtils.qml
+singleton Tray 1.0 services/Tray.qml
+singleton Media 1.0 services/Media.qml
+singleton Wallpaper 1.0 services/Wallpaper.qml
+singleton Cava 1.0 services/Cava.qml
+singleton Bluetooth 1.0 services/Bluetooth.qml
+singleton Performance 1.0 services/Performance.qml
+singleton Updates 1.0 services/Updates.qml
+singleton Weather 1.0 services/Weather.qml
+PopupServiceBase 1.0 services/PopupServiceBase.qml
+Anim 1.0 components/Anim.qml
+CAnim 1.0 components/CAnim.qml
+StyledRect 1.0 components/StyledRect.qml
+StyledScrollBar 1.0 components/StyledScrollBar.qml
+BarWidget 1.0 components/BarWidget.qml
+BarPill 1.0 components/BarPill.qml
+BarSeparator 1.0 components/BarSeparator.qml
+BorderFrame 1.0 components/BorderFrame.qml
+Bar 1.0 components/Bar.qml
+LauncherBox 1.0 components/LauncherBox.qml
+AppListItem 1.0 components/AppListItem.qml
+EmptyState 1.0 components/EmptyState.qml
+Icon 1.0 components/Icon.qml
+ListItem 1.0 components/ListItem.qml
+IconButton 1.0 components/IconButton.qml
+ClockWidget 1.0 components/ClockWidget.qml
+WorkspacesWidget 1.0 components/WorkspacesWidget.qml
+VolumeWidget 1.0 components/VolumeWidget.qml
+NetworkWidget 1.0 components/NetworkWidget.qml
+VpnWidget 1.0 components/VpnWidget.qml
+NotificationCard 1.0 components/NotificationCard.qml
+NotificationPopup 1.0 components/NotificationPopup.qml
+NotificationCenter 1.0 components/NotificationCenter.qml
+SessionWidget 1.0 components/SessionWidget.qml
+PowerWidget 1.0 components/PowerWidget.qml
+ToastPopup 1.0 components/ToastPopup.qml
+PopupPanel 1.0 components/PopupPanel.qml
+ServicePopup 1.0 components/ServicePopup.qml
+ProgressBar 1.0 components/ProgressBar.qml
+CalendarPopup 1.0 components/CalendarPopup.qml
+SearchModal 1.0 components/SearchModal.qml
+Backdrop 1.0 components/Backdrop.qml
+ClipboardBox 1.0 components/ClipboardBox.qml
+ClipboardItem 1.0 components/ClipboardItem.qml
+OverviewPanel 1.0 components/OverviewPanel.qml
+PowerMenuPanel 1.0 components/PowerMenuPanel.qml
+OverviewWidget 1.0 components/OverviewWidget.qml
+OverviewWindow 1.0 components/OverviewWindow.qml
+TrayInline 1.0 components/TrayInline.qml
+TrayPopup 1.0 components/TrayPopup.qml
+TrayMenu 1.0 components/TrayMenu.qml
+TrayMenuItem 1.0 components/TrayMenuItem.qml
+MediaWidget 1.0 components/MediaWidget.qml
+MediaPopup 1.0 components/MediaPopup.qml
+WallpaperPicker 1.0 components/WallpaperPicker.qml
+AudioPopup 1.0 components/AudioPopup.qml
+NetworkPopup 1.0 components/NetworkPopup.qml
+NetworkWifiTab 1.0 components/NetworkWifiTab.qml
+NetworkVpnTab 1.0 components/NetworkVpnTab.qml
+BluetoothWidget 1.0 components/BluetoothWidget.qml
+BluetoothPopup 1.0 components/BluetoothPopup.qml
+PerformanceWidget 1.0 components/PerformanceWidget.qml
+PerformancePopup 1.0 components/PerformancePopup.qml
+UpdatesWidget 1.0 components/UpdatesWidget.qml
+UpdatesPopup 1.0 components/UpdatesPopup.qml
+SystemOverview 1.0 components/SystemOverview.qml
