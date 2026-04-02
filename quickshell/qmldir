@@ -24,6 +24,7 @@ singleton Bluetooth 1.0 services/Bluetooth.qml
 singleton Performance 1.0 services/Performance.qml
 singleton Updates 1.0 services/Updates.qml
 singleton Weather 1.0 services/Weather.qml
+singleton EmojiPicker 1.0 services/EmojiPicker.qml
 PopupServiceBase 1.0 services/PopupServiceBase.qml
 Anim 1.0 components/Anim.qml
 CAnim 1.0 components/CAnim.qml
