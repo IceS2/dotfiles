@@ -33,6 +33,13 @@ PanelWindow {
     property alias rightPanel: rightPanelArea.children
     property int rightPanelWidth: 0
 
+    // Grid mode — shows GridView instead of ListView
+    property bool gridMode: false
+    property int gridCellWidth: 44
+    property int gridCellHeight: 44
+    property alias gridDelegate: gridView.delegate
+    readonly property alias gridView: gridView
+
     // Signals
     signal closeRequested()
     signal searchChanged(string text)
@@ -207,7 +214,7 @@ PanelWindow {
                         id: listView
                         anchors.fill: parent
                         clip: true
-                        visible: count > 0
+                        visible: !modal.gridMode && count > 0
 
                         model: modal.listModel
 
@@ -231,8 +238,37 @@ PanelWindow {
                         }
                     }
 
+                    GridView {
+                        id: gridView
+                        anchors.fill: parent
+                        clip: true
+                        visible: modal.gridMode && count > 0
+
+                        model: modal.listModel
+                        cellWidth: modal.gridCellWidth
+                        cellHeight: modal.gridCellHeight
+
+                        onCurrentIndexChanged: {
+                            if (currentIndex === -1 && count > 0)
+                                currentIndex = modal.listCurrentIndex
+                        }
+
+                        Connections {
+                            target: modal
+                            function onListCurrentIndexChanged() {
+                                if (modal.gridMode)
+                                    gridView.currentIndex = modal.listCurrentIndex
+                            }
+                        }
+                        Component.onCompleted: currentIndex = modal.listCurrentIndex
+
+                        ScrollBar.vertical: Root.StyledScrollBar {
+                            target: gridView
+                        }
+                    }
+
                     Root.EmptyState {
-                        visible: listView.count === 0 && modal.showEmpty
+                        visible: (modal.gridMode ? gridView.count === 0 : listView.count === 0) && modal.showEmpty
                         message: modal.emptyMessage
                         icon: modal.emptyIcon
                     }
