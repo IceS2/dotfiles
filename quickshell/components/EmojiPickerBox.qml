@@ -17,9 +17,9 @@ Root.SearchModal {
     listCurrentIndex: Root.EmojiPicker.currentIndex
     emptyMessage: "No matches"
     emptyIcon: "󰱨"
-    showEmpty: Root.EmojiPicker.isSearching
+    showEmpty: Root.EmojiPicker.isSearching && itemsModel.values.length === 0 && !Root.EmojiPicker._searchTimer.running
     statusText: Root.EmojiPicker.isSearching
-        ? (itemsModel.values.length + " results")
+        ? (Root.EmojiPicker._searchTimer.running ? "Searching..." : itemsModel.values.length + " results")
         : (Root.EmojiPicker.hoveredName || Root.EmojiPicker.activeCategory || "Browse")
 
     // Hybrid mode: grid for browse, list for search
@@ -115,9 +115,6 @@ Root.SearchModal {
 
     // ─── List Delegate (search mode) ───
     delegate: Root.ListItem {
-        required property var modelData
-        required property int index
-
         onHovered: if (!emojiBox._hoverLock) Root.EmojiPicker.currentIndex = index
         onClicked: Root.EmojiPicker.selectItem(index)
 

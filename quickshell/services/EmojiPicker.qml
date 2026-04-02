@@ -3,7 +3,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
-import "utils.js" as Utils
 import "fuzzy.js" as Fuzzy
 import "modals.js" as Modals
 
@@ -30,46 +29,68 @@ QtObject {
     // ─── Computed ───
     readonly property bool isSearching: searchQuery.length > 0
 
-    readonly property var categories: {
-        var cats = []
-        var seen = {}
-        if (_recents.length > 0) cats.push({ name: "Recent", type: "recent", count: _recents.length })
-        for (var i = 0; i < _allItems.length; i++) {
-            var item = _allItems[i]
-            if (!seen[item.category]) {
-                seen[item.category] = true
-                cats.push({ name: item.category, type: item.type, count: 0 })
-            }
-            for (var j = 1; j < cats.length; j++) {
-                if (cats[j].name === item.category) { cats[j].count++; break }
-            }
-        }
-        return cats
-    }
+    // Search results are decoupled from binding — populated by debounced timer
+    property var _searchResults: []
 
     readonly property var filteredItems: {
-        if (isSearching) return _searchItems(searchQuery)
+        if (isSearching) return _searchResults
         if (activeCategory === "Recent") return _recents
         if (activeCategory !== "") return _categoryItems(activeCategory)
         return _browseItems()
     }
 
-    // ─── Search ───
-    function _searchItems(query) {
+    // ─── Search (debounced, substring first then fuzzy fallback) ───
+    property Timer _searchTimer: Timer {
+        interval: 150
+        onTriggered: root._runSearch()
+    }
+
+    function _runSearch() {
+        var query = searchQuery
+        if (query.length === 0) { _searchResults = []; return }
         var lq = query.toLowerCase()
-        var results = []
-        for (var i = 0; i < _allItems.length; i++) {
-            var item = _allItems[i]
-            var nameResult = Fuzzy.fuzzyScore(lq, item.name)
-            var score = nameResult.score
-            for (var k = 0; k < item.keywords.length; k++) {
-                var kwResult = Fuzzy.fuzzyScore(lq, item.keywords[k])
-                if (kwResult.score > score) score = kwResult.score
+        var nameStarts = []
+        var nameContains = []
+        var kwMatch = []
+        var fuzzyPool = []
+        var items = _allItems
+        var len = items.length
+        // Pass 1: fast substring matching
+        for (var i = 0; i < len; i++) {
+            var item = items[i]
+            var name = item.name
+            var idx = name.indexOf(lq)
+            if (idx === 0) {
+                nameStarts.push(item)
+            } else if (idx > 0) {
+                nameContains.push(item)
+            } else {
+                var kws = item.keywords
+                var kwHit = false
+                for (var k = 0, kl = kws.length; k < kl; k++) {
+                    if (kws[k].indexOf(lq) >= 0) { kwMatch.push(item); kwHit = true; break }
+                }
+                if (!kwHit) fuzzyPool.push(item)
             }
-            if (score > 0) results.push({ item: item, score: score })
         }
-        results.sort(function(a, b) { return b.score - a.score })
-        return results.map(function(r) { return r.item })
+        var results = nameStarts.concat(nameContains, kwMatch)
+        // Pass 2: fuzzy only if substring gave < 50 results and query is 2+ chars
+        if (results.length < 50 && lq.length >= 2) {
+            var fuzzyResults = []
+            var limit = Math.min(fuzzyPool.length, 3000)
+            for (var f = 0; f < limit; f++) {
+                var fi = fuzzyPool[f]
+                var score = Fuzzy.fuzzyScore(lq, fi.name).score
+                if (score > 0) fuzzyResults.push({ item: fi, score: score })
+            }
+            fuzzyResults.sort(function(a, b) { return b.score - a.score })
+            var cap = 200 - results.length
+            for (var r = 0; r < fuzzyResults.length && r < cap; r++) {
+                results.push(fuzzyResults[r].item)
+            }
+        }
+        if (results.length > 200) results.length = 200
+        _searchResults = results
     }
 
     function _categoryItems(category) {
@@ -85,7 +106,7 @@ QtObject {
             var item = _allItems[j]
             if (seen[item.char]) continue
             if (!cats[item.category]) cats[item.category] = 0
-            if (cats[item.category] < 40) {
+            if (cats[item.category] < 20) {
                 items.push(item)
                 cats[item.category]++
             }
@@ -145,6 +166,10 @@ QtObject {
 
     onSearchQueryChanged: {
         currentIndex = 0
+        if (searchQuery.length > 0)
+            _searchTimer.restart()
+        else
+            _searchResults = []
     }
 
     // ─── Recents ───
