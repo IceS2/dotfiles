@@ -97,6 +97,7 @@ When assisting with this repository, prioritize:
    - **Screen lock → hyprlock:** ✅ Hyprland-native screen locker (complete)
    - **Screenshot → grimblast + satty:** ✅ Rust annotation tool (complete)
    - **Clipboard → cliphist (Go) + wl-clipboard + QuickShell:** ✅ Clipboard history manager (complete, SearchModal-based UI with preview)
+   - **Emoji/Icon picker → QuickShell SearchModal:** ✅ Unified emoji + Nerd Font icon picker (grid browse, list search, Super+E)
    - **Terminal → kitty:** ✅ Wayland-native with Catppuccin Mocha theme
 
 5. **QuickShell Unified Architecture (Complete):**
@@ -211,7 +212,7 @@ When assisting with this repository, prioritize:
 - [x] **Matugen 4.1** `--prefer saturation` + `--source-color-index N`: Tested (2026-04-02). `--prefer saturation` does NOT rerank results — ordering is identical to default. Index 0 matches extract-color.sh for 3/4 test wallpapers, but fails on dark wallpapers with vibrant accents (picks dominant hue over saturated accent). **Keep extract-color.sh** — its s²v scoring with accent margin handles these cases correctly.
 
 ### Someday / Maybe
-- Emoji picker (QuickShell SearchModal-based), Keybind viewer (PopupPanel)
+- Keybind viewer (PopupPanel)
 - Keyboard cheatsheet overlay
 - `hyprsunset` (night light)
 - `dua-cli` (interactive disk cleanup TUI, complements dust), `Overskride` (Bluetooth GUI for advanced tasks: file transfer, audio profiles), `Ianny` (break reminders)
