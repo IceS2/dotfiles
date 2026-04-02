@@ -59,6 +59,7 @@ CalendarPopup 1.0 components/CalendarPopup.qml
 SearchModal 1.0 components/SearchModal.qml
 Backdrop 1.0 components/Backdrop.qml
 ClipboardBox 1.0 components/ClipboardBox.qml
+EmojiPickerBox 1.0 components/EmojiPickerBox.qml
 ClipboardItem 1.0 components/ClipboardItem.qml
 OverviewPanel 1.0 components/OverviewPanel.qml
 PowerMenuPanel 1.0 components/PowerMenuPanel.qml
