@@ -73,7 +73,7 @@ Scope {
                     opacity: Root.PowerMenu.popupVisible ? 0.6 : 0.0
 
                     Behavior on opacity {
-                        NumberAnimation {
+                        OpacityAnimator {
                             duration: Root.Theme.durationNormal
                             easing.type: Easing.OutCubic
                         }

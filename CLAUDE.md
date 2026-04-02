@@ -208,7 +208,7 @@ When assisting with this repository, prioritize:
 13. [x] **Unified slider component** — ProgressBar.qml serves as shared slider/progress component
 
 ### Pending Evaluation
-- [ ] **Matugen 4.0** `--prefer saturation` + `--source-color-index N`: When it hits Arch `extra` stable (in `extra-testing` as of 2025-02), test if it can replace `extract-color.sh` for vibrant color extraction. The built-in Score algorithm weights 70% by population — `--prefer saturation` re-ranks results, which may suffice for accents >1% of pixels.
+- [x] **Matugen 4.1** `--prefer saturation` + `--source-color-index N`: Tested (2026-04-02). `--prefer saturation` does NOT rerank results — ordering is identical to default. Index 0 matches extract-color.sh for 3/4 test wallpapers, but fails on dark wallpapers with vibrant accents (picks dominant hue over saturated accent). **Keep extract-color.sh** — its s²v scoring with accent margin handles these cases correctly.
 
 ### Someday / Maybe
 - Emoji picker (QuickShell SearchModal-based), Keybind viewer (PopupPanel)

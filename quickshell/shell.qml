@@ -72,7 +72,7 @@ ShellRoot {
 
             // Alert pill: only visible when a component breaches thresholds
             BarPill {
-                visible: isPrimary && perfWidget.hasAlerts
+                showing: isPrimary && perfWidget.hasAlerts
                 active: Performance.popupVisible
                 activeColor: perfWidget._maxSeverity >= 2 ? Theme.error : Theme.caution
                 PerformanceWidget { id: perfWidget }
@@ -81,7 +81,7 @@ ShellRoot {
             // ─── Center ───
             centerContent: [
                 BarPill {
-                    visible: isPrimary && Media.hasPlayer
+                    showing: isPrimary && Media.hasPlayer
                     active: Media.popupVisible
                     activeColor: Theme.tertiary
                     MediaWidget {}
@@ -118,7 +118,7 @@ ShellRoot {
 
                 // Tray pill: inline app icons + overflow
                 BarPill {
-                    visible: isPrimary && trayInline.hasItems
+                    showing: isPrimary && trayInline.hasItems
                     active: Tray.popupVisible || Tray.menuVisible
                     activeColor: Theme.on.surface
                     TrayInline { id: trayInline }

@@ -138,7 +138,7 @@ Item {
                         ColorAnimation { duration: Root.Theme.durationFast }
                     }
                     Behavior on opacity {
-                        NumberAnimation { duration: Root.Theme.durationFast }
+                        OpacityAnimator { duration: Root.Theme.durationFast }
                     }
                 }
 

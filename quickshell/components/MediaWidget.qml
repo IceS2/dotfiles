@@ -130,7 +130,7 @@ Root.BarWidget {
                     NumberAnimation { duration: 1000; easing.type: Easing.Linear }
                 }
                 Behavior on opacity {
-                    NumberAnimation { duration: Root.Theme.durationFast }
+                    OpacityAnimator { duration: Root.Theme.durationFast }
                 }
             }
         }

@@ -102,7 +102,7 @@ Root.PopupPanel {
                 scale: itemMouse.containsMouse ? Root.Theme.hoverScale : 1.0
 
                 Behavior on scale {
-                    NumberAnimation {
+                    ScaleAnimator {
                         duration: Root.Theme.durationFast
                         easing.type: Easing.OutCubic
                     }

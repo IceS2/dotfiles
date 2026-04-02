@@ -83,7 +83,7 @@ Root.BarWidget {
                 opacity: iconMouse.containsMouse ? 1.0 : 0.7
 
                 Behavior on opacity {
-                    NumberAnimation { duration: Root.Theme.durationFast; easing.type: Easing.OutCubic }
+                    OpacityAnimator { duration: Root.Theme.durationFast; easing.type: Easing.OutCubic }
                 }
             }
         }

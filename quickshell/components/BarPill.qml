@@ -8,6 +8,9 @@ Item {
     // Children declared inside BarPill go into the inner RowLayout
     default property alias content: innerLayout.data
 
+    // Visibility with animation — use instead of `visible` for smooth entrance/exit
+    property bool showing: true
+
     // Active state — set to true when a child widget's popup is open
     property bool active: false
 
@@ -18,8 +21,29 @@ Item {
     property int paddingH: Root.Theme.pillPaddingH
     property int paddingV: Root.Theme.pillPaddingV
 
-    implicitWidth: innerLayout.implicitWidth + paddingH * 2
+    // Natural width from content; animated implicitWidth drives layout
+    readonly property int _naturalWidth: innerLayout.implicitWidth + paddingH * 2
+
+    visible: showing || _widthAnim.running
+    implicitWidth: showing ? _naturalWidth : 0
     implicitHeight: Root.Theme.pillHeight
+    opacity: showing ? 1.0 : 0.0
+    clip: true
+
+    Behavior on implicitWidth {
+        NumberAnimation {
+            id: _widthAnim
+            duration: Root.Theme.durationSlow
+            easing.type: Easing.OutCubic
+        }
+    }
+
+    Behavior on opacity {
+        OpacityAnimator {
+            duration: Root.Theme.durationNormal
+            easing.type: Easing.OutCubic
+        }
+    }
 
     // ─── Hover Detection ───
     HoverHandler {

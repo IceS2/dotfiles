@@ -248,7 +248,7 @@ Rectangle {
                 NumberAnimation { duration: Root.Theme.durationSlow; easing.type: Easing.OutCubic }
             }
             Behavior on opacity {
-                NumberAnimation { duration: Root.Theme.durationNormal; easing.type: Easing.OutCubic }
+                OpacityAnimator { duration: Root.Theme.durationNormal; easing.type: Easing.OutCubic }
             }
 
             ColumnLayout {
@@ -359,7 +359,7 @@ Rectangle {
                 NumberAnimation { duration: Root.Theme.durationSlow; easing.type: Easing.OutCubic }
             }
             Behavior on opacity {
-                NumberAnimation { duration: Root.Theme.durationNormal; easing.type: Easing.OutCubic }
+                OpacityAnimator { duration: Root.Theme.durationNormal; easing.type: Easing.OutCubic }
             }
 
             ColumnLayout {

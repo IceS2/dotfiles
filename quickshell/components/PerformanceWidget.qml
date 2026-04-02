@@ -179,7 +179,7 @@ Root.BarWidget {
             opacity: modelData.clearing ? 0.5 : 1.0
 
             Behavior on opacity {
-                NumberAnimation { duration: Root.Theme.durationMedium; easing.type: Easing.OutCubic }
+                OpacityAnimator { duration: Root.Theme.durationMedium; easing.type: Easing.OutCubic }
             }
 
             Row {

@@ -131,7 +131,7 @@ Root.ServicePopup {
                     // Crossfade on track change
                     opacity: artSource.status === Image.Ready ? 1.0 : 0.0
                     Behavior on opacity {
-                        NumberAnimation { duration: Root.Theme.durationExpressiveEffects; easing.type: Easing.InOutQuad }
+                        OpacityAnimator { duration: Root.Theme.durationExpressiveEffects; easing.type: Easing.InOutQuad }
                     }
                 }
 
@@ -187,7 +187,7 @@ Root.ServicePopup {
                             NumberAnimation { duration: Root.Theme.durationInstant; easing.type: Easing.OutQuad }
                         }
                         Behavior on opacity {
-                            NumberAnimation { duration: 80 }
+                            OpacityAnimator { duration: 80 }
                         }
                     }
                 }
@@ -279,7 +279,7 @@ Root.ServicePopup {
                     }
                     Behavior on color { Root.CAnim {} }
                     Behavior on scale {
-                        NumberAnimation { duration: Root.Theme.durationFast; easing.type: Easing.OutQuad }
+                        ScaleAnimator { duration: Root.Theme.durationFast; easing.type: Easing.OutQuad }
                     }
 
                     Text {

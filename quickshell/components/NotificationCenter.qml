@@ -307,7 +307,7 @@ Root.PopupPanel {
 
                                         Behavior on color { Root.CAnim {} }
                                         Behavior on opacity {
-                                            NumberAnimation { duration: Root.Theme.durationFast }
+                                            OpacityAnimator { duration: Root.Theme.durationFast }
                                         }
 
                                         Text {

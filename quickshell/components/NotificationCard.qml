@@ -74,7 +74,7 @@ Rectangle {
             anchors.margins: Root.Theme.paddingMedium
             scale: cardMouse.containsMouse ? 1.02 : 1.0
             Behavior on scale {
-                NumberAnimation { duration: Root.Theme.durationFast; easing.type: Easing.OutCubic }
+                ScaleAnimator { duration: Root.Theme.durationFast; easing.type: Easing.OutCubic }
             }
             spacing: Root.Theme.spacingSmall
 
@@ -275,7 +275,7 @@ Rectangle {
 
                 Behavior on color { Root.CAnim {} }
                 Behavior on opacity {
-                    NumberAnimation { duration: Root.Theme.durationFast }
+                    OpacityAnimator { duration: Root.Theme.durationFast }
                 }
 
                 Text {

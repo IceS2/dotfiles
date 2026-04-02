@@ -57,7 +57,7 @@ Item {
     opacity: mouseArea.containsMouse ? 1.0 : 0.85
 
     Behavior on opacity {
-        NumberAnimation {
+        OpacityAnimator {
             duration: Root.Theme.durationFast
             easing.type: Easing.OutCubic
         }
