@@ -5,7 +5,7 @@
 # Note: monitor-watcher.sh handles the same restarts via monitoradded events,
 # but this script is a reliable fallback since hypridle's after_sleep_cmd
 # always fires on resume regardless of monitor event timing.
-# Note: swww handles monitor reconnect natively — no wallpaper recovery needed.
+# Note: awww handles monitor reconnect natively — no wallpaper recovery needed.
 
 log() {
     echo "[$(date '+%H:%M:%S')] resume: $*" >> /tmp/hypr-resume.log

@@ -27,6 +27,11 @@ if [[ -d "$DOTFILES_DIR/system/regreet" ]]; then
     sudo chmod 0755 /var/lib/regreet /var/log/regreet 2>/dev/null || true
 fi
 
+# ── QuickShell Greeter (greetd login screen) ──
+if [[ -f "$DOTFILES_DIR/system/greeter/install.sh" ]]; then
+    bash "$DOTFILES_DIR/system/greeter/install.sh"
+fi
+
 # ── XDG Desktop Portal ──
 if [[ -f "$DOTFILES_DIR/system/xdg-desktop-portal/portals.conf" ]]; then
     link_to system/xdg-desktop-portal/portals.conf \

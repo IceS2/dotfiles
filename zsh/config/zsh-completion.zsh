@@ -21,6 +21,7 @@ fi
 {
   zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
   if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+    rm -f "${zcompdump}.zwc"
     zcompile "$zcompdump"
   fi
 } &!

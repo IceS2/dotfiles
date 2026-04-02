@@ -2,7 +2,7 @@
 version_check = false
 
 [config.wallpaper]
-command = "swww"
+command = "awww"
 set = false
 
 [config.custom_colors]

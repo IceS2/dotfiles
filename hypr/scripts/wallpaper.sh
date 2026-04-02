@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================
-# Wallpaper Engine — span / per-monitor / random via swww
+# Wallpaper Engine — span / per-monitor / random via awww
 # ============================================
 # Usage:
 #   wallpaper.sh span <image>                  Crop & span across both monitors
@@ -92,9 +92,9 @@ trigger_matugen() {
     fi
 }
 
-apply_swww() {
+apply_awww() {
     local output="$1" image="$2"
-    swww img "$image" --outputs "$output" --resize fit $TRANSITION
+    awww img "$image" --outputs "$output" --resize fit $TRANSITION
 }
 
 # ── Commands ─────────────────────────────────────────────
@@ -130,7 +130,7 @@ cmd_span() {
 
     for name in "${MONITOR_NAMES[@]}"; do
         local safe="${name//-/_}"
-        apply_swww "$name" "$CROP_DIR/${hash}_${safe}.jpg"
+        apply_awww "$name" "$CROP_DIR/${hash}_${safe}.jpg"
     done
     save_state "span" "$image"
     trigger_matugen "$image"
@@ -142,8 +142,8 @@ cmd_set() {
     [[ -f "$image1" ]] || { echo "File not found: $image1" >&2; exit 1; }
     [[ -f "$image2" ]] || { echo "File not found: $image2" >&2; exit 1; }
 
-    apply_swww DP-2 "$image1"
-    apply_swww DP-1 "$image2"
+    apply_awww DP-2 "$image1"
+    apply_awww DP-1 "$image2"
     save_state "set" "$image1" "$image2"
     trigger_matugen "$image1"
 }
@@ -152,7 +152,7 @@ cmd_set_monitor() {
     local output="$1" image="$2"
     [[ -f "$image" ]] || { echo "File not found: $image" >&2; exit 1; }
 
-    apply_swww "$output" "$image"
+    apply_awww "$output" "$image"
     # Don't overwrite full state — partial update
 }
 

@@ -185,16 +185,15 @@ When assisting with this repository, prioritize:
 
 ### Status Bar Redesign (priority order)
 
-1. [ ] **Pill grouping** — BarPill component, restructure widgets into logical groups, remove inter-group separators
-2. [ ] **Hover & active states** — Background fill on hover/press, reduce scale values, pill-level glow on popup open
-3. [ ] **Information density reduction** — Icon-only defaults for perf/VPN/BT, remove speeds from bar, shorten clock
-4. [ ] **Typography upgrade** — Add proportional UI font (Inter/Rubik/Geist), reserve monospace for data
-5. [ ] **Visual hierarchy** — Primary/secondary/tertiary opacity and weight differentiation
-6. [ ] **Polish & micro-interactions** — Pill entrance/exit animations, media progress line, workspace simplification
+1. [x] **Pill grouping** — BarPill component, restructure widgets into logical groups, remove inter-group separators
+2. [x] **Hover & active states** — Background fill on hover/press, reduce scale values, pill-level glow on popup open
+3. [x] **Information density reduction** — Icon-only defaults for perf/VPN/BT, remove speeds from bar, shorten clock
+4. [x] **Visual hierarchy** — Weight differentiation (Bold/DemiBold/Medium) + color hierarchy (on.surface/on.surfaceVariant/outline)
+5. [ ] **Polish & micro-interactions** — Pill entrance/exit animations (media progress line ✅, workspace worm animation ✅)
 
 ### Desktop Polish & UX Enhancements (priority order)
 
-1. [ ] **Hyprland animation upgrade** — Overshoot bezier curves (MD3 expressive spatial), squircle rounding, slidefade workspaces, triple buffering
+1. [x] **Hyprland animation upgrade** — Overshoot bezier curves (MD3 expressive spatial), squircle rounding, slidefade workspaces, triple buffering
 2. [ ] **QML SpringAnimation for popups** — Physics-based bounce on popup/panel appearance (qualitatively different from bezier)
 3. [ ] **Render-thread Animators** — OpacityAnimator/ScaleAnimator wrappers for 165Hz-smooth QuickShell animations
 4. [ ] **Context-aware desktop modes** — Coding/Focus/Gaming/Media modes that transform bar, borders, colors, notifications via hyprshade + QuickShell
@@ -206,7 +205,7 @@ When assisting with this repository, prioritize:
 10. [ ] **Generative shader wallpaper** — NeoWall Shadertoy wallpaper driven by system metrics (CPU/RAM/network)
 11. [ ] **Music-reactive desktop chrome** — Border glow pulses to bass, notification cards tinted to album art
 12. [ ] **AI context widget** — Git branch/status from focused terminal CWD, quick actions, Claude/Ollama integration
-13. [ ] **Unified slider component** — Extract shared Slider.qml from AudioPopup/ToastPopup/PerformancePopup
+13. [x] **Unified slider component** — ProgressBar.qml serves as shared slider/progress component
 
 ### Pending Evaluation
 - [ ] **Matugen 4.0** `--prefer saturation` + `--source-color-index N`: When it hits Arch `extra` stable (in `extra-testing` as of 2025-02), test if it can replace `extract-color.sh` for vibrant color extraction. The built-in Score algorithm weights 70% by population — `--prefer saturation` re-ranks results, which may suffice for accents >1% of pixels.

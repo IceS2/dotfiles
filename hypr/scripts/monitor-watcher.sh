@@ -5,7 +5,7 @@
 # NVIDIA + DisplayPort drops HPD on power-off, causing Hyprland to destroy
 # wl_outputs. QuickShell loses its layer surfaces and cannot recover.
 # This script listens for monitoradded events and restarts it.
-# Note: swww handles monitor reconnect natively — no wallpaper recovery needed.
+# Note: awww handles monitor reconnect natively — no wallpaper recovery needed.
 #
 # Launched via exec-once in autostart.conf
 

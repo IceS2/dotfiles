@@ -36,6 +36,7 @@ return {
       { "<leader>t", group = "Test", icon = " " },
       { "<leader>u", group = "UI", icon = " " },
       { "<leader>;", group = "Terminal", icon = " " },
+      { "<leader>a", group = "AI", icon = "󰁤 " },
       { "<leader>x", group = "Diagnostics", icon = " " },
     }
   }

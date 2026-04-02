@@ -114,7 +114,10 @@ return {
       }
     },
     signature = {
-      enabled = false,
+      enabled = true,
+      window = {
+        border = "single",
+      },
     },
     cmdline = {
       keymap = {
