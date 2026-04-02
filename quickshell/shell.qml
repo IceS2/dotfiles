@@ -20,6 +20,7 @@ ShellRoot {
     GlobalShortcut { name: "media_toggle_play"; onPressed: Media.togglePlay() }
     GlobalShortcut { name: "media_next"; onPressed: Media.next() }
     GlobalShortcut { name: "media_previous"; onPressed: Media.smartPrevious() }
+    GlobalShortcut { name: "emoji_toggle"; onPressed: EmojiPicker.toggle() }
 
     // Sentinel overlay — prevents Hyprland's "solitary client" optimization
     // from blocking layer surface creation during fullscreen (hyprwm/Hyprland#11575).
@@ -178,6 +179,37 @@ ShellRoot {
         }
     }
     ClipboardBox {}
+
+    // Emoji picker - Backdrop on all monitors + Box (focused input)
+    Variants {
+        model: Quickshell.screens
+
+        Backdrop {
+            required property var modelData
+            screenObj: modelData
+            showing: EmojiPicker.visible
+            layerNamespace: "quickshell-emoji-backdrop"
+            onCloseRequested: EmojiPicker.hide()
+        }
+    }
+    EmojiPickerBox {}
+
+    IpcHandler {
+        target: "emoji"
+        enabled: true
+
+        function toggle(): void {
+            EmojiPicker.toggle()
+        }
+
+        function show(): void {
+            EmojiPicker.show()
+        }
+
+        function hide(): void {
+            EmojiPicker.hide()
+        }
+    }
 
     // Wallpaper picker - horizontal thumbnail strip
     LazyLoader { loading: true; WallpaperPicker {} }
