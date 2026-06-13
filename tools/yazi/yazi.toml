@@ -1,8 +1,8 @@
-# Yazi Configuration - Catppuccin Mocha Theme
+# Yazi Configuration
 
-[manager]
-ratio = [1, 3, 4]  # Column ratios: parent, current, preview
-sort_by = "modified"
+[mgr]
+ratio = [1, 3, 4]          # parent, current, preview
+sort_by = "mtime"          # renamed from "modified" in newer yazi
 sort_reverse = true
 sort_dir_first = true
 linemode = "size"
@@ -17,24 +17,19 @@ image_filter = "lanczos3"
 image_quality = 90
 
 [opener]
-# Open text files with nvim
 edit = [
-  { run = 'nvim "$@"', block = true, for = "linux" },
+  { run = 'nvim %s', block = true, for = "unix" },
 ]
-# Open images with default viewer
 open = [
-  { run = 'xdg-open "$@"', desc = "Open", for = "linux" },
+  { run = 'xdg-open %s1', desc = "Open", for = "linux" },
 ]
 
 [open]
-rules = [
+# prepend_rules keeps yazi's preset rules (folder/image/media/archive/
+# fallback) intact; these just take priority for text & code files.
+prepend_rules = [
   { mime = "text/*", use = "edit" },
   { mime = "application/json", use = "edit" },
   { mime = "*/javascript", use = "edit" },
   { mime = "*/x-wine-extension-ini", use = "edit" },
-  { name = "*/", use = "edit" },
-  { mime = "image/*", use = "open" },
-  { mime = "video/*", use = "open" },
-  { mime = "audio/*", use = "open" },
-  { mime = "application/pdf", use = "open" },
 ]

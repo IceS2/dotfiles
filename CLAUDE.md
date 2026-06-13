@@ -92,7 +92,7 @@ When assisting with this repository, prioritize:
    - **picom → Hyprland compositor:** Built-in compositor (no separate daemon needed) ✅
    - **polybar/rofi → QuickShell:** ✅ Unified QML-based system (complete)
    - **dunst → QuickShell:** ✅ Custom notification center (complete, QML-based)
-   - **feh → swww:** ✅ Rust-based, GPU-accelerated animated wallpaper daemon (complete)
+   - **feh → awww:** ✅ Rust-based, GPU-accelerated wallpaper daemon — swww fork (swww archived 2025-10-31, continues as `awww` on Codeberg) (complete)
    - **xidlehook → hypridle:** ✅ Hyprland-native idle management (complete with system suspend)
    - **Screen lock → hyprlock:** ✅ Hyprland-native screen locker (complete)
    - **Screenshot → grimblast + satty:** ✅ Rust annotation tool (complete)
@@ -110,7 +110,7 @@ When assisting with this repository, prioritize:
    - **Guide:** See `quickshell/README.md` for architecture overview
 
 6. **Tool Ecosystem:**
-   - Rust tools: swww (wallpaper), satty (screenshot annotation)
+   - Rust tools: awww (wallpaper; swww fork — swww archived 2025-10), satty (screenshot annotation)
    - Performance tools: ✅ gamemode, mangohud, gamescope (complete, configured)
    - Screen recording: ✅ gpu-screen-recorder + gpu-screen-recorder-ui (NVENC, instant replay, systemd service)
    - Night light: hyprsunset (official) — deferred (low priority)
@@ -380,7 +380,7 @@ Modular XDG-compliant structure:
 - **theme/**: Core colors (colors.json, catppuccin-mocha.json, apply-theme.sh, matugen/)
 - **theme/gtk-3.0/**, **theme/gtk-4.0/**: GTK theming (individual file symlinks; colors.css is runtime-generated)
 - **theme/qt5ct/**, **theme/qt6ct/**, **theme/Kvantum/**: Qt theming (whole-dir symlinks)
-- **theme/wallpaper/**: wpaperd config + wallpaper images
+- **theme/wallpaper/**: wallpaper images + README (awww daemon, autostarted via hypr/configs/autostart.conf → wallpaper.sh)
 
 ### Tools
 - **tools/yazi/**: Terminal file manager
