@@ -1,0 +1,11 @@
+# SteelSeries Arctis 7+ (1038:220e) — ChatMix daemon support.
+#
+# Grants the login user ownership of the USB device so the PyUSB daemon can
+# detach/claim the ChatMix HID interface (IF5) without root.
+#
+# NOTE: the upstream udev rule also created a systemd .device unit via
+# SYSTEMD_ALIAS=/dev/arctis7 and the service BindsTo'd it. That mechanism
+# was unreliable on this system (the unit repeatedly failed to activate),
+# so it was removed — arctis7pcm.service is now a plain WantedBy=default.target
+# service that waits for the device itself.
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1038", ATTRS{idProduct}=="220e", OWNER="ice", GROUP="ice", MODE="0664"

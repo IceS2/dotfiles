@@ -1,0 +1,16 @@
+[Unit]
+Description=Arctis 7+ ChatMix
+# Decoupled from the fragile udev SYSTEMD_ALIAS=/dev/arctis7 mechanism (it
+# failed to activate reliably). The daemon self-manages device presence
+# (waits for the dongle, exits on disconnect) and systemd restarts it.
+After=pipewire.service wireplumber.service
+PartOf=wireplumber.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 %h/.local/bin/Arctis_7_Plus_ChatMix.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
