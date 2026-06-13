@@ -23,10 +23,8 @@ Item {
     property bool hovered: false
     property bool pressed: false
 
-    // Monitor transform compensation for vertical monitors
+    // Monitor transform — used for icon scaling
     readonly property int monitorTransform: monitorData?.transform ?? 0
-    readonly property int rotationAngle: [0, 90, 180, 270][monitorTransform] ?? 0
-    readonly property bool needsSwap: rotationAngle % 180 !== 0
 
     property real iconToWindowRatio: 0.25
     property real iconToWindowRatioCompact: 0.45
@@ -71,22 +69,11 @@ Item {
         }
     }
 
-    // ScreencopyView in container for transform compensation
-    // Buffer from hyprland-toplevel-export-v1 is in physical orientation;
-    // we rotate to match logical display orientation
-    Item {
-        id: screencopyContainer
+    // ScreencopyView — Hyprland 0.54+ sends toplevel buffers in logical orientation
+    ScreencopyView {
         anchors.fill: parent
-
-        ScreencopyView {
-            anchors.centerIn: parent
-            width: root.needsSwap ? parent.height : parent.width
-            height: root.needsSwap ? parent.width : parent.height
-            rotation: root.rotationAngle
-            transformOrigin: Item.Center
-            captureSource: Root.Overview.popupVisible ? root.toplevel : null
-            live: true
-        }
+        captureSource: Root.Overview.popupVisible ? root.toplevel : null
+        live: true
     }
 
     // Overlay — outside rotation wrapper, always matches cell dimensions

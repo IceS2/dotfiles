@@ -64,6 +64,7 @@ PanelWindow {
 
     onVisibleChanged: {
         if (visible) {
+            searchInput.text = modal.searchQuery
             searchInput.forceActiveFocus()
             listView.currentIndex = modal.listCurrentIndex
         }
@@ -225,6 +226,11 @@ PanelWindow {
                             }
                         }
 
+                        onCountChanged: {
+                            if (count > 0)
+                                currentIndex = Math.min(modal.listCurrentIndex, count - 1)
+                        }
+
                         Connections {
                             target: modal
                             function onListCurrentIndexChanged() {
@@ -251,6 +257,11 @@ PanelWindow {
                         onCurrentIndexChanged: {
                             if (currentIndex === -1 && count > 0)
                                 currentIndex = modal.listCurrentIndex
+                        }
+
+                        onCountChanged: {
+                            if (count > 0)
+                                currentIndex = Math.min(modal.listCurrentIndex, count - 1)
                         }
 
                         Connections {
