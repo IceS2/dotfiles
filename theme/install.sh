@@ -23,9 +23,9 @@ link_config theme/qt6ct qt6ct
 link_config theme/Kvantum Kvantum
 
 # ── Wallpaper ──
+# Wallpaper daemon is awww (autostarted in hypr/configs/autostart.conf);
+# wallpaper.sh drives it. No wpaperd config (wpaperd is unused).
 # wallpaper dir itself (for theme/wallpaper/README.md reference)
 link_config theme/wallpaper wallpaper
-# wpaperd config
-link_config theme/wallpaper/wpaperd wpaperd
 # wallpaper images (accessible as ~/.config/wallpapers)
 link_config theme/wallpaper/images wallpapers
