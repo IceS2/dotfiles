@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Snapshot explicitly-installed packages into the dotfiles repo.
+# Triggered by /etc/pacman.d/hooks/95-pkglist.hook (PostTransaction).
+# Fires for pacman, paru, yay — anything that ultimately invokes pacman.
+set -euo pipefail
+
+USER_NAME=ice
+DOTFILES=/home/${USER_NAME}/.dotfiles
+PKGLIST_DIR=${DOTFILES}/pkglist
+
+[[ -d ${DOTFILES} ]] || exit 0
+
+mkdir -p "${PKGLIST_DIR}"
+
+pacman -Qqen > "${PKGLIST_DIR}/official.txt"
+pacman -Qqem > "${PKGLIST_DIR}/aur.txt"
+
+chown -R "${USER_NAME}:${USER_NAME}" "${PKGLIST_DIR}"

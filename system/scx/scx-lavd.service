@@ -1,0 +1,17 @@
+[Unit]
+Description=sched_ext scheduler (scx_lavd) — latency-aware, hybrid P/E-core aware
+Documentation=https://github.com/sched-ext/scx
+# Load once userspace is up; sched_ext can attach at any time and the kernel
+# watchdog auto-reverts to EEVDF if the scheduler ever misbehaves.
+After=multi-user.target
+
+[Service]
+Type=exec
+# Plain scx_lavd: auto power mode, gaming-tuned, builds per-core-type domains
+# so latency-critical threads stay on the fast P-cores (Alder Lake i5-12600K).
+ExecStart=/usr/bin/scx_lavd
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
