@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtMultimedia 6.0 as Native
 import Quickshell
+import Quickshell.Services.Greetd
 
 Item {
     id: root
@@ -35,6 +36,17 @@ Item {
         audioOutput: Native.AudioOutput {
             muted: root.muted
             volume: root.volume
+        }
+    }
+
+    Connections {
+        target: Greetd
+
+        function onReadyToLaunch() {
+            // Release the multimedia backend before QuickShell tears down its QML engine.
+            player.stop();
+            player.videoOutput = null;
+            player.source = "";
         }
     }
 

@@ -225,6 +225,8 @@ gamescope -w 1920 -h 1080 -W 2560 -H 1440 -f --mangoapp -- %command%
 Currently **enabled** in Hyprland config (`vrr = 3` — content-type based, activates for games/video only).
 
 Both monitors run at 165Hz with G-Sync enabled via `__GL_GSYNC_ALLOWED=1` and `__GL_VRR_ALLOWED=1`.
+MangoHud caps games at 160 FPS by default, keeping them below the VRR ceiling without forcing
+driver-level VSync. Press `Shift+F1` to toggle between 160 FPS and unlimited.
 
 ## Performance Monitoring
 

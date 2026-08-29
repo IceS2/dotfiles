@@ -5,14 +5,15 @@
 -- VA-API via libva-nvidia-driver (NVDEC bridge) -- enables hardware video
 -- decode for Waterfox/Electron. mpv is pinned to hwdec=nvdec in mpv.conf so it
 -- uses NVDEC directly and bypasses VA-API regardless.
-hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("XDG_SESSION_TYPE", "wayland")
+
 hl.env("GBM_BACKEND", "nvidia-drm")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
-hl.env("NVD_BACKEND", "direct")
 hl.env("__GL_GSYNC_ALLOWED", "1")
 hl.env("__GL_VRR_ALLOWED", "1")
-hl.env("__GL_SYNC_TO_VBLANK", "1")
+
+-- Do not force __GL_SYNC_TO_VBLANK: it hangs Waterfox ESR 153 during Wayland
+-- EGL startup. Games stay inside the VRR range via MangoHud's 160 FPS cap.
 
 -- Helps preserve OpenGL contexts across screen lock/unlock (kitty freeze fix)
 hl.env("__GL_THREADED_OPTIMIZATIONS", "0")
@@ -35,6 +36,8 @@ hl.env("XCURSOR_THEME", "catppuccin-mocha-lavender-cursors")
 hl.env("XCURSOR_SIZE", "24")
 
 -- ===== Firefox/Waterfox hardware video acceleration (NVIDIA) =====
+hl.env("LIBVA_DRIVER_NAME", "nvidia")
+hl.env("NVD_BACKEND", "direct")
 hl.env("MOZ_DRM_DEVICE", "/dev/dri/renderD128")
 hl.env("MOZ_DISABLE_RDD_SANDBOX", "1")
 hl.env("MOZ_DISABLE_GMP_SANDBOX", "1")
