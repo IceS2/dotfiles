@@ -4,6 +4,17 @@ return {
     lazy = false,
     cmd = "Mason",
     build = ":MasonUpdate",
+    opts = {},
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    lazy = false,
+    dependencies = { "mason-org/mason.nvim" },
+    opts = {
+      ensure_installed = { "js-debug-adapter" },
+      run_on_start = true,
+      debounce_hours = 24,
+    },
   },
   {
     "mason-org/mason-lspconfig.nvim",
@@ -13,7 +24,6 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require("mason").setup()
       local default_capabilities = require("blink.cmp").get_lsp_capabilities()
 
       -- Setup autocommand with default groups and capabilities

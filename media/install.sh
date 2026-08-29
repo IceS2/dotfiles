@@ -16,8 +16,6 @@ link_to media/wireplumber/wireplumber.conf.d/10-bluetooth.conf \
     "$HOME/.config/wireplumber/wireplumber.conf.d/10-bluetooth.conf"
 link_to media/wireplumber/wireplumber.conf.d/50-device-priorities.conf \
     "$HOME/.config/wireplumber/wireplumber.conf.d/50-device-priorities.conf"
-link_to media/wireplumber/wireplumber.conf.d/60-arctis-chatmix-routing.conf \
-    "$HOME/.config/wireplumber/wireplumber.conf.d/60-arctis-chatmix-routing.conf"
 link_to media/wireplumber/scripts/arctis-auto-switch.sh \
     "$HOME/.config/wireplumber/scripts/arctis-auto-switch.sh"
 

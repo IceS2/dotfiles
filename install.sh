@@ -24,7 +24,6 @@ ALL_MODULES=(
     theme
     media
     gaming
-    pokerstars
     tools
     system
     local
