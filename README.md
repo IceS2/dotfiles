@@ -12,7 +12,7 @@ Arch Linux + Hyprland (NVIDIA) rice. Catppuccin Mocha everywhere.
 | Shell | Zsh + Starship |
 | Editor | Neovim (lazy.nvim) |
 | Theme | Catppuccin Mocha / Matugen (Material You) |
-| Wallpaper | wpaperd |
+| Wallpaper | awww |
 | File Manager | Yazi |
 | Audio | PipeWire + WirePlumber |
 | GPU | NVIDIA (open-dkms) |
@@ -25,13 +25,13 @@ quickshell/     QML bar, launcher, notifications, clipboard, overview, media, tr
 nvim/           Neovim with lazy.nvim
 kitty/          Terminal
 zsh/            Shell config + starship.toml
-theme/          Colors, GTK 3/4, Qt 5/6, Kvantum, wallpaper (wpaperd)
+theme/          Colors, GTK 3/4, Qt 5/6, Kvantum, wallpaper (awww)
 media/          Bluetooth, PipeWire, WirePlumber, MPV
 gaming/         MangoHud, GameMode, gpu-screen-recorder
 git/            Git config + delta
 gnupg/          GPG agent
 tools/          yazi, zathura, swayimg, paru, scripts
-system/         modprobe.d, regreet (greetd), xdg-desktop-portal
+system/         modprobe.d, QuickShell greetd greeter, xdg-desktop-portal
 local/          DBus services
 lib/            Shared install helpers
 ```

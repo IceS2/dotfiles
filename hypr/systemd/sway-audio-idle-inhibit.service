@@ -1,0 +1,12 @@
+[Unit]
+Description=Inhibit idle while PipeWire audio is active
+PartOf=hyprland-session.target
+After=pipewire.service
+
+[Service]
+ExecStart=/usr/bin/sway-audio-idle-inhibit
+Restart=on-failure
+RestartSec=2s
+
+[Install]
+WantedBy=hyprland-session.target

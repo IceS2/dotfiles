@@ -1,0 +1,24 @@
+# Brings up graphical-session.target for a non-uwsm Hyprland session.
+#
+# Why this exists:
+#   xdg-desktop-portal (>= 1.20.4 / 1.22) ships its systemd unit with
+#       Requisite=graphical-session.target
+#   so the portal refuses to start unless graphical-session.target is already
+#   active. Its D-Bus activation file routes activation through systemd
+#   (SystemdService=xdg-desktop-portal.service), so on-demand ScreenCast
+#   requests fail with "Dependency failed for Portal service" — breaking
+#   screen sharing (OBS, Discord, browsers).
+#
+#   graphical-session.target has RefuseManualStart=yes, so it can only be
+#   pulled in by another unit. uwsm normally does this; we don't use uwsm, so
+#   this lightweight target binds graphical-session.target and is started from
+#   hypr/configs/autostart.conf.
+#
+# Usage (handled automatically by autostart.conf):
+#   systemctl --user start hyprland-session.target
+
+[Unit]
+Description=Hyprland session
+Documentation=man:systemd.special(7)
+BindsTo=graphical-session.target
+Before=graphical-session.target

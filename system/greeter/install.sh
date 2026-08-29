@@ -31,8 +31,15 @@ sudo mkdir -p "$GREETD_DIR/shim" "$GREETD_DIR/imports" "$GREETER_STATE"
 
 # ── System configs ──
 sudo_copy "system/greeter/config.toml"   "$GREETD_DIR/config.toml"
-sudo_copy "system/greeter/hyprland.conf" "$GREETD_DIR/hyprland.conf"
+sudo_copy "system/greeter/hyprland.lua"  "$GREETD_DIR/hyprland.lua"
 sudo_copy "system/greeter/greeter.conf"  "$GREETD_DIR/greeter.conf"
+
+# Old hyprlang config -- superseded by hyprland.lua (.conf support dropped in
+# Hyprland 0.57). Removed so nobody edits the file that is no longer loaded.
+if [[ -f "$GREETD_DIR/hyprland.conf" ]]; then
+    sudo rm -f "$GREETD_DIR/hyprland.conf"
+    log_ok "Removed stale $GREETD_DIR/hyprland.conf"
+fi
 
 # ── Launcher script (needs executable bit) ──
 sudo_copy "system/greeter/launch.sh" "$GREETD_DIR/launch.sh"
