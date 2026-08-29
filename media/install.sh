@@ -16,6 +16,8 @@ link_to media/wireplumber/wireplumber.conf.d/10-bluetooth.conf \
     "$HOME/.config/wireplumber/wireplumber.conf.d/10-bluetooth.conf"
 link_to media/wireplumber/wireplumber.conf.d/50-device-priorities.conf \
     "$HOME/.config/wireplumber/wireplumber.conf.d/50-device-priorities.conf"
+link_to media/wireplumber/wireplumber.conf.d/60-arctis-chatmix-routing.conf \
+    "$HOME/.config/wireplumber/wireplumber.conf.d/60-arctis-chatmix-routing.conf"
 link_to media/wireplumber/scripts/arctis-auto-switch.sh \
     "$HOME/.config/wireplumber/scripts/arctis-auto-switch.sh"
 
@@ -29,6 +31,13 @@ for conf in 10-rates.conf 10-resample-quality.conf; do
     fi
 done
 
+# Arctis ChatMix virtual sinks are created by the arctis7pcm daemon on dongle
+# detect (see media/arctis-chatmix/Arctis_7_Plus_ChatMix.py:_ensure_sinks), NOT
+# declaratively — a pipewire.conf.d loopback instantiates only once at PipeWire
+# startup and never returns after the headset auto-sleeps and tears it down.
+# Clean up the old declarative symlink if a previous install left it behind.
+rm -f "$HOME/.config/pipewire/pipewire.conf.d/50-arctis-chatmix-sinks.conf"
+
 # ── MPV ──
 link_config media/mpv mpv
 
@@ -40,8 +49,10 @@ if [[ -f "$DOTFILES_DIR/media/wireplumber/systemd/arctis-auto-switch.service" ]]
 fi
 
 # ── Arctis 7+ ChatMix daemon ──
-# Reads the headset's ChatMix dial over USB HID (interface 5) and creates two
-# virtual sinks (Arctis_Game / Arctis_Chat). Requires python-pyusb. The udev
+# Reads the headset's ChatMix dial over USB HID (interface 5), creates the
+# Arctis_Game / Arctis_Chat virtual sinks on dongle detect, and sets their
+# volume from the dial. Requires python-pyusb.
+# The udev
 # rule only grants non-root USB access; the service is a plain
 # WantedBy=default.target unit that waits for the dongle itself (the upstream
 # dev-arctis7.device coupling was unreliable and was removed).

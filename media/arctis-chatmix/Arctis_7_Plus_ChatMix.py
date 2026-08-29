@@ -23,14 +23,20 @@ import os
 import sys
 import signal
 import logging
-import traceback
-import re
 import time
+import subprocess
 import usb.core
 import usb.util
 
 
 class Arctis7PlusChatMix:
+
+    # The physical headset sink both virtual sinks loop into.
+    HEADSET = 'alsa_output.usb-SteelSeries_Arctis_7_-00.analog-stereo'
+    # (sink_name, node.description) for the two ChatMix virtual sinks.
+    SINKS = (('Arctis_Game', 'Arctis 7+ Game'),
+             ('Arctis_Chat', 'Arctis 7+ Chat'))
+
     def __init__(self):
 
         # set to receive signal from systemd for termination
@@ -49,7 +55,7 @@ class Arctis7PlusChatMix:
             try:
                 self.dev = usb.core.find(idVendor=0x1038, idProduct=0x220e)
             except Exception as e:
-                self.log.error(f"USB enumeration error: {e}")
+                self.log.error("USB enumeration error: %s", e)
                 self.dev = None
             if self.dev is None:
                 self.log.info("Arctis 7+ dongle not found; waiting 5s...")
@@ -106,8 +112,73 @@ class Arctis7PlusChatMix:
         if self.dev.is_kernel_driver_active(self.interface_num):
             self.dev.detach_kernel_driver(self.interface_num)
 
-        self.VAC = self._init_VAC()
+        # Create the Arctis_Game / Arctis_Chat sinks now that the headset is
+        # present. This daemon owns their lifecycle (see _ensure_sinks): the
+        # previous declarative pipewire.conf.d loopback instantiated ONCE at
+        # PipeWire startup and never returned after the headset auto-slept and
+        # tore the loopback down — leaving ChatMix dead until a full PipeWire
+        # restart. __init__ re-runs on every dongle reconnect (systemd restarts
+        # the unit when start_modulator_signal exits on USB disconnect), so
+        # rebuilding the sinks here restores them automatically on every
+        # power-cycle.
+        self._ensure_sinks()
 
+
+    def _pactl(self, *args):
+        """Run pactl and return stdout (empty string on failure)."""
+        try:
+            return subprocess.run(
+                ['pactl', *args], capture_output=True, text=True, timeout=10
+            ).stdout
+        except Exception as e:
+            self.log.error("pactl %s failed: %s", " ".join(args), e)
+            return ''
+
+    def _wait_for_headset_sink(self, timeout=10):
+        """The USB HID dial can enumerate a beat before the ALSA sink node is
+        registered. Wait (briefly) for the headset sink so the loopback binds to
+        a real target instead of failing / falling back to the default sink."""
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            if self.HEADSET in self._pactl('list', 'sinks', 'short'):
+                return True
+            time.sleep(0.5)
+        self.log.error(
+            f"Headset sink {self.HEADSET} did not appear within {timeout}s; "
+            "creating sinks anyway (loopback will reconnect when it does).")
+        return False
+
+    def _unload_existing(self):
+        """Unload any Arctis_Game/Arctis_Chat null-sink/loopback modules left
+        from a previous run, so a reconnect rebuilds a clean topology instead of
+        stacking duplicates or keeping a half-broken loopback."""
+        for line in self._pactl('list', 'modules', 'short').splitlines():
+            if 'Arctis_Game' in line or 'Arctis_Chat' in line:
+                mod_id = line.split('\t', 1)[0].strip()
+                if mod_id:
+                    self._pactl('unload-module', mod_id)
+
+    def _ensure_sinks(self):
+        """(Re)create the two ChatMix virtual sinks and route them to the
+        headset. Each sink is a null-sink (the app-facing Audio/Sink) whose
+        monitor is carried to the headset by a module-loopback. The loopback
+        reconnects to the target by name — unlike the old manual pw-link, which
+        raced the device at boot and silently dropped the routing."""
+        self._unload_existing()
+        self._wait_for_headset_sink()
+        for name, desc in self.SINKS:
+            self._pactl(
+                'load-module', 'module-null-sink',
+                f'sink_name={name}',
+                f'sink_properties=node.description="{desc}"')
+            self._pactl(
+                'load-module', 'module-loopback',
+                f'source={name}.monitor',
+                f'sink={self.HEADSET}',
+                'latency_msec=50',
+                'source_dont_move=true',
+                'sink_dont_move=true')
+            self.log.info("ChatMix sink ready: %s -> %s", name, self.HEADSET)
 
     def _init_log(self):
         log = logging.getLogger(__name__)
@@ -115,106 +186,8 @@ class Arctis7PlusChatMix:
         stdout_handler = logging.StreamHandler()
         stdout_handler.setLevel(logging.DEBUG)
         stdout_handler.setFormatter(logging.Formatter('%(levelname)8s | %(message)s'))
-        log.addHandler(stdout_handler)    
+        log.addHandler(stdout_handler)
         return (log)
-
-    def _init_VAC(self):
-        """Get name of default sink, establish virtual sink
-        and pipe its output to the default sink
-        """
-
-        # get the default sink id from pactl
-        self.system_default_sink = os.popen("pactl get-default-sink").read().strip()
-        self.log.info(f"default sink identified as {self.system_default_sink}")
-
-        # attempt to identify an Arctis sink via pactl
-        try:
-            pactl_short_sinks = os.popen("pactl list short sinks").readlines()
-            # grab any elements from list of pactl sinks that are Arctis 7
-            arctis = re.compile('.*[aA]rctis.*7')
-            arctis_sink = list(filter(arctis.match, pactl_short_sinks))[0] 
-
-            # split the arctis line on tabs (which form table given by 'pactl short sinks')
-            tabs_pattern = re.compile(r'\t')
-            tabs_re = re.split(tabs_pattern, arctis_sink)
-
-            # skip first element of tabs_re (sink's ID which is not persistent)
-            arctis_device = tabs_re[1]
-            self.log.info(f"Arctis sink identified as {arctis_device}")
-            default_sink = arctis_device
-
-        except Exception as e:
-            self.log.error("""Something wrong with Arctis definition 
-            in pactl list short sinks regex matching.
-            Likely no match found for device, check traceback.
-            """, exc_info=True)
-            self.die_gracefully(trigger="No Arctis device match")
-
-        # Destroy virtual sinks if they already existed incase of previous failure:
-        try:
-            destroy_a7p_game = os.system("pw-cli destroy Arctis_Game 2>/dev/null")
-            destroy_a7p_chat = os.system("pw-cli destroy Arctis_Chat 2>/dev/null")
-            if destroy_a7p_game == 0 or destroy_a7p_chat == 0:
-                raise Exception
-        except Exception as e:
-            self.log.info("""Attempted to destroy old VAC sinks at init but none existed""")
-
-        # Instantiate our virtual sinks - Arctis_Chat and Arctis_Game
-        try:
-            self.log.info("Creating VACS...")
-            os.system("""pw-cli create-node adapter '{ 
-                factory.name=support.null-audio-sink 
-                node.name=Arctis_Game 
-                node.description="Arctis 7+ Game" 
-                media.class=Audio/Sink 
-                monitor.channel-volumes=true 
-                object.linger=true 
-                audio.position=[FL FR]
-                }' 1>/dev/null
-            """)
-
-            os.system("""pw-cli create-node adapter '{ 
-                factory.name=support.null-audio-sink 
-                node.name=Arctis_Chat 
-                node.description="Arctis 7+ Chat" 
-                media.class=Audio/Sink 
-                monitor.channel-volumes=true 
-                object.linger=true 
-                audio.position=[FL FR]
-                }' 1>/dev/null
-            """)
-        except Exception as E:
-            self.log.error("""Failure to create node adapter - 
-            Arctis_Chat virtual device could not be created""", exc_info=True)
-            self.die_gracefully(sink_creation_fail=True, trigger="VAC node adapter")
-
-        #route the virtual sink's L&R channels to the default system output's LR
-        try:
-            self.log.info("Assigning VAC sink monitors output to default device...")
-
-            os.system(f'pw-link "Arctis_Game:monitor_FL" '
-            f'"{default_sink}:playback_FL" 1>/dev/null')
-
-            os.system(f'pw-link "Arctis_Game:monitor_FR" '
-            f'"{default_sink}:playback_FR" 1>/dev/null')
-
-            os.system(f'pw-link "Arctis_Chat:monitor_FL" '
-            f'"{default_sink}:playback_FL" 1>/dev/null')
-
-            os.system(f'pw-link "Arctis_Chat:monitor_FR" '
-            f'"{default_sink}:playback_FR" 1>/dev/null')
-
-        except Exception as e:
-            self.log.error("""Couldn't create the links to 
-            pipe LR from VAC to default device""", exc_info=True)
-            self.die_gracefully(sink_fail=True, trigger="LR links")
-        
-        # Default-sink ownership belongs to arctis-auto-switch.sh, which routes
-        # to Arctis_Game on a power-on edge and to the soundbar when the
-        # headset is off. The daemon used to set Arctis_Game unconditionally
-        # during init, which (a) stole audio away from the soundbar when its
-        # delayed startup landed while the headset was off, and (b) defeated
-        # any manual selection. Leave the default alone.
 
     def start_modulator_signal(self):
         """Listen to the USB device for modulator knob's signal 
@@ -252,15 +225,16 @@ class Arctis7PlusChatMix:
     def __handle_sigterm(self, sig, frame):
         self.die_gracefully()
 
-    def die_gracefully(self, sink_creation_fail=False, trigger=None):
-        """Kill the process and remove the VACs
-        on fatal exceptions or SIGTERM / SIGINT
+    def die_gracefully(self, trigger=None):
+        """Kill the process on fatal exceptions or SIGTERM / SIGINT.
+
+        The virtual sinks are intentionally NOT torn down here — they persist so
+        apps stay pointed at Arctis_Game/Arctis_Chat across a dial-reader restart
+        (the null-sink survives even a headset disconnect). _ensure_sinks unloads
+        and rebuilds them cleanly on the next start, so nothing stacks up.
         """
-        
+
         self.log.info('Cleanup on shutdown')
-        # No default-sink restore: we never set it in the first place (see
-        # create_virtual_sinks). arctis-auto-switch.sh reconciles the default
-        # within one tick after the Arctis_Game sink disappears.
 
         # Reattach the kernel HID driver we detached. Otherwise the interface
         # stays driverless after this daemon stops and headsetcontrol / hidraw
@@ -270,15 +244,9 @@ class Arctis7PlusChatMix:
             ifnum = getattr(self, "interface_num", None)
             if ifnum is not None and not self.dev.is_kernel_driver_active(ifnum):
                 self.dev.attach_kernel_driver(ifnum)
-                self.log.info(f"Reattached kernel driver to interface {ifnum}")
+                self.log.info("Reattached kernel driver to interface %s", ifnum)
         except Exception as e:
-            self.log.info(f"Could not reattach kernel driver: {e}")
-
-        # cleanup virtual sinks if they exist
-        if  sink_creation_fail == False:
-            self.log.info("Destroying virtual sinks...")
-            os.system("pw-cli destroy Arctis_Game 1>/dev/null")
-            os.system("pw-cli destroy Arctis_Chat 1>/dev/null")
+            self.log.info("Could not reattach kernel driver: %s", e)
 
         if trigger is not None:
             self.log.info("-"*45)
