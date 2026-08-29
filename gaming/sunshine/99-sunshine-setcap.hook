@@ -1,0 +1,14 @@
+# KMS capture needs cap_sys_admin on the sunshine binary. A package upgrade
+# replaces the binary and drops the capability, silently breaking capture.
+# Re-apply it after every Sunshine install/upgrade.
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = sunshine
+Target = sunshine-bin
+
+[Action]
+Description = Re-applying cap_sys_admin to Sunshine for KMS capture...
+When = PostTransaction
+Exec = /bin/sh -c 'setcap cap_sys_admin,cap_sys_nice+p "$(readlink -f "$(command -v sunshine)")"'

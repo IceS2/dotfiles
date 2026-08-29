@@ -1,0 +1,15 @@
+{
+  "env": {},
+  "apps": [
+    {
+      "name": "Desktop",
+      "image-path": "desktop.png"
+    },
+    {
+      "name": "Steam Big Picture",
+      "cmd": "steam steam://open/bigpicture",
+      "image-path": "steam.png",
+      "auto-detach": "true"
+    }
+  ]
+}

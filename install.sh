@@ -24,6 +24,7 @@ ALL_MODULES=(
     theme
     media
     gaming
+    pokerstars
     tools
     system
     local
@@ -40,6 +41,7 @@ list_modules() {
 
 run_module() {
     local mod="$1"
+    shift
     local script="$DOTFILES_DIR/$mod/install.sh"
 
     if [[ ! -x "$script" ]]; then
@@ -47,7 +49,7 @@ run_module() {
         return 1
     fi
 
-    "$script"
+    "$script" "$@"
 }
 
 # ── Main ──

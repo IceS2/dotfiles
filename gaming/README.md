@@ -326,3 +326,74 @@ Uses NVENC two-pass encoding. Warns if video is too long for target size.
 3. **Monitor performance** and adjust settings as needed
 4. **Report issues** to ProtonDB for Windows games
 5. **Customize MangoHud** config for your preferences
+
+## Game Streaming (Sunshine → Moonlight)
+
+Stream games to a 4K TV. **Phase 1** captures the physical DP-2 monitor at its
+native 1440p; Moonlight upscales to 4K on the TV (same 16:9 aspect → no black
+bars, no desktop reflow). Uses **KMS capture + NVENC**. No HDR on this path.
+
+Dotfiles install the configs, udev/uinput rules, a setcap-repair pacman hook,
+and a systemd binding. The steps below are the **manual** operator tasks.
+
+### One-time setup
+
+1. **Install the host** (native package — AppImage/Flatpak can't do KMS):
+   ```bash
+   paru -S sunshine-bin
+   ./gaming/install.sh          # re-run so setcap + service enable apply
+   ```
+   Confirm version ≥ 0.24.0: `sunshine --version`.
+
+2. **Verify NVIDIA modeset** (black stream if off):
+   ```bash
+   cat /sys/module/nvidia_drm/parameters/modeset   # must print Y
+   ```
+
+3. **Start + credentials:** the service starts with the graphical session. Open
+   the web UI at `https://localhost:47990`, accept the self-signed cert, and set
+   a username/password on first launch.
+
+4. **Pin capture to DP-2 (`output_name`):** read the numeric output id once:
+   ```bash
+   journalctl --user -u app-dev.lizardbyte.app.Sunshine | grep -i -A2 output
+   ```
+   Put that number in `gaming/sunshine/sunshine.conf` (`output_name = <id>`) and
+   restart: `systemctl --user restart app-dev.lizardbyte.app.Sunshine`.
+
+5. **Firewall** (only if one is active):
+   ```bash
+   sudo ufw allow 47984,47989,48010/tcp
+   sudo ufw allow 47998,47999,48000,48002,48010,5353/udp
+   ```
+
+6. **Pair the TV:** install Moonlight on the TV device, add this host by IP,
+   enter the PIN it shows into the web UI's "PIN" page. Launch **Desktop** or
+   **Steam Big Picture**, pair a controller, and play.
+
+### Troubleshooting
+
+- **Black stream:** `nvidia-drm.modeset=1` missing (step 2), or `output_name`
+  points at the wrong monitor.
+- **Capture fails after an update:** the pacman hook re-applies setcap; verify
+  with `getcap "$(readlink -f "$(command -v sunshine)")"` → `cap_sys_admin,cap_sys_nice=p`.
+- **No capture / no audio:** the service didn't inherit the Wayland env — confirm
+  it's bound to the graphical session (`systemctl --user status
+  app-dev.lizardbyte.app.Sunshine` shows it started after login, not at boot).
+- **Controller dead:** `ls -l /dev/uinput` must exist; `lsmod | grep uinput`
+  loaded; re-run `./gaming/install.sh` to reinstall the udev rule.
+- **Wrong monitor / cursor escapes to the other display:** expected with
+  multi-monitor Wayland capture — irrelevant with a gamepad (input goes to the
+  game, not the pointer).
+
+### Phase 2 (deferred — only if Phase 1 annoys you)
+
+- **Dedicated virtual 4K display** via a kernel EDID-firmware fake connector
+  (`drm.edid_firmware=<conn>:edid/<file>` + `video=<conn>:e` + a hand-built 4K
+  EDID). The OS treats it as a real, always-present output → clean single-output
+  capture, stable across suspend. Heavier (GRUB/initramfs). NOTE: `hyprctl
+  output create headless` is the AMD/Intel path — NVIDIA needs the EDID route.
+- **Audio split** via `virtual_sink`/null-sink so game audio goes to the TV only,
+  not the desk speakers (Phase 1 streams the default sink — audio on both).
+- HDR stays unavailable even in Phase 2 (virtual connectors get no HDR DRM props
+  on NVIDIA).
