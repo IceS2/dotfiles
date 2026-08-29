@@ -1,8 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
+import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import ".." as Root
+import "../services/utils.js" as Utils
 
 Root.BarWidget {
     id: trayInline
@@ -68,14 +70,18 @@ Root.BarWidget {
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
 
                     onClicked: mouse => {
-                        var screenX = inlineItem.mapToGlobal(inlineItem.width / 2, 0).x
+                        var anchor = Utils.popupAnchorForPoint(
+                            Quickshell,
+                            inlineItem.mapToGlobal(inlineItem.width / 2, 0),
+                            Root.Tray.activeScreen
+                        )
                         if (mouse.button === Qt.LeftButton) {
                             if (inlineItem.modelData.onlyMenu)
-                                Root.Tray.showMenu(inlineItem.modelData, screenX)
+                                Root.Tray.showMenu(inlineItem.modelData, anchor.screen, anchor.x)
                             else
                                 inlineItem.modelData.activate()
                         } else if (mouse.button === Qt.RightButton) {
-                            Root.Tray.showMenu(inlineItem.modelData, screenX)
+                            Root.Tray.showMenu(inlineItem.modelData, anchor.screen, anchor.x)
                         }
                     }
                 }
@@ -112,7 +118,12 @@ Root.BarWidget {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    Root.Tray.popupAnchorX = parent.mapToGlobal(parent.width / 2, 0).x
+                    var anchor = Utils.popupAnchorForPoint(
+                        Quickshell,
+                        parent.mapToGlobal(parent.width / 2, 0),
+                        Root.Tray.activeScreen
+                    )
+                    Root.Tray.updatePopupAnchor(anchor.screen, anchor.x)
                     Root.Tray.togglePopup()
                 }
             }

@@ -26,12 +26,17 @@ Scope {
             readonly property var monitorWorkspaceIds: Root.Workspaces.workspaceIdsForMonitor(monitor?.name)
 
             screen: modelData
-            visible: Root.Overview.popupVisible
+            // Stays mapped briefly after hiding so screencopy sessions are torn
+            // down first — see Overview.capturing.
+            visible: Root.Overview.mapped
             color: "transparent"
 
             WlrLayershell.namespace: "quickshell-overview"
             WlrLayershell.layer: WlrLayer.Overlay
-            WlrLayershell.keyboardFocus: monitorIsFocused ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+            // Released immediately on hide, not on unmap, so focus returns to the
+            // window without waiting out the grace period.
+            WlrLayershell.keyboardFocus: (Root.Overview.popupVisible && monitorIsFocused)
+                ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
             mask: Region {
                 item: Root.Overview.popupVisible ? keyHandler : null
@@ -104,7 +109,7 @@ Scope {
                     }
 
                     if (targetId !== null) {
-                        Hyprland.dispatch("workspace " + targetId);
+                        Hyprland.dispatch("hl.dsp.focus({ workspace = " + targetId + " })");
                         event.accepted = true;
                     }
                 }

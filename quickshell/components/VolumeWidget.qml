@@ -6,7 +6,6 @@ Root.BarWidget {
     id: volumeWidget
     acceptedButtons: Qt.LeftButton | Qt.RightButton
     anchorTarget: Root.Audio
-    anchorProperty: "anchorX"
     tintColor: Root.Theme.rosewater
 
     readonly property int volumePercent: Root.Audio.volumePercent

@@ -111,7 +111,7 @@ Item {
                                 onClicked: {
                                     if (root.draggingTargetWorkspace === -1) {
                                         Root.Overview.hidePopup()
-                                        Hyprland.dispatch("workspace " + workspace.workspaceValue)
+                                        Hyprland.dispatch("hl.dsp.focus({ workspace = " + workspace.workspaceValue + " })")
                                     }
                                 }
                             }
@@ -237,7 +237,8 @@ Item {
                             window.Drag.active = false
                             root.draggingFromWorkspace = -1
                             if (targetWorkspace !== -1 && targetWorkspace !== window.windowData?.workspace.id) {
-                                Hyprland.dispatch("movetoworkspacesilent " + targetWorkspace + ", address:" + window.windowData?.address)
+                                Hyprland.dispatch("hl.dsp.window.move({ workspace = " + targetWorkspace
+                                    + ", silent = true, window = \"address:" + window.windowData?.address + "\" })")
                                 updateWindowPosition.restart()
                             } else {
                                 window.x = window.initX
@@ -249,10 +250,10 @@ Item {
 
                             if (event.button === Qt.LeftButton) {
                                 Root.Overview.hidePopup()
-                                Hyprland.dispatch("focuswindow address:" + window.windowData.address)
+                                Hyprland.dispatch("hl.dsp.focus({ window = \"address:" + window.windowData.address + "\" })")
                                 event.accepted = true
                             } else if (event.button === Qt.MiddleButton) {
-                                Hyprland.dispatch("closewindow address:" + window.windowData.address)
+                                Hyprland.dispatch("hl.dsp.window.close({ window = \"address:" + window.windowData.address + "\" })")
                                 event.accepted = true
                             }
                         }

@@ -6,7 +6,6 @@ Root.BarWidget {
     id: perfWidget
     acceptedButtons: Qt.LeftButton
     anchorTarget: Root.Performance
-    anchorProperty: "anchorX"
 
     // Exposed for parent pill visibility binding (don't use `visible` — circular dependency)
     readonly property bool hasAlerts: _alerts.length > 0

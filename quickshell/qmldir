@@ -23,6 +23,7 @@ singleton Cava 1.0 services/Cava.qml
 singleton Bluetooth 1.0 services/Bluetooth.qml
 singleton Performance 1.0 services/Performance.qml
 singleton Updates 1.0 services/Updates.qml
+singleton Caffeine 1.0 services/Caffeine.qml
 singleton Weather 1.0 services/Weather.qml
 singleton EmojiPicker 1.0 services/EmojiPicker.qml
 PopupServiceBase 1.0 services/PopupServiceBase.qml
@@ -81,5 +82,6 @@ BluetoothPopup 1.0 components/BluetoothPopup.qml
 PerformanceWidget 1.0 components/PerformanceWidget.qml
 PerformancePopup 1.0 components/PerformancePopup.qml
 UpdatesWidget 1.0 components/UpdatesWidget.qml
+CaffeineWidget 1.0 components/CaffeineWidget.qml
 UpdatesPopup 1.0 components/UpdatesPopup.qml
 SystemOverview 1.0 components/SystemOverview.qml

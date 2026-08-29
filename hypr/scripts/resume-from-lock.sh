@@ -12,21 +12,14 @@ log() {
 }
 
 restart_quickshell() {
-    # Try non-destructive IPC hard reload first (preserves D-Bus + notification server)
-    if qs ipc call shell reload 2>/dev/null; then
-        log "QuickShell hard reload triggered via IPC"
-        sleep 2
-        if hyprctl layers -j | grep -q quickshell; then
-            log "QuickShell surfaces recovered via reload"
-            return 0
-        fi
-        log "Reload succeeded but surfaces still missing, falling back to restart"
+    # QML reload preserves the Hyprland singleton and its dead event socket.
+    if qs kill 2>/dev/null; then
+        log "QuickShell stopped gracefully"
     else
-        log "IPC reload failed, falling back to restart"
+        pkill -9 quickshell
+        log "QuickShell force-stopped after IPC shutdown failed"
     fi
 
-    # Fallback: full restart (breaks long-lived D-Bus clients like Waterfox)
-    pkill -9 quickshell
     sleep 0.5
     quickshell &
     log "QuickShell restarted (PID: $!)"
@@ -49,13 +42,8 @@ log "=== Resume triggered ==="
 # Wait for monitors to stabilize
 sleep 2
 
-# Restart QuickShell if surfaces are gone
-if ! hyprctl layers -j | grep -q quickshell; then
-    log "QuickShell surfaces lost"
-    restart_quickshell
-else
-    log "QuickShell surfaces OK"
-fi
+# A process restart recreates the Hyprland event socket after resume.
+restart_quickshell
 
 # Check for frozen Kitty terminals
 FROZEN_KITTY=$(hyprctl clients -j | jq -r '.[] | select(.class == "kitty") | select(.mapped == false) | .address' 2>/dev/null)

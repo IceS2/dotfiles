@@ -6,7 +6,6 @@ Root.BarWidget {
     id: updatesWidget
     acceptedButtons: Qt.LeftButton
     anchorTarget: Root.Updates
-    anchorProperty: "anchorX"
     tintColor: Root.Updates.hasCritical ? Root.Theme.error : Root.Theme.yellow
 
     // Ghost widget: parent BarPill binds visible to this

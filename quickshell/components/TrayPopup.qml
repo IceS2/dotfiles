@@ -73,17 +73,22 @@ Root.PopupPanel {
                     acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
 
                     onClicked: mouse => {
-                        var screenX = trayItem.mapToGlobal(trayItem.width / 2, 0).x
+                        var localX = trayItem.mapToGlobal(trayItem.width / 2, 0).x
+                            - Root.Tray.activeScreen.x
                         switch (mouse.button) {
                         case Qt.LeftButton:
                             if (trayItem.modelData.onlyMenu) {
-                                Root.Tray.showMenu(trayItem.modelData, screenX)
+                                Root.Tray.showMenu(
+                                    trayItem.modelData, Root.Tray.activeScreen, localX
+                                )
                             } else {
                                 trayItem.modelData.activate()
                             }
                             break
                         case Qt.RightButton:
-                            Root.Tray.showMenu(trayItem.modelData, screenX)
+                            Root.Tray.showMenu(
+                                trayItem.modelData, Root.Tray.activeScreen, localX
+                            )
                             break
                         case Qt.MiddleButton:
                             trayItem.modelData.secondaryActivate()

@@ -194,10 +194,10 @@ Rectangle {
                     id: actionsFlow
                     Layout.fillWidth: true
                     spacing: Root.Theme.spacingSmall
-                    visible: card.notif.notification && card.notif.notification.actions.length > 0
+                    visible: (card.notif.notification?.actions?.length ?? 0) > 0
 
                     Repeater {
-                        model: card.notif.notification ? card.notif.notification.actions.length : 0
+                        model: card.notif.notification?.actions?.length ?? 0
 
                         Rectangle {
                             required property int index

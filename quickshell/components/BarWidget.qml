@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
+import Quickshell
 import ".." as Root
+import "../services/utils.js" as Utils
 
 Item {
     id: barWidget
@@ -13,13 +15,17 @@ Item {
     // MouseArea configuration
     property int acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-    // Popup anchor — set anchorTarget to a service with an anchorX property
-    // and the widget will auto-update it on creation and resize
+    // Popup anchor — set anchorTarget to a PopupServiceBase service.
     property QtObject anchorTarget: null
-    property string anchorProperty: "anchorX"
 
     function updateAnchor() {
-        if (anchorTarget) anchorTarget[anchorProperty] = mapToGlobal(width / 2, 0).x
+        if (!anchorTarget) return
+
+        var globalPoint = mapToGlobal(width / 2, 0)
+        var anchor = Utils.popupAnchorForPoint(
+            Quickshell, globalPoint, anchorTarget.activeScreen
+        )
+        anchorTarget.updateAnchor(anchor.screen, anchor.x)
     }
 
     Component.onCompleted: if (anchorTarget) Qt.callLater(updateAnchor)

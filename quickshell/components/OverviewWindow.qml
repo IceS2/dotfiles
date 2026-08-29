@@ -70,9 +70,11 @@ Item {
     }
 
     // ScreencopyView — Hyprland 0.54+ sends toplevel buffers in logical orientation
+    // Gated on `capturing`, not `popupVisible`: capture must stop before the
+    // panel unmaps, or captured toplevels are left frame-callback starved.
     ScreencopyView {
         anchors.fill: parent
-        captureSource: Root.Overview.popupVisible ? root.toplevel : null
+        captureSource: Root.Overview.capturing ? root.toplevel : null
         live: true
     }
 

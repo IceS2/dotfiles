@@ -27,6 +27,22 @@ function findFocusedScreen(Hyprland, Quickshell, fallback) {
     return fallback;
 }
 
+function popupAnchorForPoint(Quickshell, globalPoint, fallback) {
+    var screens = Quickshell.screens;
+    for (var i = 0; i < screens.length; i++) {
+        var screen = screens[i];
+        if (globalPoint.x >= screen.x && globalPoint.x < screen.x + screen.width
+                && globalPoint.y >= screen.y && globalPoint.y < screen.y + screen.height) {
+            return { screen: screen, x: globalPoint.x - screen.x };
+        }
+    }
+
+    return {
+        screen: fallback,
+        x: fallback ? globalPoint.x - fallback.x : globalPoint.x
+    };
+}
+
 /**
  * List navigation helpers for services with currentIndex + filteredList pattern.
  * Each returns the new index, or -1 if no change occurred.

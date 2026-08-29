@@ -46,6 +46,11 @@ QtObject {
         popupVisible = false
     }
 
+    function updateAnchor(screen, localX) {
+        activeScreen = screen
+        anchorX = localX
+    }
+
     // ─── Modal Exclusivity (reactive — works with overridden showPopup) ───
     onPopupVisibleChanged: {
         if (popupVisible && _modalKey)

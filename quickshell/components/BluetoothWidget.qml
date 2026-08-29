@@ -6,7 +6,6 @@ Root.BarWidget {
     id: btWidget
     acceptedButtons: Qt.LeftButton | Qt.RightButton
     anchorTarget: Root.Bluetooth
-    anchorProperty: "anchorX"
     tintColor: Root.Theme.sky
 
     // Hide when no adapter available

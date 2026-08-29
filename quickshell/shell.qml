@@ -133,6 +133,8 @@ ShellRoot {
                         : Updates.popupVisible
                             ? (Updates.hasCritical ? Theme.error : Theme.yellow)
                             : Theme.flamingo
+                    CaffeineWidget {}
+                    BarSeparator {}
                     UpdatesWidget { id: updatesWidget }
                     BarSeparator { visible: updatesWidget.hasUpdates }
                     SessionWidget {}

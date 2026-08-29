@@ -49,10 +49,16 @@ QtObject {
 
     // ─── Menu controls ───
 
-    function showMenu(item, screenX) {
+    function updatePopupAnchor(screen, localX) {
+        root.activeScreen = screen
+        root.popupAnchorX = localX
+    }
+
+    function showMenu(item, screen, localX) {
         Modals.closeOthers("tray")
         root.menuItem = item
-        root.menuAnchorX = screenX
+        root.activeScreen = screen
+        root.menuAnchorX = localX
         root.menuVisible = true
     }
 
@@ -60,11 +66,11 @@ QtObject {
         root.menuVisible = false
     }
 
-    function toggleMenu(item, screenX) {
+    function toggleMenu(item, screen, localX) {
         if (root.menuVisible && root.menuItem === item) {
             hideMenu()
         } else {
-            showMenu(item, screenX)
+            showMenu(item, screen, localX)
         }
     }
 

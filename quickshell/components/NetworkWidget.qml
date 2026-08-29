@@ -6,7 +6,6 @@ Root.BarWidget {
     id: networkWidget
     acceptedButtons: Qt.LeftButton
     anchorTarget: Root.Network
-    anchorProperty: "anchorX"
     tintColor: Root.Theme.teal
 
     readonly property bool connected: Root.Network.connected
