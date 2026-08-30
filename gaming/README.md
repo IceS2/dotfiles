@@ -49,7 +49,7 @@ Expected output: `gamemoded is running`
 ### Locations
 
 - **MangoHud config:** `~/.dotfiles/gaming/MangoHud/MangoHud.conf`
-- **GameMode config:** `~/.dotfiles/gaming/gamemode.ini` → `/etc/gamemode.ini`
+- **GameMode config:** `~/.dotfiles/gaming/gamemode.ini`, copied to `/etc/gamemode.ini`
 - **Hyprland gaming rules:** `~/.config/hypr/configs/windowrules.conf`
 - **MangoHud logs:** `~/Documents/mangohud_logs/`
 
@@ -68,9 +68,9 @@ After editing, changes apply immediately (no restart needed).
 Edit `~/.dotfiles/gaming/gamemode.ini` to customize:
 
 **CPU Governor:**
-- `desiredgov=schedutil` - Dynamic performance (recommended, balanced)
-- `desiredgov=performance` - Max performance (highest power, minimal benefit)
-- `default_gov=powersave` - Power saving when not gaming
+- `desiredgov=performance` - Use the performance policy while gaming
+- Leave `defaultgov` unset so GameMode restores the pre-game policy on exit
+- This system uses active `intel_pstate`, which exposes `performance` and `powersave`; `schedutil` is unavailable
 
 **GPU Mode:**
 - `apply_gpu_optimisations=accept` - Max NVIDIA performance during gaming
