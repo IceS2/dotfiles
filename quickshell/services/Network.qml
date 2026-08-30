@@ -13,7 +13,7 @@ import Quickshell.Io
  * - VPN detection and management (WireGuard, OpenVPN, ProtonVPN, etc.)
  * - WiFi scanning and connection management (for popup)
  *
- * Single nmcli poll (1s) feeds both network and VPN state.
+ * A persistent nmcli monitor triggers debounced state reconciliation.
  * WiFi and VPN management delegated to sub-objects.
  */
 PopupServiceBase {
@@ -27,6 +27,8 @@ PopupServiceBase {
 
     function showPopup() {
         root.popupVisible = true
+        root.reconcileState()
+        if (root.isWiFi) root.signalProcess.running = true
         scanWifi()
         listVpnConnections()
         root._deviceStatusProc.running = true
@@ -188,26 +190,77 @@ PopupServiceBase {
         return ""
     }
 
-    // ─── Single update timer ───
-    property int _tickCount: 0
+    function reconcileState() {
+        if (!root.statusProcess.running) root.statusProcess.running = true
+        root.wifi.checkRadio()
+        root.vpn.checkWgQuick()
+    }
 
-    property Timer updateTimer: Timer {
-        interval: 1000
+    property Timer _reconcileTimer: Timer {
+        interval: 30000
         running: true
         repeat: true
         triggeredOnStart: true
-        onTriggered: {
-            root.statusProcess.running = true
-            if (root.isWiFi) root.signalProcess.running = true
-            if (root.deviceName && (root.displayMode === 1 || root.popupVisible)) root.updateNetworkSpeed()
-            if (root.popupVisible) root._deviceStatusProc.running = true
-            // Check WiFi radio + wg-quick state every 5s
-            root._tickCount++
-            if (root._tickCount % 5 === 0) {
-                root.wifi.checkRadio()
-                root.vpn.checkWgQuick()
-            }
+        onTriggered: root.reconcileState()
+    }
+
+    property Timer _signalTimer: Timer {
+        interval: root.popupVisible ? 1000 : 5000
+        running: root.isWiFi
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: root.signalProcess.running = true
+    }
+
+    property Timer _speedTimer: Timer {
+        interval: 1000
+        running: root.deviceName !== "" && (root.displayMode === 1 || root.popupVisible)
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: root.updateNetworkSpeed()
+    }
+
+    property Timer _deviceTimer: Timer {
+        interval: 5000
+        running: root.popupVisible
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: root._deviceStatusProc.running = true
+    }
+
+    property Timer _monitorDebounce: Timer {
+        interval: 250
+        onTriggered: root.reconcileState()
+    }
+
+    property int _monitorRetryMs: 5000
+    property bool monitorAvailable: false
+    property Process _networkMonitor: Process {
+        running: true
+        command: ["nmcli", "monitor"]
+        stdout: SplitParser { onRead: data => root._monitorDebounce.restart() }
+        onStarted: {
+            root.monitorAvailable = true
+            root._monitorStable.restart()
         }
+        onRunningChanged: {
+            if (running) return
+            root.monitorAvailable = false
+            root._monitorStable.stop()
+            root._monitorRetry.interval = root._monitorRetryMs
+            root._monitorRetryMs = Math.min(root._monitorRetryMs * 2, 60000)
+            root._monitorRetry.restart()
+        }
+    }
+
+    property Timer _monitorRetry: Timer {
+        interval: root._monitorRetryMs
+        onTriggered: root._networkMonitor.running = true
+    }
+
+    property Timer _monitorStable: Timer {
+        interval: 60000
+        onTriggered: root._monitorRetryMs = 5000
     }
 
     // ─── nmcli process — feeds BOTH network and VPN state ───

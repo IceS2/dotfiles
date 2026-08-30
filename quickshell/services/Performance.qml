@@ -17,7 +17,7 @@ PopupServiceBase {
     function showPopup() {
         root.popupVisible = true
         // Force immediate updates on open
-        root._cpuProc.running = true
+        root.updateKernelMetrics()
         root._gpuProc.running = true
         root._diskProc.running = true
     }
@@ -26,6 +26,7 @@ PopupServiceBase {
 
     property int cpuPercent: 0
     property int cpuTemp: 0
+    property bool kernelMetricsStale: true
 
     // Two-sample delta for accurate CPU usage
     property var _prevCpuTimes: null
@@ -45,83 +46,17 @@ PopupServiceBase {
         blockLoading: true
     }
 
-    property Process _cpuProc: Process {
-        running: false
-        command: ["cat", "/proc/stat"]
-        stdout: SplitParser {
-            onRead: data => {
-                if (!data.startsWith("cpu ")) return
-                var parts = data.trim().split(/\s+/)
-                if (parts.length < 8) return
-
-                // user, nice, system, idle, iowait, irq, softirq
-                var user = parseInt(parts[1]) || 0
-                var nice = parseInt(parts[2]) || 0
-                var system = parseInt(parts[3]) || 0
-                var idle = parseInt(parts[4]) || 0
-                var iowait = parseInt(parts[5]) || 0
-                var irq = parseInt(parts[6]) || 0
-                var softirq = parseInt(parts[7]) || 0
-
-                var totalIdle = idle + iowait
-                var totalActive = user + nice + system + irq + softirq
-                var total = totalIdle + totalActive
-
-                if (root._prevCpuTimes) {
-                    var dTotal = total - root._prevCpuTimes.total
-                    var dIdle = totalIdle - root._prevCpuTimes.idle
-                    if (dTotal > 0) {
-                        root.cpuPercent = Math.round(((dTotal - dIdle) / dTotal) * 100)
-                    }
-                }
-
-                root._prevCpuTimes = { total: total, idle: totalIdle }
-            }
-        }
-        onExited: {
-            // Read temperature
-            root._cpuTempFile.reload()
-            var tempStr = root._cpuTempFile.text()
-            if (tempStr) {
-                var temp = parseInt(tempStr.trim())
-                if (!isNaN(temp)) root.cpuTemp = Math.round(temp / 1000)
-            }
-        }
-    }
-
     // ─── RAM State ───
 
     property int ramPercent: 0
     property real ramUsedGb: 0
     property real ramTotalGb: 0
 
-    property Process _ramProc: Process {
-        running: false
-        command: ["cat", "/proc/meminfo"]
-
-        property real _total: 0
-        property real _available: 0
-
-        stdout: SplitParser {
-            onRead: data => {
-                if (data.startsWith("MemTotal:")) {
-                    var val = parseInt(data.replace(/[^0-9]/g, ""))
-                    if (!isNaN(val)) root._ramProc._total = val
-                } else if (data.startsWith("MemAvailable:")) {
-                    var val2 = parseInt(data.replace(/[^0-9]/g, ""))
-                    if (!isNaN(val2)) root._ramProc._available = val2
-                }
-            }
-        }
-
-        onExited: {
-            if (_total > 0) {
-                var used = _total - _available
-                root.ramPercent = Math.round((used / _total) * 100)
-                root.ramUsedGb = Math.round(used / 1048576 * 10) / 10
-                root.ramTotalGb = Math.round(_total / 1048576 * 10) / 10
-            }
-        }
+    property FileView _ramInfoFile: FileView {
+        path: "/proc/meminfo"
+        watchChanges: false
+        preload: false
+        blockLoading: true
     }
 
     // ─── GPU State (NVIDIA) ───
@@ -131,6 +66,7 @@ PopupServiceBase {
     property real gpuVramUsedGb: 0
     property real gpuVramTotalGb: 0
     property int gpuVramPercent: 0
+    property bool gpuMetricsStale: true
 
     property Process _gpuProc: Process {
         running: false
@@ -148,8 +84,12 @@ PopupServiceBase {
                     root.gpuVramUsedGb = Math.round(vramUsed / 1024 * 10) / 10
                     root.gpuVramTotalGb = Math.round(vramTotal / 1024 * 10) / 10
                     root.gpuVramPercent = vramTotal > 0 ? Math.round((vramUsed / vramTotal) * 100) : 0
+                    root.gpuMetricsStale = false
                 }
             }
+        }
+        onExited: (code, status) => {
+            if (code !== 0) root.gpuMetricsStale = true
         }
     }
 
@@ -158,31 +98,107 @@ PopupServiceBase {
     property int ramTemp: 0
     property int nvmeTemp: 0
 
-    property Process _tempProc: Process {
-        running: false
-        command: ["bash", "-c", "for d in /sys/class/hwmon/hwmon*/; do n=$(cat \"$d/name\" 2>/dev/null); if [ \"$n\" = \"spd5118\" ]; then echo \"RAM:$(cat \"$d/temp1_input\" 2>/dev/null)\"; elif [ \"$n\" = \"nvme\" ]; then echo \"NVME:$(cat \"$d/temp1_input\" 2>/dev/null)\"; fi; done"]
+    property string _ramTempPath1: ""
+    property string _ramTempPath2: ""
+    property string _nvmeTempPath: ""
+
+    property FileView _ramTempFile1: FileView { path: root._ramTempPath1; watchChanges: false; preload: false; blockLoading: true }
+    property FileView _ramTempFile2: FileView { path: root._ramTempPath2; watchChanges: false; preload: false; blockLoading: true }
+    property FileView _nvmeTempFile: FileView { path: root._nvmeTempPath; watchChanges: false; preload: false; blockLoading: true }
+
+    // Hardware topology changes rarely; discover paths once and read them directly thereafter.
+    property Process _sensorDiscoveryProc: Process {
+        running: true
+        command: ["bash", "-c", "for d in /sys/class/hwmon/hwmon*; do read -r n < \"$d/name\" || continue; case \"$n\" in spd5118) printf 'RAM:%s\\n' \"$d/temp1_input\" ;; nvme) printf 'NVME:%s\\n' \"$d/temp1_input\" ;; esac; done"]
 
         stdout: SplitParser {
             onRead: data => {
                 if (data.startsWith("RAM:")) {
-                    var val = parseInt(data.substring(4))
-                    if (!isNaN(val)) {
-                        // Average with existing if we already have a value (multiple sticks)
-                        if (root.ramTemp > 0)
-                            root.ramTemp = Math.round((root.ramTemp + Math.round(val / 1000)) / 2)
-                        else
-                            root.ramTemp = Math.round(val / 1000)
-                    }
+                    var path = data.substring(4).trim()
+                    if (!root._ramTempPath1) root._ramTempPath1 = path
+                    else if (!root._ramTempPath2) root._ramTempPath2 = path
                 } else if (data.startsWith("NVME:")) {
-                    var val2 = parseInt(data.substring(5))
-                    if (!isNaN(val2)) root.nvmeTemp = Math.round(val2 / 1000)
+                    root._nvmeTempPath = data.substring(5).trim()
                 }
             }
         }
+        onExited: root.updateKernelMetrics()
+    }
 
-        onStarted: {
-            root.ramTemp = 0
+    function readTemperature(file) {
+        if (!file.path) return null
+        file.reload()
+        var value = parseInt(file.text().trim())
+        return isNaN(value) ? null : Math.round(value / 1000)
+    }
+
+    function scheduleSensorDiscovery() {
+        if (!root._sensorRetry.running) root._sensorRetry.start()
+    }
+
+    function discoverSensors() {
+        if (root._sensorDiscoveryProc.running) return
+        root._ramTempPath1 = ""
+        root._ramTempPath2 = ""
+        root._nvmeTempPath = ""
+        root._sensorDiscoveryProc.running = true
+    }
+
+    function updateKernelMetrics() {
+        root._cpuStatFile.reload()
+        var cpuLine = root._cpuStatFile.text().split("\n")[0]
+        var parts = cpuLine.trim().split(/\s+/)
+        var cpuValid = parts.length >= 8 && parts[0] === "cpu"
+        if (cpuValid) {
+            var idle = (parseInt(parts[4]) || 0) + (parseInt(parts[5]) || 0)
+            var active = (parseInt(parts[1]) || 0) + (parseInt(parts[2]) || 0)
+                + (parseInt(parts[3]) || 0) + (parseInt(parts[6]) || 0)
+                + (parseInt(parts[7]) || 0)
+            var total = idle + active
+            if (root._prevCpuTimes) {
+                var dTotal = total - root._prevCpuTimes.total
+                var dIdle = idle - root._prevCpuTimes.idle
+                if (dTotal > 0) root.cpuPercent = Math.round((dTotal - dIdle) / dTotal * 100)
+            }
+            root._prevCpuTimes = { total: total, idle: idle }
         }
+
+        root._ramInfoFile.reload()
+        var mem = root._ramInfoFile.text()
+        var totalMatch = mem.match(/^MemTotal:\s+(\d+)/m)
+        var availableMatch = mem.match(/^MemAvailable:\s+(\d+)/m)
+        var memoryValid = totalMatch && availableMatch
+        if (memoryValid) {
+            var totalKb = parseInt(totalMatch[1])
+            var availableKb = parseInt(availableMatch[1])
+            var usedKb = totalKb - availableKb
+            root.ramPercent = Math.round(usedKb / totalKb * 100)
+            root.ramUsedGb = Math.round(usedKb / 1048576 * 10) / 10
+            root.ramTotalGb = Math.round(totalKb / 1048576 * 10) / 10
+        }
+        root.kernelMetricsStale = !(cpuValid && memoryValid)
+
+        var cpuTemperature = root.readTemperature(root._cpuTempFile)
+        if (cpuTemperature !== null) root.cpuTemp = cpuTemperature
+        var ram1 = root.readTemperature(root._ramTempFile1)
+        var ram2 = root.readTemperature(root._ramTempFile2)
+        if (ram1 !== null || ram2 !== null) {
+            if (ram1 !== null && ram2 !== null) root.ramTemp = Math.round((ram1 + ram2) / 2)
+            else root.ramTemp = ram1 !== null ? ram1 : ram2
+        }
+        var nvmeTemperature = root.readTemperature(root._nvmeTempFile)
+        if (nvmeTemperature !== null) root.nvmeTemp = nvmeTemperature
+
+        if ((root._ramTempPath1 && ram1 === null)
+                || (root._ramTempPath2 && ram2 === null)
+                || (root._nvmeTempPath && nvmeTemperature === null)) {
+            root.scheduleSensorDiscovery()
+        }
+    }
+
+    property Timer _sensorRetry: Timer {
+        interval: 60000
+        onTriggered: root.discoverSensors()
     }
 
     // ─── Disk State ───
@@ -244,11 +260,16 @@ PopupServiceBase {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            root._cpuProc.running = true
-            root._ramProc.running = true
-            root._gpuProc.running = true
-            root._tempProc.running = true
+            root.updateKernelMetrics()
         }
+    }
+
+    property Timer _gpuTimer: Timer {
+        interval: root.popupVisible ? 2000 : 5000
+        running: true
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: root._gpuProc.running = true
     }
 
     property Timer _slowTimer: Timer {
