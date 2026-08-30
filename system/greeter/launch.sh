@@ -5,12 +5,6 @@
 
 CONF="/etc/greetd/greeter.conf"
 
-# Portals are unused in the greeter and crash when its compositor exits.
-systemctl --user --quiet mask --runtime --now \
-    xdg-desktop-portal.service \
-    xdg-desktop-portal-gtk.service \
-    xdg-desktop-portal-hyprland.service
-
 # Parse theme from greeter.conf
 THEME=$(sed -n 's/^theme *= *//p' "$CONF" 2>/dev/null)
 export QS_THEME="${THEME:-pixel-rainyroom}"
