@@ -11,7 +11,7 @@ return {
     lazy = false,
     dependencies = { "mason-org/mason.nvim" },
     opts = {
-      ensure_installed = { "js-debug-adapter" },
+      ensure_installed = { "codelldb", "js-debug-adapter" },
       run_on_start = true,
       debounce_hours = 24,
     },
