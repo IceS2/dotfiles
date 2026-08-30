@@ -11,7 +11,13 @@ return {
     lazy = false,
     dependencies = { "mason-org/mason.nvim" },
     opts = {
-      ensure_installed = { "codelldb", "js-debug-adapter" },
+      ensure_installed = {
+        "codelldb",
+        "js-debug-adapter",
+        "markdownlint",
+        "prettier",
+        "stylua",
+      },
       run_on_start = true,
       debounce_hours = 24,
     },
@@ -24,23 +30,12 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      local default_capabilities = require("blink.cmp").get_lsp_capabilities()
-
-      -- Setup autocommand with default groups and capabilities
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
         callback = function(ev)
-          local client = vim.lsp.get_client_by_id(ev.data.client_id)
-          if client then
-            client.config.capabilities = vim.tbl_deep_extend(
-              "force",
-              client.config.capabilities or {},
-              default_capabilities)
-          end
           require("plugins.lsp.keymaps").setup(ev.buf)
         end,
       })
-
 
       -- Override Any Server Configuration
       -- ---------------------------------
@@ -63,18 +58,17 @@ return {
           "biome",
           "astro",
         },
-        automatic_enable =  {
+        automatic_enable = {
           exclude = {
             "rust_analyzer", -- rustaceanvim handles this
           },
-        }
+        },
       })
-    end
+    end,
   },
   {
     "neovim/nvim-lspconfig",
     lazy = false,
-    config = function()
-    end
-  }
+    config = function() end,
+  },
 }

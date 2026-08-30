@@ -118,6 +118,7 @@ steam
 sudo
 swayimg
 tokei
+tree-sitter-cli
 ttf-cascadia-code
 ttf-cascadia-code-nerd
 ttf-firacode-nerd

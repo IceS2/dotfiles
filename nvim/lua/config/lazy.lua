@@ -26,6 +26,7 @@ require("lazy").setup({
   },
   defaults = { lazy = true },
   install = { colorscheme = { "catppuccin" } },
+  rocks = { enabled = false },
   checker = { enabled = true, frequency = 86400 },
   performance = {
     rtp = {
@@ -39,7 +40,7 @@ require("lazy").setup({
         "tutor",
         "zipPlugin",
         "spellfile_plugin",
-      }
-    }
-  }
+      },
+    },
+  },
 })

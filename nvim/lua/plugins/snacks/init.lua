@@ -6,7 +6,11 @@ return {
     opts = {
       bigfile = { enabled = true },
       dim = { enabled = true },
-      image = { enabled = true },
+      image = {
+        enabled = true,
+        formats = { "png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff", "heic", "avif", "icns" },
+        math = { enabled = false },
+      },
       indent = { enabled = true },
       input = { enabled = true },
       notifier = { enabled = true },
@@ -15,9 +19,31 @@ return {
       words = { enabled = true },
     },
     keys = {
-      { "<leader>fn", function() Snacks.notifier.show_history() end, desc = "Notification History" },
-      { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse (Open in Browser)" },
-      { "<leader>ud", function() if Snacks.dim.enabled then Snacks.dim.disable() else Snacks.dim.enable() end end, desc = "Toggle Dim" },
+      {
+        "<leader>fn",
+        function()
+          Snacks.notifier.show_history()
+        end,
+        desc = "Notification History",
+      },
+      {
+        "<leader>gB",
+        function()
+          Snacks.gitbrowse()
+        end,
+        desc = "Git Browse (Open in Browser)",
+      },
+      {
+        "<leader>ud",
+        function()
+          if Snacks.dim.enabled then
+            Snacks.dim.disable()
+          else
+            Snacks.dim.enable()
+          end
+        end,
+        desc = "Toggle Dim",
+      },
     },
   },
   { import = "plugins.snacks.lazygit" },

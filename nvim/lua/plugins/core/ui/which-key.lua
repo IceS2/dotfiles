@@ -32,12 +32,13 @@ return {
       { "<leader>E", desc = "Explorer (File Dir)" },
       { "<leader>f", group = "Find", icon = " " },
       { "<leader>g", group = "Git", icon = "󰊢 " },
+      { "<leader>r", group = "Rust", icon = " " },
       { "<leader>s", group = "Search", icon = " " },
       { "<leader>t", group = "Test", icon = " " },
       { "<leader>u", group = "UI", icon = " " },
       { "<leader>;", group = "Terminal", icon = " " },
       { "<leader>a", group = "AI", icon = "󰁤 " },
       { "<leader>x", group = "Diagnostics", icon = " " },
-    }
-  }
+    },
+  },
 }

@@ -1,11 +1,14 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",  -- Use master branch for stable API
-    event = { "BufReadPost", "BufNewFile" },
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
-    opts = {
-      ensure_installed = {
+    dependencies = {
+      "neovim-treesitter/treesitter-parser-registry",
+    },
+    config = function()
+      local parsers = {
         "astro",
         "bash",
         "css",
@@ -25,19 +28,46 @@ return {
         "vim",
         "vimdoc",
         "yaml",
-      },
-      highlight = { enable = true },
-      indent = { enable = true },
-      matchup = { enable = true },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+      }
+
+      require("nvim-treesitter").install(parsers)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("UserTreesitter", { clear = true }),
+        pattern = {
+          "astro",
+          "bash",
+          "css",
+          "html",
+          "javascript",
+          "javascriptreact",
+          "json",
+          "jsonc",
+          "lua",
+          "markdown",
+          "mdx",
+          "python",
+          "query",
+          "regex",
+          "rust",
+          "toml",
+          "typescript",
+          "typescriptreact",
+          "vim",
+          "vimdoc",
+          "yaml",
+        },
+        callback = function(args)
+          vim.treesitter.start(args.buf)
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
     end,
   },
   {
     "davidmh/mdx.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    lazy = false
+    lazy = false,
   },
   {
     "andymass/vim-matchup",
@@ -67,7 +97,7 @@ return {
           enable_close_on_slash = false,
         },
       })
-    end
+    end,
   },
   {
     "HiPhish/rainbow-delimiters.nvim",
@@ -76,8 +106,8 @@ return {
       vim.g.rainbow_delimiters = {
         query = {
           [""] = "rainbow-delimiters",
-          lua = "rainbow-blocks"
-        }
+          lua = "rainbow-blocks",
+        },
       }
     end,
   },
@@ -87,9 +117,7 @@ return {
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter-textobjects",
-        init = function()
-          require("lazy.core.loader").disable_rtp_plugin "nvim-treesitter-textobjects"
-        end
+        branch = "main",
       },
       "kana/vim-textobj-user",
       "kana/vim-textobj-entire",
@@ -97,29 +125,29 @@ return {
       "kana/vim-textobj-indent",
     },
     keys = {
-      { "a", mode = { "x", "o" }},
-      { "i", mode = { "x", "o" }},
+      { "a", mode = { "x", "o" } },
+      { "i", mode = { "x", "o" } },
     },
     config = function()
-      local ai = require "mini.ai"
-      ai.setup {
+      local ai = require("mini.ai")
+      ai.setup({
         n_lines = 500,
         custom_textobjects = {
           o = ai.gen_spec.treesitter({
             a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-            i = { "@block.inner", "@conditional.inner", "@loop.inner" }
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
           }, {}),
-          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner"} , {}),
-          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner"} , {}),
+          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
+          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
           p = ai.gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }, {}),
         },
         mappings = {
           around_next = "",
           inside_next = "",
           around_last = "",
-          inside_last = ""
-        }
-      }
-    end
+          inside_last = "",
+        },
+      })
+    end,
   },
 }

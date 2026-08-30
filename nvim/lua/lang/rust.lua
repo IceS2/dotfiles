@@ -9,25 +9,24 @@ return {
           test_executor = "neotest",
         },
         server = {
-          capabilities = require("blink.cmp").get_lsp_capabilities(),
           on_attach = function(_, bufnr)
             local opts = { buffer = bufnr }
             require("plugins.lsp.keymaps").setup(bufnr)
             vim.keymap.set("n", "<leader>ca", function()
               vim.cmd.RustLsp("codeAction")
             end, opts)
-            vim.keymap.set("n", "<leader>cR", function()
+            vim.keymap.set("n", "<leader>rr", function()
               vim.cmd.RustLsp("runnables")
-            end, opts)
+            end, vim.tbl_extend("force", opts, { desc = "Rust Runnables" }))
             vim.keymap.set("n", "<leader>cD", function()
               vim.cmd.RustLsp("debuggables")
             end, opts)
-            vim.keymap.set("n", "<leader>ce", function()
+            vim.keymap.set("n", "<leader>re", function()
               vim.cmd.RustLsp("expandMacro")
-            end, opts)
-            vim.keymap.set("n", "<leader>cp", function()
+            end, vim.tbl_extend("force", opts, { desc = "Rust Expand Macro" }))
+            vim.keymap.set("n", "<leader>rp", function()
               vim.cmd.RustLsp("parentModule")
-            end, opts)
+            end, vim.tbl_extend("force", opts, { desc = "Rust Parent Module" }))
             vim.keymap.set("n", "K", function()
               vim.cmd.RustLsp({ "hover", "actions" })
             end, opts)
@@ -65,11 +64,11 @@ return {
                 chainingHints = { enable = true },
                 lifetimeElisionHints = { enable = "skip_trivial" },
               },
-            }
-          }
-        }
+            },
+          },
+        },
       }
-    end
+    end,
   },
   {
     "saecki/crates.nvim",
@@ -79,15 +78,15 @@ return {
       completion = {
         cmp = {
           enabled = true,
-        }
-      }
-    }
+        },
+      },
+    },
   },
   {
     "saghen/blink.compat",
     version = "2.*",
     lazy = true,
-    opts = {}
+    opts = {},
   },
   {
     "saghen/blink.cmp",
@@ -97,10 +96,10 @@ return {
         providers = {
           crates = {
             name = "crates",
-            module = "blink.compat.source"
-          }
-        }
-      }
-    }
-  }
+            module = "blink.compat.source",
+          },
+        },
+      },
+    },
+  },
 }
