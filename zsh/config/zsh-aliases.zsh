@@ -37,11 +37,6 @@ if (( $+commands[bat] )); then
   alias catt='bat --style=plain'  # bat without decorations
 fi
 
-#: du → dust (Rust, visual tree of disk usage)
-if (( $+commands[dust] )); then
-  alias du='dust'
-fi
-
 #: df → duf (not installed, but ready if you install it later)
 if (( $+commands[duf] )); then
   alias df='duf'
@@ -53,10 +48,6 @@ if (( $+commands[btm] )); then
   alias top='btm'
 fi
 
-#: ps → procs (Rust, colored process viewer)
-if (( $+commands[procs] )); then
-  alias ps='procs'
-fi
 #: }}}}
 
 #: Git Aliases {{{{
@@ -109,7 +100,10 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 #: Disk usage sorted
-alias ducks='du -h --max-depth=1 | sort -h'
+ducks() {
+  (( $# > 0 )) || set -- .
+  command du -h --max-depth=1 -- "$@" | sort -h
+}
 #: }}}}
 
 #: File Manager {{{{
