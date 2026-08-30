@@ -45,6 +45,7 @@ ensure_dir() {
 _make_link() {
     local src="$1"
     local dest="$2"
+    local backup counter timestamp
 
     # Source must exist
     if [[ ! -e "$src" ]]; then
@@ -68,8 +69,18 @@ _make_link() {
 
     # Regular file/dir exists — back up then link
     if [[ -e "$dest" ]]; then
-        mv "$dest" "${dest}.bak"
-        log_warn "Backed up existing: $dest -> ${dest}.bak"
+        backup="${dest}.bak"
+        if [[ -e "$backup" ]] || [[ -L "$backup" ]]; then
+            timestamp=$(date +%Y%m%d-%H%M%S)
+            backup="${dest}.bak.${timestamp}"
+            counter=1
+            while [[ -e "$backup" ]] || [[ -L "$backup" ]]; do
+                backup="${dest}.bak.${timestamp}.${counter}"
+                (( counter++ ))
+            done
+        fi
+        mv "$dest" "$backup"
+        log_warn "Backed up existing: $dest -> $backup"
         ln -s "$src" "$dest"
         log_ok "$dest -> $src"
         return 0
