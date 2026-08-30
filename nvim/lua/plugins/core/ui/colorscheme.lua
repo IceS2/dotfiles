@@ -13,6 +13,7 @@ return {
       transparent_background = false,
       show_end_of_buffer = false,
       term_colors = true,
+      auto_integrations = false,
       dim_inactive = {
         enabled = false,
         shade = "dark",
@@ -40,18 +41,31 @@ return {
           local palette_path = vim.fn.expand("~/.config/theme/nvim-palette.lua")
           if vim.fn.filereadable(palette_path) == 1 then
             local ok, colors = pcall(dofile, palette_path)
-            if ok and colors then return colors end
+            if ok and colors then
+              return colors
+            end
           end
           return {}
         end)(),
       },
       custom_highlights = {},
       integrations = {
-        cmp = true,
+        blink_cmp = { style = "bordered" },
+        dap = true,
+        dap_ui = true,
+        diffview = true,
+        fidget = true,
+        flash = true,
         gitsigns = true,
-        nvimtree = true,
+        grug_far = true,
+        lsp_trouble = true,
+        mason = true,
+        neotest = true,
+        rainbow_delimiters = true,
+        render_markdown = true,
+        snacks = true,
         treesitter = true,
-        notify = false,
+        ufo = true,
         mini = {
           enabled = true,
           indentscope_color = "",
@@ -71,7 +85,6 @@ return {
             information = { "underline" },
           },
         },
-        telescope = true,
         which_key = true,
       },
     },

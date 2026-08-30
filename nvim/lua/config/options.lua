@@ -2,8 +2,14 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Unused remote plugin hosts
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 -- Text
-vim.opt.fileencoding   = "utf-8"
+vim.opt.fileencoding = "utf-8"
 
 -- Line Numbers
 vim.opt.number = true
@@ -69,7 +75,7 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.WARN] = "",
       [vim.diagnostic.severity.HINT] = "",
       [vim.diagnostic.severity.INFO] = "",
-    }
+    },
   },
   virtual_text = false,
   underline = true,
