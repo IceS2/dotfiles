@@ -8,23 +8,26 @@
 autoload -Uz compinit
 
 # Check if cache is older than 24 hours
-zcompdump_path="${ZDOTDIR:-$HOME}/.zcompdump"
+typeset -g _zsh_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+[[ -d $_zsh_cache_dir ]] || mkdir -p -- "$_zsh_cache_dir"
+zcompdump_path="$_zsh_cache_dir/zcompdump-$ZSH_VERSION"
 if [[ -n $zcompdump_path(#qN.mh+24) ]]; then
   # Rebuild cache
-  compinit
+  compinit -d "$zcompdump_path"
 else
   # Use existing cache (skip security check with -C)
-  compinit -C
+  compinit -C -d "$zcompdump_path"
 fi
 
 # Compile .zcompdump to .zwc for faster loading (runs in background)
 {
-  zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+  zcompdump="$_zsh_cache_dir/zcompdump-$ZSH_VERSION"
   if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
     rm -f "${zcompdump}.zwc"
     zcompile "$zcompdump"
   fi
 } &!
+unset _zsh_cache_dir zcompdump_path
 #: }}}
 
 #: Completion Behavior {{{

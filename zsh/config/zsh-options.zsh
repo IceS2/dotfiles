@@ -4,7 +4,10 @@
 # ╚═══════════════════════════════════════════════════════════╝
 
 #: History Configuration {{{
-HISTFILE=~/.histfile
+typeset -g _zsh_state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
+[[ -d $_zsh_state_dir ]] || mkdir -p -- "$_zsh_state_dir"
+HISTFILE="$_zsh_state_dir/history"
+unset _zsh_state_dir
 HISTSIZE=10000              # Max events in memory
 SAVEHIST=1000000            # Max events in history file (1 million!)
 

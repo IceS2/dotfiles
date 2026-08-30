@@ -29,10 +29,6 @@ bindkey '^[[1;3D' backward-word
 #: }}}}
 
 #: History Search {{{{
-#: Ctrl+R - Reverse history search (legacy)
-#: Note: fzf-history-search plugin may override this
-bindkey '^R' history-incremental-search-backward
-
 #: Ctrl+S - Forward history search
 bindkey '^S' history-incremental-search-forward
 

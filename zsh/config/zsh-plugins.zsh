@@ -56,7 +56,6 @@ plugins=(
   # 2. Regular plugins (order doesn't matter)
   MichaelAquilina/zsh-you-should-use      # Reminds you of aliases
   ael-code/zsh-colored-man-pages          # Colorful man pages
-  joshskidmore/zsh-fzf-history-search     # Fuzzy history search
   
   # 3. Completion with fzf (after compinit, before wrappers)
   Aloxaf/fzf-tab                          # Fuzzy tab completion

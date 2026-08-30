@@ -23,7 +23,7 @@ fi
 #: Fast Node Manager - Rust-based, faster than nvm
 #: Auto-switches Node versions based on .node-version or .nvmrc files
 if (( $+commands[fnm] )); then
-  eval "$(fnm env --use-on-cd)"
+  zsh-defer -c 'eval "$(fnm env --use-on-cd)"'
 fi
 #: }}}}
 
@@ -32,8 +32,7 @@ fi
 #: 10-100x faster than pip, automatic Python version management
 #: Usage: uv python install 3.12, uv venv, uv pip install <package>, uv run python
 if (( $+commands[uv] )); then
-  # Shell completions (minimal overhead)
-  eval "$(uv generate-shell-completion zsh)"
+  zsh-defer -c 'eval "$(uv generate-shell-completion zsh)"'
 fi
 #: }}}}
 
