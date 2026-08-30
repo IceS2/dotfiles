@@ -10,9 +10,33 @@ PKGLIST_DIR=${DOTFILES}/pkglist
 
 [[ -d ${DOTFILES} ]] || exit 0
 
+if (( EUID == 0 )); then
+    echo "update-pkglist must run as ${USER_NAME}, not root" >&2
+    exit 1
+fi
+
+if (( $# > 0 )); then
+    [[ $# == 2 && $1 == --output-dir ]] || {
+        echo "usage: update-pkglist [--output-dir DIR]" >&2
+        exit 2
+    }
+    PKGLIST_DIR=$2
+fi
+
 mkdir -p "${PKGLIST_DIR}"
 
-pacman -Qqen > "${PKGLIST_DIR}/official.txt"
-pacman -Qqem > "${PKGLIST_DIR}/aur.txt"
+temp_dir=$(mktemp -d "${PKGLIST_DIR}/.update.XXXXXX")
+cleanup() {
+    rm -f -- "${temp_dir}/official.txt" "${temp_dir}/aur.txt"
+    rmdir -- "${temp_dir}" 2>/dev/null || true
+}
+trap cleanup EXIT
 
-chown -R "${USER_NAME}:${USER_NAME}" "${PKGLIST_DIR}"
+pacman -Qqen > "${temp_dir}/official.txt"
+pacman -Qqem > "${temp_dir}/aur.txt"
+chmod 0644 "${temp_dir}/official.txt" "${temp_dir}/aur.txt"
+
+mv -- "${temp_dir}/official.txt" "${PKGLIST_DIR}/official.txt"
+mv -- "${temp_dir}/aur.txt" "${PKGLIST_DIR}/aur.txt"
+rmdir -- "${temp_dir}"
+trap - EXIT

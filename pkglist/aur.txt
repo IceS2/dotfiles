@@ -33,6 +33,7 @@ sway-audio-idle-inhibit-git
 ttf-outfit
 vial-appimage
 waterfox-bin
+waterfox-bin-debug
 xcaddy
 xwaylandvideobridge
 yay-debug

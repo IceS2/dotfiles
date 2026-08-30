@@ -31,6 +31,7 @@ fd
 ffmpeg4.4
 firefox
 font-manager
+foot
 fzf
 gamemode
 gamescope
@@ -116,9 +117,9 @@ sops
 starship
 steam
 sudo
+sway
 swayimg
 tokei
-tree-sitter-cli
 ttf-cascadia-code
 ttf-cascadia-code-nerd
 ttf-firacode-nerd

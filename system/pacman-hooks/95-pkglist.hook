@@ -8,4 +8,4 @@ Target = *
 [Action]
 Description = Snapshotting package list to ~/.dotfiles/pkglist...
 When = PostTransaction
-Exec = /usr/local/bin/update-pkglist
+Exec = /usr/bin/runuser -u ice -- /usr/local/bin/update-pkglist
