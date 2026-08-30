@@ -23,10 +23,8 @@
 # (e.g. a sunset pink split across two buckets) and expose tiny noise clusters.
 # 30° resolution keeps visually coherent hue groups together.
 #
-# TODO: When matugen 4.0 hits Arch stable (currently in extra-testing as of
-#       2025-02), test `matugen image <img> --prefer saturation` as a potential
-#       replacement.  It re-ranks Score results by saturation, which may suffice
-#       for accents >1% of pixels.  Also adds --source-color-index N (0-3).
+# Matugen's `--prefer saturation` changes candidate selection semantics;
+# hue buckets deliberately score every retained pixel, including small accents.
 #
 # Usage: extract-color.sh <image>
 # Output: hex color without '#' (e.g. D3357C)

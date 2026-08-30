@@ -37,6 +37,20 @@ if (( $+commands[bat] )); then
   alias catt='bat --style=plain'  # bat without decorations
 fi
 
+# Keep man-page colors local instead of depending on a plugin repository.
+man() {
+  env \
+    LESS_TERMCAP_md="$(tput bold; tput setaf 4)" \
+    LESS_TERMCAP_me="$(tput sgr0)" \
+    LESS_TERMCAP_mb="$(tput blink)" \
+    LESS_TERMCAP_us="$(tput setaf 2)" \
+    LESS_TERMCAP_ue="$(tput sgr0)" \
+    LESS_TERMCAP_so="$(tput smso)" \
+    LESS_TERMCAP_se="$(tput rmso)" \
+    PAGER="${commands[less]:-$PAGER}" \
+    man "$@"
+}
+
 #: df → duf (not installed, but ready if you install it later)
 if (( $+commands[duf] )); then
   alias df='duf'

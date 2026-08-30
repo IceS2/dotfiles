@@ -417,6 +417,38 @@ generate_gtk() {
 @define-color error_bg_color $(ch error);
 @define-color error_fg_color $(ch on_error);
 EOF
+
+        if [[ "$ver" == 4.0 ]]; then
+            cat >> "$out" << EOF
+
+:root {
+  --accent-bg-color: $(ch primary);
+  --accent-fg-color: $(ch on_primary);
+  --window-bg-color: $(ch surface);
+  --window-fg-color: $(ch on_surface);
+  --view-bg-color: $(ch surface_dim);
+  --view-fg-color: $(ch on_surface);
+  --headerbar-bg-color: $(ch surface);
+  --headerbar-fg-color: $(ch on_surface);
+  --card-bg-color: $(ch surface_container);
+  --card-fg-color: $(ch on_surface);
+  --popover-bg-color: $(ch surface_container);
+  --popover-fg-color: $(ch on_surface);
+  --sidebar-bg-color: $(ch surface_dim);
+  --sidebar-fg-color: $(ch on_surface);
+  --dialog-bg-color: $(ch surface_container);
+  --dialog-fg-color: $(ch on_surface);
+  --destructive-bg-color: $(ch error);
+  --destructive-fg-color: $(ch on_error);
+  --success-bg-color: $(ch success);
+  --success-fg-color: $(ch on_success);
+  --warning-bg-color: $(ch warning);
+  --warning-fg-color: $(ch on_warning);
+  --error-bg-color: $(ch error);
+  --error-fg-color: $(ch on_error);
+}
+EOF
+        fi
     done
 }
 

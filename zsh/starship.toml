@@ -10,7 +10,6 @@ palette = 'catppuccin_mocha'
 
 # Performance tuning
 scan_timeout = 30
-command_timeout = 1000
 add_newline = true
 
 # Two-line prompt: Info line + Input line
