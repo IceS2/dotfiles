@@ -8,7 +8,7 @@ return {
       -- Adapters
       "nvim-neotest/neotest-python",
       "marilari88/neotest-vitest",
-      "nvim-neotest/neotest-jest",
+      "mrcjkb/rustaceanvim",
     },
     keys = {
       { "<leader>tr", function() require("neotest").run.run() end, desc = "Run Nearest" },
@@ -44,16 +44,8 @@ return {
               console = "integratedTerminal",
             },
           }),
-          require("rustaceanvim.neotest"),
-          require("neotest-vitest")({
-            filter_dir = function(name)
-              return name ~= "node_modules"
-            end,
-          }),
-          require("neotest-jest")({
-            jestCommand = "npm test --",
-            cwd = function() return vim.fn.getcwd() end,
-          }),
+          require("config.neotest-rust"),
+          require("neotest-vitest"),
         },
         status = { virtual_text = true },
         output = { open_on_run = true },
