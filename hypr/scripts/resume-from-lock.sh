@@ -21,8 +21,8 @@ restart_quickshell() {
     fi
 
     sleep 0.5
-    quickshell &
-    log "QuickShell restarted (PID: $!)"
+    "$(dirname "${BASH_SOURCE[0]}")/start-quickshell.sh" --wait &
+    log "QuickShell restart launched (guard PID: $!)"
 
     # Wait for D-Bus notification server to register
     if timeout 10 bash -c 'until dbus-send --session --print-reply \

@@ -37,6 +37,7 @@ readonly DEBOUNCE_SAMPLES=3
 readonly ARCTIS_SINK="alsa_output.usb-SteelSeries_Arctis_7_-00.analog-stereo"
 readonly ARCTIS_SOURCE="alsa_input.usb-SteelSeries_Arctis_7_-00.mono-fallback"
 readonly CHATMIX_GAME_SINK="Arctis_Game"   # virtual sink from the ChatMix daemon (if running)
+readonly CHATMIX_CHAT_SINK="Arctis_Chat"
 readonly SPDIF_SINK="alsa_output.usb-Generic_USB_Audio-00.HiFi__SPDIF__sink"
 readonly USB_MIC="alsa_input.usb-Generic_USB_Audio-00.HiFi__Mic__source"
 
@@ -69,8 +70,21 @@ set_default() { wpctl set-default "$1" 2>/dev/null || true; }
 get_default_sink_name() { pactl get-default-sink 2>/dev/null || true; }
 move_all_streams() {
     local target_sink="$1"
-    pactl list sink-inputs short 2>/dev/null | awk '{print $1}' | while read -r stream; do
-        pactl move-sink-input "$stream" "$target_sink" 2>/dev/null || true
+    local chat_sink="" sinks="" stream binary destination
+    if [[ "$target_sink" == "$CHATMIX_GAME_SINK" ]]; then
+        sinks=$(pactl list sinks short 2>/dev/null)
+        chat_sink=$(awk -v name="$CHATMIX_CHAT_SINK" '$2 == name {print $1; exit}' <<<"$sinks")
+        target_sink=$(awk -v name="$CHATMIX_GAME_SINK" '$2 == name {print $1; exit}' <<<"$sinks")
+        [[ -n "$target_sink" ]] || target_sink="$CHATMIX_GAME_SINK"
+    fi
+    pactl -f json list sink-inputs 2>/dev/null |
+        jq -r '.[] | [.index, (.properties["application.process.binary"] // "")] | @tsv' |
+        while IFS=$'\t' read -r stream binary; do
+            destination="$target_sink"
+            if [[ -n "$chat_sink" && "$binary" == "Discord" ]]; then
+                destination="$chat_sink"
+            fi
+            pactl move-sink-input "$stream" "$destination" 2>/dev/null || true
     done
 }
 

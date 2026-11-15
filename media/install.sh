@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Media configuration installer
 # Handles: Bluetooth, PipeWire, WirePlumber, MPV, Arctis auto-switch
+# shellcheck source=../lib/helpers.sh
 source "$(dirname "$0")/../lib/helpers.sh"
 
 log_header "Media"
@@ -39,6 +40,22 @@ rm -f "$HOME/.config/pipewire/pipewire.conf.d/50-arctis-chatmix-sinks.conf"
 # ── MPV ──
 link_config media/mpv mpv
 
+# ── Rescrobbled ──
+ensure_dir "$HOME/.config/rescrobbled"
+link_to media/rescrobbled/config.toml \
+    "$HOME/.config/rescrobbled/config.toml"
+
+for credential in lastfm-key lastfm-secret; do
+    credential_path="$HOME/.config/rescrobbled/$credential"
+    if [[ ! -e "$credential_path" ]]; then
+        install -m 600 /dev/null "$credential_path"
+        log_ok "Created Rescrobbled credential file: $credential_path"
+    else
+        chmod 600 "$credential_path"
+        log_skip "$credential_path (preserved)"
+    fi
+done
+
 # ── Arctis auto-switch systemd service ──
 if [[ -f "$DOTFILES_DIR/media/wireplumber/systemd/arctis-auto-switch.service" ]]; then
     ensure_dir "$HOME/.config/systemd/user"
@@ -75,6 +92,17 @@ if [[ "${1:-}" == "--restart" ]]; then
     systemctl --user restart pipewire pipewire-pulse wireplumber 2>/dev/null || true
     log_ok "PipeWire stack restarted"
     systemctl --user daemon-reload 2>/dev/null || true
+    if [[ -s "$HOME/.config/rescrobbled/lastfm-key" ]] && \
+        [[ -s "$HOME/.config/rescrobbled/lastfm-secret" ]]; then
+        if systemctl --user enable rescrobbled.service 2>/dev/null && \
+            systemctl --user restart rescrobbled.service 2>/dev/null; then
+            log_ok "Rescrobbled enabled and restarted"
+        else
+            log_warn "Rescrobbled could not be enabled — check: systemctl --user status rescrobbled.service"
+        fi
+    else
+        log_warn "Rescrobbled credentials are empty — fill ~/.config/rescrobbled/lastfm-{key,secret}, then rerun with --restart"
+    fi
     systemctl --user enable arctis-auto-switch.service 2>/dev/null || true
     systemctl --user restart arctis-auto-switch.service 2>/dev/null || true
     log_ok "Arctis auto-switch restarted"

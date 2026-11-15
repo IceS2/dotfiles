@@ -10,13 +10,13 @@ if (( $+commands[eza] )); then
   unalias ls ll la l 2>/dev/null
 
   # Use functions instead of aliases for better completion support
-  ls() { eza --group-directories-first --icons "$@" }
-  ll() { eza -la --group-directories-first --icons --git "$@" }
-  la() { eza -a --group-directories-first --icons "$@" }
-  l() { eza -l --group-directories-first --icons "$@" }
+  ls() { eza --group-directories-first --icons=always "$@" }
+  ll() { eza -la --group-directories-first --icons=always --git "$@" }
+  la() { eza -a --group-directories-first --icons=always "$@" }
+  l() { eza -l --group-directories-first --icons=always "$@" }
 
-  alias tree='eza --tree --icons'
-  alias lt='eza --tree --level=2 --icons'
+  alias tree='eza --tree --icons=always'
+  alias lt='eza --tree --level=2 --icons=always'
 
   # Use eza's completion for the ls function
   compdef ls=eza

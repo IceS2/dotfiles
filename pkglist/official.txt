@@ -1,6 +1,7 @@
 adw-gtk-theme
 age
 alsa-utils
+android-tools
 ansible
 awww
 base
@@ -17,7 +18,9 @@ cliphist
 cpio
 cpptrace
 curl
+darktable
 devtools
+digikam
 discord
 docker
 docker-compose
@@ -57,9 +60,11 @@ hyprshutdown
 inkscape
 intel-ucode
 inter-font
+kasts
 kitty
 krita
 kvantum
+lact
 lazygit
 lib32-gamemode
 lib32-mangohud
@@ -83,12 +88,14 @@ noto-fonts-emoji
 nvidia-open-dkms
 nvidia-settings
 nvidia-utils
+nvtop
 obs-studio
 openai-codex
 openbsd-netcat
 opentofu
 otf-monaspace-nerd
 pacman-contrib
+pandoc-cli
 papirus-icon-theme
 parted
 pavucontrol
@@ -105,9 +112,12 @@ qt5ct
 qt6-multimedia-ffmpeg
 qt6-wayland
 qt6ct
+rapid-photo-downloader
+restic
 ripgrep
 rustup
 satty
+scrcpy
 scx-scheds
 sd
 seahorse
@@ -128,6 +138,7 @@ ttf-jetbrains-mono
 ttf-jetbrains-mono-nerd
 ttf-nerd-fonts-symbols-mono
 ttf-victor-mono-nerd
+udiskie
 unzip
 uv
 vulkan-headers
@@ -146,6 +157,7 @@ yazi
 yq
 zathura
 zathura-pdf-mupdf
+zettlr
 zip
 zoxide
 zram-generator

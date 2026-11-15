@@ -42,6 +42,13 @@ gaming_profile("steam-games", { class = "^(steam_app_)" })
 -- window class is "gamescope", not steam_app_*.
 gaming_profile("gamescope", { class = "^(gamescope)$" })
 
+-- Wine Wayland exposes Witcher 3 as witcher3.exe without a game content type.
+hl.window_rule({
+  name  = "witcher3",
+  match = { class = "^(witcher3\\.exe)$" },
+  content = "game",
+})
+
 -- Guilty Gear Strive (APPID 1384160). Supplements the steam_app_ rules above
 -- with title-matched placement; NOT a third copy of the gaming profile.
 hl.window_rule({
@@ -83,6 +90,18 @@ hl.window_rule({
 hl.window_rule({
   name  = "waterfox-opaque",
   match = { class = "^(waterfox)$" },
+  opacity = "1.0 override 1.0 override",
+})
+
+hl.window_rule({
+  name  = "darktable-opaque",
+  match = { class = "^(org\\.darktable\\.darktable)$" },
+  opacity = "1.0 override 1.0 override",
+})
+
+hl.window_rule({
+  name  = "digikam-opaque",
+  match = { class = "^(org\\.kde\\.digikam|digikam)$" },
   opacity = "1.0 override 1.0 override",
 })
 

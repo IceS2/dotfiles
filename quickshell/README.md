@@ -27,16 +27,13 @@ paru -S quickshell-allflags-git
 # Symlink to config directory
 ln -sf ~/.dotfiles/quickshell ~/.config/quickshell
 
-# Test it works
-quickshell
-
-# Add to Hyprland config
-echo 'exec-once = quickshell' >> ~/.config/hypr/hyprland.conf
-echo 'bind = SUPER, Space, exec, qs ipc call launcher toggle' >> ~/.config/hypr/hyprland.conf
-
-# Reload Hyprland
-hyprctl reload
+# Hyprland starts it automatically; for a manual launch:
+~/.config/hypr/scripts/start-quickshell.sh &
 ```
+
+Hyprland starts this launcher from `hypr/configs/autostart.lua` (or
+`autostart.conf` with the legacy config). The launcher keybind is already in
+`hypr/configs/keybinds.lua`.
 
 ## Modules
 

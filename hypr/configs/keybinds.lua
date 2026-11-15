@@ -66,8 +66,8 @@ end)
 hl.bind(MOD .. " + R", hl.dsp.submap("resize"))
 
 -- ===== Mouse bindings =====
-hl.bind(MOD .. " + mouse:272", hl.dsp.window.drag(),   { drag = true })
-hl.bind(MOD .. " + mouse:273", hl.dsp.window.resize(), { drag = true })
+hl.bind(MOD .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+hl.bind(MOD .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- ===== Scratchpads =====
 hl.bind(MOD .. " + T", hl.dsp.workspace.toggle_special("term"))
@@ -124,4 +124,4 @@ hl.bind(MOD .. " + F10", hl.dsp.exec_cmd("gsr-ui-cli replay-save"))
 -- playback stall and wedge the screen. pkill on the binary path works even when
 -- the frozen surface covers everything and the window can't be focused.
 hl.bind(MOD .. " + SHIFT + J",
-  hl.dsp.exec_cmd("pkill -9 -f /opt/jellyfin-desktop/jellyfin-desktop"))
+  hl.dsp.exec_cmd("pkill -9 -f /usr/bin/jellyfin-desktop"))

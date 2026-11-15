@@ -25,6 +25,7 @@ DIR="$(cd "$(dirname "$0")" && pwd)"
 # shellcheck disable=SC1090
 __TEST__=1 source "$DIR/arctis-auto-switch.sh"
 set +e +u +o pipefail   # neutralize the sourced script's strict mode for the harness
+REAL_MOVE_ALL_STREAMS=$(declare -f move_all_streams)
 
 PASS=0
 FAIL=0
@@ -265,6 +266,21 @@ else
     echo "FAIL: S14 tick() aborted under set -euo pipefail (likely an arithmetic gotcha)"
     ((FAIL++))
 fi
+
+# A power-on route keeps voice on Chat while the game follows the Game default.
+eval "$REAL_MOVE_ALL_STREAMS"
+pactl() {
+    case "$*" in
+        "list sink-inputs short") printf '101\t700\n102\t700\n' ;;
+        "-f json list sink-inputs") printf '%s\n' '[{"index":101,"properties":{"application.process.binary":"Discord"}},{"index":102,"properties":{"application.process.binary":"wine64-preloader"}}]' ;;
+        "list sinks short") printf '700\tArctis_Game\n701\tArctis_Chat\n702\talsa_output.usb-Generic_USB_Audio-00.HiFi__SPDIF__sink\n' ;;
+        move-sink-input*) printf '%s:%s ' "$2" "$3" ;;
+    esac
+}
+ACTIONS=$(move_all_streams "$CHATMIX_GAME_SINK")
+assert_eq "S16 power-on routes Discord to Chat and game to Game" "101:701 102:700 " "$ACTIONS"
+ACTIONS=$(move_all_streams "$SPDIF_SINK")
+assert_eq "S17 power-off routes both streams to soundbar" "101:$SPDIF_SINK 102:$SPDIF_SINK " "$ACTIONS"
 
 echo "--------"
 echo "PASS=$PASS FAIL=$FAIL"

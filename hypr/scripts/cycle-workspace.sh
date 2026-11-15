@@ -42,7 +42,7 @@ fi
 TARGET=${WORKSPACES[$INDEX]}
 
 if [[ "$MOVE_WINDOW" == "--move" ]]; then
-    hyprctl dispatch movetoworkspace "$TARGET"
+    hyprctl dispatch "hl.dsp.window.move({ workspace = $TARGET })"
 else
-    hyprctl dispatch workspace "$TARGET"
+    hyprctl dispatch "hl.dsp.focus({ workspace = $TARGET })"
 fi

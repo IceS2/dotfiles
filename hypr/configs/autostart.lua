@@ -1,7 +1,10 @@
 -- Autostart. Replaces exec-once; the handler fires once on compositor start.
--- Order within the handler is preserved and is load-bearing.
+-- Commands are dispatched in order; launched processes run asynchronously.
 
 hl.on("hyprland.start", function()
+  -- Dispatch the shell before notification-producing services.
+  hl.exec_cmd("~/.config/hypr/scripts/start-quickshell.sh")
+
   -- ===== Theme & appearance =====
   hl.exec_cmd([[gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-lavender-standard+default"]])
   hl.exec_cmd([[gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"]])
@@ -39,14 +42,10 @@ hl.on("hyprland.start", function()
 
   -- ===== System tray =====
   hl.exec_cmd("nm-applet --indicator") -- --indicator = tray icon only, no window
+  hl.exec_cmd("udiskie --smart-tray")
 
   -- ===== User interface =====
-  -- Ensure theme configs are current before launching UI
-  -- (no live reload -- apps read on start)
   hl.exec_cmd("~/.config/theme/apply-theme.sh --no-reload")
-
-  -- QuickShell (bar + launcher + notifications)
-  hl.exec_cmd("quickshell")
 
   -- Monitor watcher -- restart services that lose surfaces after a monitor
   -- power cycle (NVIDIA)

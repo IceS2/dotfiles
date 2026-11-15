@@ -22,7 +22,6 @@ hl.config({
   dwindle = {
     preserve_split       = true, -- keep split direction permanent (no surprise shifts)
     force_split          = 2,    -- always split right/bottom (predictable)
-    special_scale_factor = 0.9,  -- scratchpad at 90% screen size
   },
 
   decoration = {

@@ -22,8 +22,17 @@ for i = 1, 10 do
   })
 end
 
--- Terminal scratchpad (Super+T)
+-- Keep both special workspaces inset on either monitor.
 hl.workspace_rule({
-  workspace        = "special:term",
-  on_created_empty = "kitty --class scratchpad",
+  workspace = "special:term",
+  gaps_out  = 80,
 })
+hl.workspace_rule({
+  workspace = "special:minimized",
+  gaps_out  = 80,
+})
+
+hl.on("workspace.created", function(ws)
+  if ws.name ~= "special:term" or not ws.is_empty then return end
+  hl.exec_cmd("kitty --class scratchpad", { workspace = "special:term silent" })
+end)

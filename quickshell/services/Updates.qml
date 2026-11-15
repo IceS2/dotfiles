@@ -39,6 +39,7 @@ PopupServiceBase {
 
     property int _prevTotalCount: -1
     property var _lastCheckTime: null
+    property bool _officialFailed: false
 
     // ─── Check Logic ───
 
@@ -47,6 +48,7 @@ PopupServiceBase {
         root.checking = true
         root._officialBuffer = []
         root._aurBuffer = []
+        root._officialFailed = false
         root._officialProc.running = true
     }
 
@@ -64,7 +66,7 @@ PopupServiceBase {
         }
 
         onExited: (exitCode, exitStatus) => {
-            // checkupdates exits 2 when no updates available — that's fine
+            root._officialFailed = exitCode !== 0 && exitCode !== 2
             root._aurProc.running = true
         }
     }
@@ -80,6 +82,12 @@ PopupServiceBase {
         }
 
         onExited: (exitCode, exitStatus) => {
+            if (root._officialFailed || exitCode !== 0) {
+                root.checking = false
+                root._retryTimer.restart()
+                return
+            }
+            root._retryTimer.stop()
             root._processResults()
         }
     }
@@ -170,6 +178,11 @@ PopupServiceBase {
         running: true
         repeat: true
         triggeredOnStart: true
+        onTriggered: root.refresh()
+    }
+
+    property Timer _retryTimer: Timer {
+        interval: 60000
         onTriggered: root.refresh()
     }
 

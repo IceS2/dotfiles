@@ -1,6 +1,6 @@
 # Media Configuration
 
-Audio, Bluetooth, and media configuration for Arch Linux with PipeWire/WirePlumber.
+Audio, Bluetooth, playback, and scrobbling configuration for Arch Linux.
 
 ## Structure
 
@@ -18,6 +18,8 @@ media/
 │   ├── 10-rates.conf                       → ~/.config/pipewire/pipewire-pulse.conf.d/
 │   └── 10-resample-quality.conf            → ~/.config/pipewire/pipewire-pulse.conf.d/
 ├── mpv/mpv.conf                            → ~/.config/mpv/mpv.conf
+├── rescrobbled/
+│   └── config.toml                         → ~/.config/rescrobbled/config.toml
 ├── install.sh
 └── README.md
 ```
@@ -40,6 +42,11 @@ media/
 - **Headset OFF** → S/PDIF output + USB mic
 - **Polling**: Every 3 seconds
 
+### Deezer scrobbling
+- **Player filter**: only the `deezer` MPRIS player is submitted
+- **Credentials**: stored locally in `~/.config/rescrobbled/lastfm-{key,secret}`
+- **Session**: generated locally in `~/.config/rescrobbled/session`
+
 ### Sample Rates
 - **Default**: 48kHz
 - **Supported**: 44.1, 48, 88.2, 96, 192 kHz (no resampling when matched)
@@ -52,6 +59,7 @@ media/
 ```bash
 sudo pacman -S pipewire pipewire-pulse wireplumber bluez bluez-utils mpv
 paru -S headsetcontrol  # Required for Arctis auto-switch
+paru -S rescrobbled-git
 ```
 
 ### Install
@@ -64,7 +72,37 @@ The script:
 1. Copies `/etc/bluetooth/main.conf` (requires sudo)
 2. Symlinks configs to `~/.config/`
 3. Enables and starts `arctis-auto-switch.service`
-4. Restarts audio services
+4. Creates local Rescrobbled credential files with mode `0600`
+5. Restarts audio services
+
+### Rescrobbled
+
+Run the installer once to deploy the config and create the local credential file:
+
+```bash
+~/.dotfiles/media/install.sh
+```
+
+Add the Last.fm application credentials to their local files. Each file should
+contain only the corresponding value; using an editor keeps the values out of
+your shell history:
+
+```bash
+$EDITOR ~/.config/rescrobbled/lastfm-key
+$EDITOR ~/.config/rescrobbled/lastfm-secret
+```
+
+Authenticate once in a terminal so Rescrobbled creates its machine-local
+`session` file, then enable the user service:
+
+```bash
+rescrobbled
+# Complete authentication, then press Ctrl+C.
+~/.dotfiles/media/install.sh --restart
+```
+
+Neither the credentials nor the generated session is stored in the dotfiles
+repository.
 
 ## Usage
 

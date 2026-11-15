@@ -1,0 +1,3 @@
+lastfm-key-file = "~/.config/rescrobbled/lastfm-key"
+lastfm-secret-file = "~/.config/rescrobbled/lastfm-secret"
+player-whitelist = ["deezer"]

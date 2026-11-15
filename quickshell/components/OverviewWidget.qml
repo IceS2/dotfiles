@@ -237,7 +237,7 @@ Item {
                             root.draggingFromWorkspace = -1
                             if (targetWorkspace !== -1 && targetWorkspace !== window.windowData?.workspace.id) {
                                 Hyprland.dispatch("hl.dsp.window.move({ workspace = " + targetWorkspace
-                                    + ", silent = true, window = \"address:" + window.windowData?.address + "\" })")
+                                    + ", follow = false, window = \"address:" + window.windowData?.address + "\" })")
                                 updateWindowPosition.restart()
                             } else {
                                 window.x = window.initX

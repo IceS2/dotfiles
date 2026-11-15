@@ -7,7 +7,7 @@
 # This script listens for monitoradded events and restarts it.
 # Note: awww handles monitor reconnect natively — no wallpaper recovery needed.
 #
-# Launched via exec-once in autostart.conf
+# Launched by Hyprland autostart.
 
 log() {
     echo "[$(date '+%H:%M:%S')] monitor-watcher: $*" >> /tmp/hypr-resume.log
@@ -30,8 +30,8 @@ restart_quickshell() {
     # Fallback: full restart (breaks long-lived D-Bus clients like Waterfox)
     pkill -9 quickshell
     sleep 0.5
-    quickshell &
-    log "QuickShell restarted (PID: $!)"
+    "$(dirname "${BASH_SOURCE[0]}")/start-quickshell.sh" --wait &
+    log "QuickShell restart launched (guard PID: $!)"
 
     # Wait for D-Bus notification server to register
     if timeout 10 bash -c 'until dbus-send --session --print-reply \

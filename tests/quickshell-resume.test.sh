@@ -5,7 +5,7 @@ REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 TEST_ROOT=$(mktemp -d)
 trap 'rm -rf "$TEST_ROOT"' EXIT
 
-mkdir -p "$TEST_ROOT/bin"
+mkdir -p "$TEST_ROOT/bin" "$TEST_ROOT/runtime"
 
 cat > "$TEST_ROOT/bin/qs" <<'EOF'
 #!/usr/bin/env bash
@@ -27,7 +27,7 @@ EOF
 
 cat > "$TEST_ROOT/bin/quickshell" <<'EOF'
 #!/usr/bin/env bash
-printf 'quickshell:start\n' >> "$TEST_CALLS"
+printf 'quickshell:%s\n' "$*" >> "$TEST_CALLS"
 EOF
 
 cat > "$TEST_ROOT/bin/timeout" <<'EOF'
@@ -39,9 +39,10 @@ chmod +x "$TEST_ROOT/bin/qs" "$TEST_ROOT/bin/hyprctl" \
     "$TEST_ROOT/bin/sleep" "$TEST_ROOT/bin/quickshell" "$TEST_ROOT/bin/timeout"
 
 export TEST_CALLS="$TEST_ROOT/calls"
-PATH="$TEST_ROOT/bin:$PATH" "$REPO_ROOT/hypr/scripts/resume-from-lock.sh"
+XDG_RUNTIME_DIR="$TEST_ROOT/runtime" PATH="$TEST_ROOT/bin:$PATH" "$REPO_ROOT/hypr/scripts/resume-from-lock.sh"
+/usr/bin/timeout 5 bash -c 'until [[ $(wc -l < "$TEST_CALLS") -eq 2 ]]; do /usr/bin/sleep 0.05; done'
 
-expected=$'qs:kill\nquickshell:start'
+expected=$'qs:kill\nquickshell:--no-duplicate'
 if [[ $(<"$TEST_CALLS") != "$expected" ]]; then
     printf 'expected resume to restart Quickshell; calls were:\n' >&2
     cat "$TEST_CALLS" >&2

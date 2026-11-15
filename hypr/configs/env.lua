@@ -13,7 +13,7 @@ hl.env("__GL_GSYNC_ALLOWED", "1")
 hl.env("__GL_VRR_ALLOWED", "1")
 
 -- Do not force __GL_SYNC_TO_VBLANK: it hangs Waterfox ESR 153 during Wayland
--- EGL startup. Games stay inside the VRR range via MangoHud's 160 FPS cap.
+-- EGL startup. Games stay inside the VRR range via MangoHud's default 144 FPS cap.
 
 -- Helps preserve OpenGL contexts across screen lock/unlock (kitty freeze fix)
 hl.env("__GL_THREADED_OPTIMIZATIONS", "0")

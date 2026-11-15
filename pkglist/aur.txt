@@ -1,4 +1,5 @@
 anytype-electron-bin
+apps2samsung-bin
 catppuccin-cursors-mocha
 catppuccin-gtk-theme-mocha
 deezer
@@ -18,6 +19,7 @@ nsis
 osslsigncode
 otf-geist
 overskride
+pano-scrobbler-bin
 papirus-folders-catppuccin-git
 paru
 proton-pass-bin
@@ -25,6 +27,7 @@ proton-pass-cli-bin
 protonplus
 qt5-webengine
 quickshell-allflags-git
+rescrobbled-git
 sound-theme-smooth
 sshpilot
 stremio
@@ -37,3 +40,4 @@ waterfox-bin-debug
 xcaddy
 xwaylandvideobridge
 yay-debug
+zotero
