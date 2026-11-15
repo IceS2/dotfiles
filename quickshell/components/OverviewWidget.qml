@@ -110,8 +110,7 @@ Item {
                                 acceptedButtons: Qt.LeftButton
                                 onClicked: {
                                     if (root.draggingTargetWorkspace === -1) {
-                                        Root.Overview.hidePopup()
-                                        Hyprland.dispatch("hl.dsp.focus({ workspace = " + workspace.workspaceValue + " })")
+                                        Root.Overview.focusAfterHide("hl.dsp.focus({ workspace = " + workspace.workspaceValue + " })")
                                     }
                                 }
                             }
@@ -249,8 +248,8 @@ Item {
                             if (!window.windowData) return;
 
                             if (event.button === Qt.LeftButton) {
-                                Root.Overview.hidePopup()
-                                Hyprland.dispatch("hl.dsp.focus({ window = \"address:" + window.windowData.address + "\" })")
+                                const address = window.windowData.address
+                                Root.Overview.focusAfterHide("hl.dsp.focus({ window = \"address:" + address + "\" })")
                                 event.accepted = true
                             } else if (event.button === Qt.MiddleButton) {
                                 Hyprland.dispatch("hl.dsp.window.close({ window = \"address:" + window.windowData.address + "\" })")

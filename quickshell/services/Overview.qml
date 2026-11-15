@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQuick
+import Quickshell.Hyprland
 import "modals.js" as Modals
 
 QtObject {
@@ -26,6 +27,15 @@ QtObject {
         onTriggered: root.mapped = false
     }
 
+    property string pendingFocusRequest: ""
+    property Timer _focusTimer: Timer {
+        interval: 40
+        onTriggered: {
+            Hyprland.dispatch(root.pendingFocusRequest)
+            root.pendingFocusRequest = ""
+        }
+    }
+
     onPopupVisibleChanged: {
         if (popupVisible) {
             _unmapTimer.stop();
@@ -44,6 +54,13 @@ QtObject {
 
     function hidePopup() {
         popupVisible = false;
+    }
+
+    function focusAfterHide(request) {
+        pendingFocusRequest = request
+        hidePopup()
+        // Allow the exclusive keyboard focus change to reach Hyprland.
+        _focusTimer.restart()
     }
 
     function togglePopup() {
